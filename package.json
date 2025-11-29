@@ -1,0 +1,12 @@
+{
+  "name": "tree-sitter-cil",
+  "type": "commonjs",
+  "main": "grammar.js",
+  "scripts": {
+    "build": "tree-sitter generate --output ./dist",
+    "test": "tree-sitter parse test.il"
+  },
+  "devDependencies": {
+    "tree-sitter-cli": "^0.25.10"
+  }
+}
