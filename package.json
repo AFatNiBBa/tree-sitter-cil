@@ -1,10 +1,8 @@
 {
   "name": "tree-sitter-cil",
-  "type": "commonjs",
-  "main": "grammar.js",
   "scripts": {
-    "build": "tree-sitter generate --output ./dist",
-    "test": "tree-sitter parse test.il"
+    "build": "tree-sitter generate ./src/index.js --output ./dist",
+    "test": "tree-sitter parse ./src/assets/test.il"
   },
   "devDependencies": {
     "tree-sitter-cli": "^0.25.10"
