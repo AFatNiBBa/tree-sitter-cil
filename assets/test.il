@@ -32,6 +32,7 @@
   .hash algorithm 0x00008004
   .ver 1:0:0:0
 }
+.module A.dll
 // MVID: {5E4384BE-C25B-458B-8A02-2E14BEC17D5C}
 .custom instance void [System.Runtime]System.Runtime.CompilerServices.RefSafetyRulesAttribute::.ctor(int32) = ( 01 00 0B 00 00 00 00 00 ) 
 .imagebase 0x00400000

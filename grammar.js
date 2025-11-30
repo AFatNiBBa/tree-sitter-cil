@@ -3,7 +3,14 @@
 
 /// <reference types="tree-sitter-cli/dsl" />
 
-const HEX_DIGIT = /[a-f\d_]/i, IDENTIFIER = /[a-z_][a-z0-9_]*/i;
+const HEX_DIGIT = /[a-f\d_]/i;
+
+/**
+ * Utility function that allows to define a repeating rule with a separator between each element
+ * @param {RuleOrLiteral} sep The rule to use as separator
+ * @param {RuleOrLiteral} rule The rule to repeat
+ */
+const join = (sep, rule) => seq(rule, repeat(seq(sep, rule)));
 
 module.exports = grammar({
   name: "cil",
@@ -31,7 +38,7 @@ module.exports = grammar({
     def_assembly: $ => seq(
       ".assembly",
       optional("extern"),
-      $.namespace,
+      $.identifier,
       "{",
       repeat($.option_assembly),
       "}"
@@ -41,9 +48,9 @@ module.exports = grammar({
 
     //#region REF
 
-    ref_assembly: $ => seq("[", $.namespace, "]"),
+    ref_assembly: $ => seq("[", $.identifier, "]"),
 
-    ref_type: $ => seq($.ref_assembly, $.namespace),
+    ref_type: $ => seq($.ref_assembly, $.identifier),
 
     ref_method: $ => seq(
       optional("instance"),
@@ -52,10 +59,7 @@ module.exports = grammar({
       "::",
       $.identifier,
       "(",
-      optional(seq(
-        $.type,
-        repeat(seq(",", $.type))
-      )),
+      optional(join(",", $.type)),
       ")"
     ),
 
@@ -65,6 +69,7 @@ module.exports = grammar({
 
     option_module: $ => choice(
       $.attribute,
+      seq(".module", optional("extern"), $.identifier),
       seq(".file", "alignment", $.integer),
       seq(".imagebase", $.integer),
       seq(".stackreserve", $.integer),
@@ -93,11 +98,14 @@ module.exports = grammar({
 
     integer: () => token(choice(/\d+/, seq("0x", repeat1(HEX_DIGIT)))),
 
-    namespace: () => token(seq(IDENTIFIER, repeat(seq(".", IDENTIFIER)))),
-
-    identifier: () => token(choice(
-      seq(optional("."), IDENTIFIER),
-      seq("'", repeat(/[^']|\\./), "'")
+    identifier: () => token(join(
+      ".",
+      choice(
+        seq("'", repeat(/[^']|\\./), "'"),
+        /[a-z_][a-z0-9_]*/i,
+        ".cctor",
+        ".ctor"
+      )
     )),
 
     comment: () => token(choice(
