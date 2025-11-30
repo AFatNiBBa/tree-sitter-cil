@@ -23,16 +23,58 @@ module.exports = grammar({
 
     attribute: $ => seq(".custom", $.ref_method, "=", $.blob),
 
+    args: $ => seq(
+      "(",
+      optional(join(",", seq($.type, optional($.identifier)))),
+      ")"
+    ),
+
     type: $ => choice(
       /void|refany|bool|bytearray|char|float|float32|float64|int|int16|int32|int64|object|int8|wchar|string|typedref/,
-      seq(choice("class", "valuetype"), $.ref_type)
+      seq(choice("class", "valuetype"), $.ref_type),
+      seq(
+        $.type,
+        "[",
+        optional(join(
+          ",",
+          optional(choice(
+            "...", // You can't put the upper bound alone, but you can put the dots without bounds
+            seq(
+              $.integer,
+              "...",
+              optional($.integer)
+            )
+          ))
+        )),
+        "]"
+      )
+    ),
+
+    instruction: $ => seq(
+      repeat(seq($.identifier, ":")),
+      choice(
+        seq("call", $.ref_method),
+        seq("ldc.i4.s", $.integer),
+        seq("br", $.identifier),
+        "ldarg.0",
+        "stloc.0",
+        "stloc.1",
+        "ldloc.0",
+        "ldloc.1",
+        "ldc.i4.1",
+        "add",
+        "conv.u2",
+        "ret",
+        "nop",
+      )
     ),
 
     //#region DEF
 
     def_module: $ => repeat1(choice(
       $.option_module,
-      $.def_assembly
+      $.def_assembly,
+      $.def_type
     )),
 
     def_assembly: $ => seq(
@@ -44,23 +86,77 @@ module.exports = grammar({
       "}"
     ),
 
+    def_type: $ => seq(
+      ".class",
+      repeat(choice(
+        "abstract",
+        "ansi",
+        "assembly",
+        "auto",
+        "beforefieldinit",
+        "interface",
+        "nested",
+        "private",
+        "public",
+        "sealed",
+        "sequential"
+      )),
+      $.identifier,
+      optional(seq("extends", $.ref_type)),
+      "{",
+      repeat(choice(
+        $.option_type,
+        $.def_type,
+        $.def_method
+      )),
+      "}"
+    ),
+
+    def_method: $ => seq(
+      ".method",
+      repeat(choice(
+        "hidebysig",
+        "instance",
+        "private",
+        "public",
+        "rtspecialname",
+        "specialname",
+        "static"
+      )),
+      $.type,
+      $.identifier,
+      $.args,
+      repeat(choice(
+        "cil",
+        "managed"
+      )),
+      "{",
+      repeat(choice(
+        $.option_method,
+        $.instruction
+      )),
+      "}"
+    ),
+
     //#endregion
 
     //#region REF
 
     ref_assembly: $ => seq("[", $.identifier, "]"),
 
-    ref_type: $ => seq($.ref_assembly, $.identifier),
+    ref_type: $ => seq(optional($.ref_assembly), $.identifier),
 
-    ref_method: $ => seq(
-      optional("instance"),
+    ref_member: $ => seq(
       $.type,
       $.ref_type,
       "::",
-      $.identifier,
-      "(",
-      optional(join(",", $.type)),
-      ")"
+      $.identifier
+    ),
+
+    ref_method: $ => seq(
+      optional("instance"),
+      $.ref_member,
+      $.args
     ),
 
     //#endregion
@@ -84,8 +180,15 @@ module.exports = grammar({
       seq(".ver", $.version),
     ),
 
+    option_type: $ => choice(
+      $.attribute,
+      seq(".pack", $.integer),
+      seq(".size", $.integer),
+    ),
+
     option_method: $ => choice(
       $.attribute,
+      seq(".locals", "init", $.args),
       seq(".maxstack", $.integer),
       seq(".entrypoint"),
     ),
