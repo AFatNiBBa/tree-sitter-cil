@@ -1,8 +1,8 @@
 {
   "name": "tree-sitter-cil",
   "scripts": {
-    "build": "tree-sitter generate ./src/index.js --output ./dist",
-    "test": "tree-sitter parse ./src/assets/test.il"
+    "build": "tree-sitter generate && tree-sitter build",
+    "test": "npm run build && tree-sitter parse ./assets/test.il"
   },
   "devDependencies": {
     "tree-sitter-cli": "^0.25.10"

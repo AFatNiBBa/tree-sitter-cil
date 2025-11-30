@@ -1,5 +1,11 @@
 
 # TypeScript
 node_modules/
-dist/
 package-lock.json
+
+# Tree-sitter
+src/
+cil.dll
+parser.lib
+parser.obj
+parser.exp
