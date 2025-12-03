@@ -1,0 +1,12 @@
+
+[[language]]
+name = "cil"
+scope = "source.cil"
+injection-regex = "cil"
+file-types = ["il", "cil", "msil"]
+comment-tokens = "//"
+block-comment-tokens = { start = "/*", end = "*/" }
+
+[[grammar]]
+name = "cil"
+source = { path = "C:/Users/alunnis/Downloads/tree-sitter-cil" }

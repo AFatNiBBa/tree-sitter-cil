@@ -1,0 +1,32 @@
+
+# Syntax highlighting
+"comment" = { fg = "mauve", modifiers = ["italic"] }
+"constant" = "salmon"
+"constant.numeric" = "salmon"
+"constant.character.escape" = "beaming-blue"
+"constant.builtin" = "synthetic-green"
+"constant.builtin.boolean" = "synthetic-green"
+"string" = "orange"
+"string.regexp" = "salmon"
+"variable" = "pelati-red"
+"variable.builtin" = { fg = "blood-red", modifiers = ["bold"] }
+"variable.parameter" = { fg = "jess-green", modifiers = ["italic"] }
+"type" = "blood-red"
+"constructor" = "blood-red"
+"function" = "beaming-blue"
+"keyword" = "neon-yellow"
+"keyword.control" = "neon-yellow"
+"keyword.control.import" = "jade"
+"keyword.operator" = "neon-yellow"
+"keyword.directive" = "jade"
+"keyword.storage.type" = "neon-yellow"
+"keyword.storage.modifier" = "neon-yellow"
+
+# "label" = "neon-yellow"
+"namespace" = "blood-red"
+"operator" = "neon-yellow"
+# "special" = "beaming-blue"
+
+"punctuation.bracket" = "neon-yellow"
+"tag" = "jade"
+"attribute" = { fg = "neon-yellow", modifiers = ["italic"] }

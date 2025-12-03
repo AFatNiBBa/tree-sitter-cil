@@ -2,7 +2,7 @@
   "name": "tree-sitter-cil",
   "scripts": {
     "build": "tree-sitter generate && tree-sitter build",
-    "test": "npm run build && tree-sitter parse ./assets/test.il"
+    "test": "npm run build && tree-sitter parse ./assets/test.il > ./assets/test.log"
   },
   "devDependencies": {
     "tree-sitter-cli": "^0.25.10"

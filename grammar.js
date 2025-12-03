@@ -19,30 +19,9 @@ module.exports = grammar({
   rules: {
     file: $ => optional($.def_module),
 
-    blob: () => seq("(", repeat(token(seq(HEX_DIGIT, HEX_DIGIT))), ")"),
+    blob: $ => seq("(", repeat($.byte), ")"),
 
     attribute: $ => seq(".custom", $.ref_method, "=", $.blob),
-
-    type: $ => choice(
-      /void|refany|bool|bytearray|char|float|float32|float64|int|int16|int32|int64|object|int8|wchar|string|typedref/,
-      seq(choice("class", "valuetype"), $.ref_type),
-      seq(
-        $.type,
-        "[",
-        optional(join(
-          ",",
-          optional(choice(
-            "...", // You can't put the upper bound alone, but you can put the dots without bounds
-            seq(
-              $.integer,
-              "...",
-              optional($.integer)
-            )
-          ))
-        )),
-        "]"
-      )
-    ),
 
     instruction: $ => seq(
       repeat(seq($.identifier, ":")),
@@ -65,12 +44,25 @@ module.exports = grammar({
 
     //#region ARGS
 
+    args: $ => seq("(", optional(join(",", $.args_item)), ")"),
+
     args_item: $ => seq($.type, optional($.identifier)),
 
-    args_list: $ => seq(
-      "(",
-      optional(join(",", $.args_item)),
-      ")"
+    //#endregion
+
+    //#region TYPE
+
+    type: $ => choice($.type_intrinsic, $.type_custom, seq($.type, $.type_indexer)),
+
+    type_intrinsic: () => /void|refany|bool|bytearray|char|float|float32|float64|int|int16|int32|int64|object|int8|wchar|string|typedref/,
+
+    type_custom: $ => seq(choice("class", "valuetype"), $.ref_type),
+
+    type_indexer: $ => seq("[", optional(join(",", optional($.type_indexer_range))), "]"),
+
+    type_indexer_range: $ => choice(
+      "...", // You can't put the upper bound alone, but you can put the dots without bounds
+      seq($.integer, "...", optional($.integer))
     ),
 
     //#endregion
@@ -131,7 +123,7 @@ module.exports = grammar({
       )),
       $.type,
       $.identifier,
-      $.args_list,
+      $.args,
       repeat(choice(
         "cil",
         "managed"
@@ -162,7 +154,7 @@ module.exports = grammar({
     ref_method: $ => seq(
       optional("instance"),
       $.ref_member,
-      $.args_list
+      $.args
     ),
 
     //#endregion
@@ -194,7 +186,7 @@ module.exports = grammar({
 
     option_method: $ => choice(
       $.attribute,
-      seq(".locals", "init", $.args_list),
+      seq(".locals", "init", $.args),
       seq(".maxstack", $.integer),
       seq(".entrypoint"),
     ),
@@ -203,9 +195,11 @@ module.exports = grammar({
 
     //#region TOKEN
 
-    version: () => token(seq(/\d+/, ":", /\d+/, ":", /\d+/, ":", /\d+/)),
+    byte: () => token(seq(HEX_DIGIT, HEX_DIGIT)),
 
     integer: () => token(choice(/\d+/, seq("0x", repeat1(HEX_DIGIT)))),
+
+    version: () => token(seq(/\d+/, ":", /\d+/, ":", /\d+/, ":", /\d+/)),
 
     identifier: () => token(join(
       ".",
