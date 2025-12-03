@@ -14,7 +14,7 @@ const join = (sep, rule) => seq(rule, repeat(seq(sep, rule)));
 
 module.exports = grammar({
   name: "cil",
-  extras: $ => [ /\s/, $.comment ],
+  extras: $ => [ /\s+/, $.comment ],
 
   rules: {
     file: $ => optional($.def_module),
@@ -22,12 +22,6 @@ module.exports = grammar({
     blob: () => seq("(", repeat(token(seq(HEX_DIGIT, HEX_DIGIT))), ")"),
 
     attribute: $ => seq(".custom", $.ref_method, "=", $.blob),
-
-    args: $ => seq(
-      "(",
-      optional(join(",", seq($.type, optional($.identifier)))),
-      ")"
-    ),
 
     type: $ => choice(
       /void|refany|bool|bytearray|char|float|float32|float64|int|int16|int32|int64|object|int8|wchar|string|typedref/,
@@ -68,6 +62,18 @@ module.exports = grammar({
         "nop",
       )
     ),
+
+    //#region ARGS
+
+    args_item: $ => seq($.type, optional($.identifier)),
+
+    args_list: $ => seq(
+      "(",
+      optional(join(",", $.args_item)),
+      ")"
+    ),
+
+    //#endregion
 
     //#region DEF
 
@@ -125,7 +131,7 @@ module.exports = grammar({
       )),
       $.type,
       $.identifier,
-      $.args,
+      $.args_list,
       repeat(choice(
         "cil",
         "managed"
@@ -156,7 +162,7 @@ module.exports = grammar({
     ref_method: $ => seq(
       optional("instance"),
       $.ref_member,
-      $.args
+      $.args_list
     ),
 
     //#endregion
@@ -188,7 +194,7 @@ module.exports = grammar({
 
     option_method: $ => choice(
       $.attribute,
-      seq(".locals", "init", $.args),
+      seq(".locals", "init", $.args_list),
       seq(".maxstack", $.integer),
       seq(".entrypoint"),
     ),

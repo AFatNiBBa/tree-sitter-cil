@@ -4,3 +4,19 @@ altri tipi di numeri
 togli quella tappabucata dei nomi dei metodi
 
 cerca di definire le istruzioni in maniera non manuale
+
+query > capisci il funzionamento > {
+    differenze tra "field($1, optional($2))" e "optional(field($1, $2))" >> stessa cosa con "repeat()"
+
+    se ci sono più capture ci mette un'array? >> se qualcosa è dentro un "repeat()" ci mette l'array a prescindere?
+
+    se faccio "seq(field($1, $2), field($1, $3))" (stesso nome su due capture) me li mette su un'array comunque?
+    
+    se faccio "repeat(seq(field($1, $2), field($3, $4)))" mi fa "{ $1: $2[], $3: $4[] }"? > (misà fa un'array di oggetti perchè vede il repeat)
+
+    se faccio "repeat(field($1, $.inner))" con "$.inner" che è "seq(field($2, $3), field($4, $5))" mi fa "{ $1: { $2: $3, $4: $5 }[] }"?
+
+    se faccio "repeat(field($1, seq(field($2, $3), field($4, $5))))" che fa? > (misà un'array di oggetti) >> se questo è il caso, che casino fa "join($1, field($2, $3))" > (non voglio "$1" nella lista) >> se faccio "field($1, field($2, $3))" mi fa "{ $1: { $2: $3 } }"?
+
+    se faccio "repeat(field($1, alias(seq(field($2, $3), field($4, $5)), $6)))" mi fa "{ $1: { $2: $3, $4: $5 }[] }"?
+} >> ripassa tutta la grammatica
