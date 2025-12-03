@@ -21,24 +21,27 @@ module.exports = grammar({
 
     blob: $ => seq("(", repeat($.byte), ")"),
 
-    attribute: $ => seq(".custom", $.ref_method, "=", $.blob),
+    attribute: $ => seq(".custom", field("ctor", $.ref_method), "=", field("data", $.blob)),
 
     instruction: $ => seq(
-      repeat(seq($.identifier, ":")),
-      choice(
-        seq("call", $.ref_method),
-        seq("ldc.i4.s", $.integer),
-        seq("br", $.identifier),
-        "ldarg.0",
-        "stloc.0",
-        "stloc.1",
-        "ldloc.0",
-        "ldloc.1",
-        "ldc.i4.1",
-        "add",
-        "conv.u2",
-        "ret",
-        "nop",
+      repeat(seq(field("label", $.identifier), ":")),
+      field(
+        "instruction",
+        choice(
+          seq("call", $.ref_method),
+          seq("ldc.i4.s", $.integer),
+          seq("br", $.identifier),
+          "ldarg.0",
+          "stloc.0",
+          "stloc.1",
+          "ldloc.0",
+          "ldloc.1",
+          "ldc.i4.1",
+          "add",
+          "conv.u2",
+          "ret",
+          "nop",
+        )
       )
     ),
 
@@ -46,7 +49,7 @@ module.exports = grammar({
 
     args: $ => seq("(", optional(join(",", $.args_item)), ")"),
 
-    args_item: $ => seq($.type, optional($.identifier)),
+    args_item: $ => seq(field("type", $.type), optional(field("name", $.identifier))),
 
     //#endregion
 
@@ -56,7 +59,7 @@ module.exports = grammar({
 
     type_intrinsic: () => /void|refany|bool|bytearray|char|float|float32|float64|int|int16|int32|int64|object|int8|wchar|string|typedref/,
 
-    type_custom: $ => seq(choice("class", "valuetype"), $.ref_type),
+    type_custom: $ => seq(alias(choice("class", "valuetype"), $.modifier), $.ref_type),
 
     type_indexer: $ => seq("[", optional(join(",", optional($.type_indexer_range))), "]"),
 
@@ -70,6 +73,7 @@ module.exports = grammar({
     //#region DEF
 
     def_module: $ => repeat1(choice(
+      $.attribute,
       $.option_module,
       $.def_assembly,
       $.def_type
@@ -77,62 +81,85 @@ module.exports = grammar({
 
     def_assembly: $ => seq(
       ".assembly",
-      optional("extern"),
-      $.identifier,
+      alias(optional("extern"), $.modifier),
+      field("name", $.identifier),
       "{",
-      repeat($.option_assembly),
+      alias(
+        repeat(choice(
+          $.attribute,
+          $.option_assembly
+        )),
+        $.body
+      ),
       "}"
     ),
 
     def_type: $ => seq(
       ".class",
-      repeat(choice(
-        "abstract",
-        "ansi",
-        "assembly",
-        "auto",
-        "beforefieldinit",
-        "interface",
-        "nested",
-        "private",
-        "public",
-        "sealed",
-        "sequential"
-      )),
-      $.identifier,
-      optional(seq("extends", $.ref_type)),
+      alias(
+        repeat(choice(
+          "abstract",
+          "ansi",
+          "assembly",
+          "auto",
+          "beforefieldinit",
+          "interface",
+          "nested",
+          "private",
+          "public",
+          "sealed",
+          "sequential"
+        )),
+        $.modifier
+      ),
+      field("name", $.identifier),
+      optional(seq("extends", field("base", $.ref_type))),
       "{",
-      repeat(choice(
-        $.option_type,
-        $.def_type,
-        $.def_method
-      )),
+      alias(
+        repeat(choice(
+          $.attribute,
+          $.option_type,
+          $.def_type,
+          $.def_method
+        )),
+        $.body
+      ),
       "}"
     ),
 
     def_method: $ => seq(
       ".method",
-      repeat(choice(
-        "hidebysig",
-        "instance",
-        "private",
-        "public",
-        "rtspecialname",
-        "specialname",
-        "static"
-      )),
-      $.type,
-      $.identifier,
+      alias(
+        repeat(choice(
+          "hidebysig",
+          "instance",
+          "private",
+          "public",
+          "rtspecialname",
+          "specialname",
+          "static"
+        )),
+        $.modifier
+      ),
+      field("return", $.type),
+      field("name", $.identifier),
       $.args,
-      repeat(choice(
-        "cil",
-        "managed"
-      )),
+      alias(
+        repeat(choice(
+          "cil",
+          "managed"
+        )),
+        $.modifier
+      ),
       "{",
-      repeat(choice(
-        $.option_method,
-        $.instruction
-      )),
+      alias(
+        repeat(choice(
+          $.attribute,
+          $.option_method,
+          $.instruction
+        )),
+        $.body
+      ),
       "}"
     ),
 
@@ -140,19 +167,19 @@ module.exports = grammar({
 
     //#region REF
 
-    ref_assembly: $ => seq("[", $.identifier, "]"),
+    ref_assembly: $ => seq("[", field("name", $.identifier), "]"),
 
-    ref_type: $ => seq(optional($.ref_assembly), $.identifier),
+    ref_type: $ => seq(optional(field("assembly", $.ref_assembly)), field("name", $.identifier)),
 
     ref_member: $ => seq(
-      $.type,
-      $.ref_type,
+      field("return", $.type),
+      field("parent", $.ref_type),
       "::",
-      $.identifier
+      field("name", $.identifier)
     ),
 
     ref_method: $ => seq(
-      optional("instance"),
+      alias(optional("instance"), $.modifier),
       $.ref_member,
       $.args
     ),
@@ -162,8 +189,7 @@ module.exports = grammar({
     //#region OPTION
 
     option_module: $ => choice(
-      $.attribute,
-      seq(".module", optional("extern"), $.identifier),
+      seq(".module", alias(optional("extern"), $.modifier), $.identifier),
       seq(".file", "alignment", $.integer),
       seq(".imagebase", $.integer),
       seq(".stackreserve", $.integer),
@@ -172,20 +198,17 @@ module.exports = grammar({
     ),
 
     option_assembly: $ => choice(
-      $.attribute,
       seq(".hash", "algorithm", $.integer),
       seq(".publickeytoken", "=", $.blob),
       seq(".ver", $.version),
     ),
 
     option_type: $ => choice(
-      $.attribute,
       seq(".pack", $.integer),
       seq(".size", $.integer),
     ),
 
     option_method: $ => choice(
-      $.attribute,
       seq(".locals", "init", $.args),
       seq(".maxstack", $.integer),
       seq(".entrypoint"),

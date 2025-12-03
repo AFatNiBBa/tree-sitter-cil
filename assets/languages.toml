@@ -9,4 +9,4 @@ block-comment-tokens = { start = "/*", end = "*/" }
 
 [[grammar]]
 name = "cil"
-source = { path = "C:/Users/alunnis/Downloads/tree-sitter-cil" }
+source = { git = "https://github.com/AFatNiBBa/tree-sitter-cil", rev = "master" }

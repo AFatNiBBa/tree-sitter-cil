@@ -1,6 +1,4 @@
 
-"languages.toml" > "[[grammar]]" > "source" > mettici la repo > ("{ git: $urlRepo, rev: $hashCommit }")
-
 altri tipi di numeri
 
 togli quella tappabucata dei nomi dei metodi
