@@ -21,7 +21,12 @@ module.exports = grammar({
 
     blob: $ => seq("(", repeat($.byte), ")"),
 
-    attribute: $ => seq(".custom", field("ctor", $.ref_method), "=", field("data", $.blob)),
+    attribute: $ => seq(
+      alias(".custom", $.part_keyword),
+      field("ctor", $.ref_method),
+      "=",
+      field("data", $.blob)
+    ),
 
     instruction: $ => seq(
       repeat(seq(field("label", $.symbol), ":")),
@@ -96,7 +101,7 @@ module.exports = grammar({
     )),
 
     def_assembly: $ => seq(
-      ".assembly",
+      alias(".assembly", $.part_keyword),
       alias(optional("extern"), $.part_modifier),
       field("name", $.id),
       "{",
@@ -111,7 +116,7 @@ module.exports = grammar({
     ),
 
     def_type: $ => seq(
-      ".class",
+      alias(".class", $.part_keyword),
       alias(
         repeat(choice(
           "abstract",
@@ -144,7 +149,7 @@ module.exports = grammar({
     ),
 
     def_method: $ => seq(
-      ".method",
+      alias(".method", $.part_keyword),
       alias(
         repeat(choice(
           "hidebysig",
@@ -208,29 +213,33 @@ module.exports = grammar({
     //#region OPTION
 
     option_module: $ => choice(
-      seq(".module", alias(optional("extern"), $.part_modifier), $.id),
-      seq(".file", "alignment", $.integer),
-      seq(".imagebase", $.integer),
-      seq(".stackreserve", $.integer),
-      seq(".subsystem", $.integer),
-      seq(".corflags", $.integer)
+      seq(alias(seq(".file", "alignment"), $.part_keyword), $.integer),
+      seq(alias(".imagebase", $.part_keyword), $.integer),
+      seq(alias(".stackreserve", $.part_keyword), $.integer),
+      seq(alias(".subsystem", $.part_keyword), $.integer),
+      seq(alias(".corflags", $.part_keyword), $.integer),
+      seq(
+        alias(".module", $.part_keyword),
+        alias(optional("extern"), $.part_modifier),
+        $.id
+      ),
     ),
 
     option_assembly: $ => choice(
-      seq(".hash", "algorithm", $.integer),
-      seq(".publickeytoken", "=", $.blob),
-      seq(".ver", $.version)
+      seq(alias(seq(".hash", "algorithm"), $.part_keyword), $.integer),
+      seq(alias(".publickeytoken", $.part_keyword), "=", $.blob),
+      seq(alias(".ver", $.part_keyword), $.version)
     ),
 
     option_type: $ => choice(
-      seq(".pack", $.integer),
-      seq(".size", $.integer)
+      seq(alias(".pack", $.part_keyword), $.integer),
+      seq(alias(".size", $.part_keyword), $.integer)
     ),
 
     option_method: $ => choice(
-      seq(".locals", "init", $.args),
-      seq(".maxstack", $.integer),
-      ".entrypoint"
+      seq(alias(seq(".locals", "init"), $.part_keyword), $.args),
+      seq(alias(".maxstack", $.part_keyword), $.integer),
+      alias(".entrypoint", $.part_keyword)
     ),
 
     //#endregion
