@@ -4,9 +4,12 @@
   (comment [6, 0] - [6, 32])
   (def_module [7, 0] - [138, 1]
     (def_assembly [7, 0] - [11, 1]
-      (modifier [7, 10] - [7, 16])
-      name: (identifier [7, 17] - [7, 31])
-      (body [9, 2] - [10, 14]
+      (part_modifier [7, 10] - [7, 16])
+      name: (id [7, 17] - [7, 31]
+        (id_namespace [7, 17] - [7, 23]
+          (symbol [7, 17] - [7, 23]))
+        (symbol [7, 24] - [7, 31]))
+      (part_body [9, 2] - [10, 14]
         (option_assembly [9, 2] - [9, 46]
           (blob [9, 20] - [9, 46]
             (byte [9, 21] - [9, 23])
@@ -21,19 +24,29 @@
         (option_assembly [10, 2] - [10, 14]
           (version [10, 7] - [10, 14]))))
     (def_assembly [12, 0] - [33, 1]
-      name: (identifier [12, 10] - [12, 11])
-      (body [14, 2] - [32, 14]
+      name: (id [12, 10] - [12, 11]
+        (symbol [12, 10] - [12, 11]))
+      (part_body [14, 2] - [32, 14]
         (attribute [14, 2] - [14, 147]
           ctor: (ref_method [14, 10] - [14, 117]
-            (modifier [14, 10] - [14, 18])
-            (ref_member [14, 19] - [14, 110]
-              return: (type [14, 19] - [14, 23]
-                (type_intrinsic [14, 19] - [14, 23]))
-              parent: (ref_type [14, 24] - [14, 103]
-                assembly: (ref_assembly [14, 24] - [14, 40]
-                  name: (identifier [14, 25] - [14, 39]))
-                name: (identifier [14, 40] - [14, 103]))
-              name: (identifier [14, 105] - [14, 110]))
+            (part_modifier [14, 10] - [14, 18])
+            return: (type [14, 19] - [14, 23]
+              (type_intrinsic [14, 19] - [14, 23]))
+            parent: (ref_class [14, 24] - [14, 103]
+              assembly: (ref_assembly [14, 24] - [14, 40]
+                name: (id [14, 25] - [14, 39]
+                  (id_namespace [14, 25] - [14, 31]
+                    (symbol [14, 25] - [14, 31]))
+                  (symbol [14, 32] - [14, 39])))
+              name: (id [14, 40] - [14, 103]
+                (id_namespace [14, 40] - [14, 71]
+                  (id_namespace [14, 40] - [14, 54]
+                    (id_namespace [14, 40] - [14, 46]
+                      (symbol [14, 40] - [14, 46]))
+                    (symbol [14, 47] - [14, 54]))
+                  (symbol [14, 55] - [14, 71]))
+                (symbol [14, 72] - [14, 103])))
+            name: (id_method [14, 105] - [14, 110])
             (args [14, 110] - [14, 117]
               (args_item [14, 111] - [14, 116]
                 type: (type [14, 111] - [14, 116]
@@ -49,15 +62,24 @@
             (byte [14, 143] - [14, 145])))
         (attribute [15, 2] - [16, 158]
           ctor: (ref_method [15, 10] - [15, 110]
-            (modifier [15, 10] - [15, 18])
-            (ref_member [15, 19] - [15, 108]
-              return: (type [15, 19] - [15, 23]
-                (type_intrinsic [15, 19] - [15, 23]))
-              parent: (ref_type [15, 24] - [15, 101]
-                assembly: (ref_assembly [15, 24] - [15, 40]
-                  name: (identifier [15, 25] - [15, 39]))
-                name: (identifier [15, 40] - [15, 101]))
-              name: (identifier [15, 103] - [15, 108]))
+            (part_modifier [15, 10] - [15, 18])
+            return: (type [15, 19] - [15, 23]
+              (type_intrinsic [15, 19] - [15, 23]))
+            parent: (ref_class [15, 24] - [15, 101]
+              assembly: (ref_assembly [15, 24] - [15, 40]
+                name: (id [15, 25] - [15, 39]
+                  (id_namespace [15, 25] - [15, 31]
+                    (symbol [15, 25] - [15, 31]))
+                  (symbol [15, 32] - [15, 39])))
+              name: (id [15, 40] - [15, 101]
+                (id_namespace [15, 40] - [15, 71]
+                  (id_namespace [15, 40] - [15, 54]
+                    (id_namespace [15, 40] - [15, 46]
+                      (symbol [15, 40] - [15, 46]))
+                    (symbol [15, 47] - [15, 54]))
+                  (symbol [15, 55] - [15, 71]))
+                (symbol [15, 72] - [15, 101])))
+            name: (id_method [15, 103] - [15, 108])
             (args [15, 108] - [15, 110]))
           data: (blob [15, 113] - [16, 158]
             (byte [15, 115] - [15, 117])
@@ -96,15 +118,24 @@
         (comment [19, 2] - [19, 202])
         (attribute [21, 2] - [24, 150]
           ctor: (ref_method [21, 10] - [21, 105]
-            (modifier [21, 10] - [21, 18])
-            (ref_member [21, 19] - [21, 97]
-              return: (type [21, 19] - [21, 23]
-                (type_intrinsic [21, 19] - [21, 23]))
-              parent: (ref_type [21, 24] - [21, 90]
-                assembly: (ref_assembly [21, 24] - [21, 40]
-                  name: (identifier [21, 25] - [21, 39]))
-                name: (identifier [21, 40] - [21, 90]))
-              name: (identifier [21, 92] - [21, 97]))
+            (part_modifier [21, 10] - [21, 18])
+            return: (type [21, 19] - [21, 23]
+              (type_intrinsic [21, 19] - [21, 23]))
+            parent: (ref_class [21, 24] - [21, 90]
+              assembly: (ref_assembly [21, 24] - [21, 40]
+                name: (id [21, 25] - [21, 39]
+                  (id_namespace [21, 25] - [21, 31]
+                    (symbol [21, 25] - [21, 31]))
+                  (symbol [21, 32] - [21, 39])))
+              name: (id [21, 40] - [21, 90]
+                (id_namespace [21, 40] - [21, 65]
+                  (id_namespace [21, 40] - [21, 54]
+                    (id_namespace [21, 40] - [21, 46]
+                      (symbol [21, 40] - [21, 46]))
+                    (symbol [21, 47] - [21, 54]))
+                  (symbol [21, 55] - [21, 65]))
+                (symbol [21, 66] - [21, 90])))
+            name: (id_method [21, 92] - [21, 97])
             (args [21, 97] - [21, 105]
               (args_item [21, 98] - [21, 104]
                 type: (type [21, 98] - [21, 104]
@@ -177,15 +208,22 @@
         (comment [24, 160] - [24, 177])
         (attribute [25, 2] - [25, 121]
           ctor: (ref_method [25, 10] - [25, 97]
-            (modifier [25, 10] - [25, 18])
-            (ref_member [25, 19] - [25, 89]
-              return: (type [25, 19] - [25, 23]
-                (type_intrinsic [25, 19] - [25, 23]))
-              parent: (ref_type [25, 24] - [25, 82]
-                assembly: (ref_assembly [25, 24] - [25, 40]
-                  name: (identifier [25, 25] - [25, 39]))
-                name: (identifier [25, 40] - [25, 82]))
-              name: (identifier [25, 84] - [25, 89]))
+            (part_modifier [25, 10] - [25, 18])
+            return: (type [25, 19] - [25, 23]
+              (type_intrinsic [25, 19] - [25, 23]))
+            parent: (ref_class [25, 24] - [25, 82]
+              assembly: (ref_assembly [25, 24] - [25, 40]
+                name: (id [25, 25] - [25, 39]
+                  (id_namespace [25, 25] - [25, 31]
+                    (symbol [25, 25] - [25, 31]))
+                  (symbol [25, 32] - [25, 39])))
+              name: (id [25, 40] - [25, 82]
+                (id_namespace [25, 40] - [25, 57]
+                  (id_namespace [25, 40] - [25, 46]
+                    (symbol [25, 40] - [25, 46]))
+                  (symbol [25, 47] - [25, 57]))
+                (symbol [25, 58] - [25, 82])))
+            name: (id_method [25, 84] - [25, 89])
             (args [25, 89] - [25, 97]
               (args_item [25, 90] - [25, 96]
                 type: (type [25, 90] - [25, 96]
@@ -200,15 +238,22 @@
         (comment [25, 152] - [25, 162])
         (attribute [26, 2] - [26, 139]
           ctor: (ref_method [26, 10] - [26, 103]
-            (modifier [26, 10] - [26, 18])
-            (ref_member [26, 19] - [26, 95]
-              return: (type [26, 19] - [26, 23]
-                (type_intrinsic [26, 19] - [26, 23]))
-              parent: (ref_type [26, 24] - [26, 88]
-                assembly: (ref_assembly [26, 24] - [26, 40]
-                  name: (identifier [26, 25] - [26, 39]))
-                name: (identifier [26, 40] - [26, 88]))
-              name: (identifier [26, 90] - [26, 95]))
+            (part_modifier [26, 10] - [26, 18])
+            return: (type [26, 19] - [26, 23]
+              (type_intrinsic [26, 19] - [26, 23]))
+            parent: (ref_class [26, 24] - [26, 88]
+              assembly: (ref_assembly [26, 24] - [26, 40]
+                name: (id [26, 25] - [26, 39]
+                  (id_namespace [26, 25] - [26, 31]
+                    (symbol [26, 25] - [26, 31]))
+                  (symbol [26, 32] - [26, 39])))
+              name: (id [26, 40] - [26, 88]
+                (id_namespace [26, 40] - [26, 57]
+                  (id_namespace [26, 40] - [26, 46]
+                    (symbol [26, 40] - [26, 46]))
+                  (symbol [26, 47] - [26, 57]))
+                (symbol [26, 58] - [26, 88])))
+            name: (id_method [26, 90] - [26, 95])
             (args [26, 95] - [26, 103]
               (args_item [26, 96] - [26, 102]
                 type: (type [26, 96] - [26, 102]
@@ -227,15 +272,22 @@
         (comment [26, 158] - [26, 172])
         (attribute [27, 2] - [27, 143]
           ctor: (ref_method [27, 10] - [27, 101]
-            (modifier [27, 10] - [27, 18])
-            (ref_member [27, 19] - [27, 93]
-              return: (type [27, 19] - [27, 23]
-                (type_intrinsic [27, 19] - [27, 23]))
-              parent: (ref_type [27, 24] - [27, 86]
-                assembly: (ref_assembly [27, 24] - [27, 40]
-                  name: (identifier [27, 25] - [27, 39]))
-                name: (identifier [27, 40] - [27, 86]))
-              name: (identifier [27, 88] - [27, 93]))
+            (part_modifier [27, 10] - [27, 18])
+            return: (type [27, 19] - [27, 23]
+              (type_intrinsic [27, 19] - [27, 23]))
+            parent: (ref_class [27, 24] - [27, 86]
+              assembly: (ref_assembly [27, 24] - [27, 40]
+                name: (id [27, 25] - [27, 39]
+                  (id_namespace [27, 25] - [27, 31]
+                    (symbol [27, 25] - [27, 31]))
+                  (symbol [27, 32] - [27, 39])))
+              name: (id [27, 40] - [27, 86]
+                (id_namespace [27, 40] - [27, 57]
+                  (id_namespace [27, 40] - [27, 46]
+                    (symbol [27, 40] - [27, 46]))
+                  (symbol [27, 47] - [27, 57]))
+                (symbol [27, 58] - [27, 86])))
+            name: (id_method [27, 88] - [27, 93])
             (args [27, 93] - [27, 101]
               (args_item [27, 94] - [27, 100]
                 type: (type [27, 94] - [27, 100]
@@ -256,15 +308,22 @@
         (comment [27, 156] - [27, 172])
         (attribute [28, 2] - [28, 146]
           ctor: (ref_method [28, 10] - [28, 110]
-            (modifier [28, 10] - [28, 18])
-            (ref_member [28, 19] - [28, 102]
-              return: (type [28, 19] - [28, 23]
-                (type_intrinsic [28, 19] - [28, 23]))
-              parent: (ref_type [28, 24] - [28, 95]
-                assembly: (ref_assembly [28, 24] - [28, 40]
-                  name: (identifier [28, 25] - [28, 39]))
-                name: (identifier [28, 40] - [28, 95]))
-              name: (identifier [28, 97] - [28, 102]))
+            (part_modifier [28, 10] - [28, 18])
+            return: (type [28, 19] - [28, 23]
+              (type_intrinsic [28, 19] - [28, 23]))
+            parent: (ref_class [28, 24] - [28, 95]
+              assembly: (ref_assembly [28, 24] - [28, 40]
+                name: (id [28, 25] - [28, 39]
+                  (id_namespace [28, 25] - [28, 31]
+                    (symbol [28, 25] - [28, 31]))
+                  (symbol [28, 32] - [28, 39])))
+              name: (id [28, 40] - [28, 95]
+                (id_namespace [28, 40] - [28, 57]
+                  (id_namespace [28, 40] - [28, 46]
+                    (symbol [28, 40] - [28, 46]))
+                  (symbol [28, 47] - [28, 57]))
+                (symbol [28, 58] - [28, 95])))
+            name: (id_method [28, 97] - [28, 102])
             (args [28, 102] - [28, 110]
               (args_item [28, 103] - [28, 109]
                 type: (type [28, 103] - [28, 109]
@@ -283,15 +342,22 @@
         (comment [28, 165] - [28, 179])
         (attribute [29, 2] - [29, 121]
           ctor: (ref_method [29, 10] - [29, 97]
-            (modifier [29, 10] - [29, 18])
-            (ref_member [29, 19] - [29, 89]
-              return: (type [29, 19] - [29, 23]
-                (type_intrinsic [29, 19] - [29, 23]))
-              parent: (ref_type [29, 24] - [29, 82]
-                assembly: (ref_assembly [29, 24] - [29, 40]
-                  name: (identifier [29, 25] - [29, 39]))
-                name: (identifier [29, 40] - [29, 82]))
-              name: (identifier [29, 84] - [29, 89]))
+            (part_modifier [29, 10] - [29, 18])
+            return: (type [29, 19] - [29, 23]
+              (type_intrinsic [29, 19] - [29, 23]))
+            parent: (ref_class [29, 24] - [29, 82]
+              assembly: (ref_assembly [29, 24] - [29, 40]
+                name: (id [29, 25] - [29, 39]
+                  (id_namespace [29, 25] - [29, 31]
+                    (symbol [29, 25] - [29, 31]))
+                  (symbol [29, 32] - [29, 39])))
+              name: (id [29, 40] - [29, 82]
+                (id_namespace [29, 40] - [29, 57]
+                  (id_namespace [29, 40] - [29, 46]
+                    (symbol [29, 40] - [29, 46]))
+                  (symbol [29, 47] - [29, 57]))
+                (symbol [29, 58] - [29, 82])))
+            name: (id_method [29, 84] - [29, 89])
             (args [29, 89] - [29, 97]
               (args_item [29, 90] - [29, 96]
                 type: (type [29, 90] - [29, 96]
@@ -306,15 +372,22 @@
         (comment [29, 152] - [29, 162])
         (attribute [30, 2] - [30, 119]
           ctor: (ref_method [30, 10] - [30, 95]
-            (modifier [30, 10] - [30, 18])
-            (ref_member [30, 19] - [30, 87]
-              return: (type [30, 19] - [30, 23]
-                (type_intrinsic [30, 19] - [30, 23]))
-              parent: (ref_type [30, 24] - [30, 80]
-                assembly: (ref_assembly [30, 24] - [30, 40]
-                  name: (identifier [30, 25] - [30, 39]))
-                name: (identifier [30, 40] - [30, 80]))
-              name: (identifier [30, 82] - [30, 87]))
+            (part_modifier [30, 10] - [30, 18])
+            return: (type [30, 19] - [30, 23]
+              (type_intrinsic [30, 19] - [30, 23]))
+            parent: (ref_class [30, 24] - [30, 80]
+              assembly: (ref_assembly [30, 24] - [30, 40]
+                name: (id [30, 25] - [30, 39]
+                  (id_namespace [30, 25] - [30, 31]
+                    (symbol [30, 25] - [30, 31]))
+                  (symbol [30, 32] - [30, 39])))
+              name: (id [30, 40] - [30, 80]
+                (id_namespace [30, 40] - [30, 57]
+                  (id_namespace [30, 40] - [30, 46]
+                    (symbol [30, 40] - [30, 46]))
+                  (symbol [30, 47] - [30, 57]))
+                (symbol [30, 58] - [30, 80])))
+            name: (id_method [30, 82] - [30, 87])
             (args [30, 87] - [30, 95]
               (args_item [30, 88] - [30, 94]
                 type: (type [30, 88] - [30, 94]
@@ -332,19 +405,31 @@
         (option_assembly [32, 2] - [32, 14]
           (version [32, 7] - [32, 14]))))
     (option_module [34, 0] - [34, 13]
-      (identifier [34, 8] - [34, 13]))
+      (id [34, 8] - [34, 13]
+        (id_namespace [34, 8] - [34, 9]
+          (symbol [34, 8] - [34, 9]))
+        (symbol [34, 10] - [34, 13])))
     (comment [35, 0] - [35, 48])
     (attribute [36, 0] - [36, 137]
       ctor: (ref_method [36, 8] - [36, 107]
-        (modifier [36, 8] - [36, 16])
-        (ref_member [36, 17] - [36, 100]
-          return: (type [36, 17] - [36, 21]
-            (type_intrinsic [36, 17] - [36, 21]))
-          parent: (ref_type [36, 22] - [36, 93]
-            assembly: (ref_assembly [36, 22] - [36, 38]
-              name: (identifier [36, 23] - [36, 37]))
-            name: (identifier [36, 38] - [36, 93]))
-          name: (identifier [36, 95] - [36, 100]))
+        (part_modifier [36, 8] - [36, 16])
+        return: (type [36, 17] - [36, 21]
+          (type_intrinsic [36, 17] - [36, 21]))
+        parent: (ref_class [36, 22] - [36, 93]
+          assembly: (ref_assembly [36, 22] - [36, 38]
+            name: (id [36, 23] - [36, 37]
+              (id_namespace [36, 23] - [36, 29]
+                (symbol [36, 23] - [36, 29]))
+              (symbol [36, 30] - [36, 37])))
+          name: (id [36, 38] - [36, 93]
+            (id_namespace [36, 38] - [36, 69]
+              (id_namespace [36, 38] - [36, 52]
+                (id_namespace [36, 38] - [36, 44]
+                  (symbol [36, 38] - [36, 44]))
+                (symbol [36, 45] - [36, 52]))
+              (symbol [36, 53] - [36, 69]))
+            (symbol [36, 70] - [36, 93])))
+        name: (id_method [36, 95] - [36, 100])
         (args [36, 100] - [36, 107]
           (args_item [36, 101] - [36, 106]
             type: (type [36, 101] - [36, 106]
@@ -373,24 +458,40 @@
     (comment [42, 0] - [42, 34])
     (comment [45, 0] - [45, 65])
     (def_type [47, 0] - [79, 1]
-      (modifier [47, 7] - [47, 40])
-      name: (identifier [47, 41] - [47, 48])
-      base: (ref_type [48, 15] - [48, 44]
+      (part_modifier [47, 7] - [47, 40])
+      name: (id [47, 41] - [47, 48]
+        (symbol [47, 41] - [47, 48]))
+      base: (ref_class [48, 15] - [48, 44]
         assembly: (ref_assembly [48, 15] - [48, 31]
-          name: (identifier [48, 16] - [48, 30]))
-        name: (identifier [48, 31] - [48, 44]))
-      (body [50, 2] - [77, 3]
+          name: (id [48, 16] - [48, 30]
+            (id_namespace [48, 16] - [48, 22]
+              (symbol [48, 16] - [48, 22]))
+            (symbol [48, 23] - [48, 30])))
+        name: (id [48, 31] - [48, 44]
+          (id_namespace [48, 31] - [48, 37]
+            (symbol [48, 31] - [48, 37]))
+          (symbol [48, 38] - [48, 44])))
+      (part_body [50, 2] - [77, 3]
         (attribute [50, 2] - [50, 125]
           ctor: (ref_method [50, 10] - [50, 107]
-            (modifier [50, 10] - [50, 18])
-            (ref_member [50, 19] - [50, 105]
-              return: (type [50, 19] - [50, 23]
-                (type_intrinsic [50, 19] - [50, 23]))
-              parent: (ref_type [50, 24] - [50, 98]
-                assembly: (ref_assembly [50, 24] - [50, 40]
-                  name: (identifier [50, 25] - [50, 39]))
-                name: (identifier [50, 40] - [50, 98]))
-              name: (identifier [50, 100] - [50, 105]))
+            (part_modifier [50, 10] - [50, 18])
+            return: (type [50, 19] - [50, 23]
+              (type_intrinsic [50, 19] - [50, 23]))
+            parent: (ref_class [50, 24] - [50, 98]
+              assembly: (ref_assembly [50, 24] - [50, 40]
+                name: (id [50, 25] - [50, 39]
+                  (id_namespace [50, 25] - [50, 31]
+                    (symbol [50, 25] - [50, 31]))
+                  (symbol [50, 32] - [50, 39])))
+              name: (id [50, 40] - [50, 98]
+                (id_namespace [50, 40] - [50, 71]
+                  (id_namespace [50, 40] - [50, 54]
+                    (id_namespace [50, 40] - [50, 46]
+                      (symbol [50, 40] - [50, 46]))
+                    (symbol [50, 47] - [50, 54]))
+                  (symbol [50, 55] - [50, 71]))
+                (symbol [50, 72] - [50, 98])))
+            name: (id_method [50, 100] - [50, 105])
             (args [50, 105] - [50, 107]))
           data: (blob [50, 110] - [50, 125]
             (byte [50, 112] - [50, 114])
@@ -398,19 +499,21 @@
             (byte [50, 118] - [50, 120])
             (byte [50, 121] - [50, 123])))
         (def_method [51, 2] - [66, 3]
-          (modifier [51, 10] - [51, 34])
+          (part_modifier [51, 10] - [51, 34])
           return: (type [51, 35] - [51, 39]
             (type_intrinsic [51, 35] - [51, 39]))
-          name: (identifier [51, 41] - [51, 50])
+          name: (id_method [51, 41] - [51, 50]
+            (id [51, 41] - [51, 50]
+              (symbol [51, 41] - [51, 50])))
           (args [51, 50] - [51, 65]
             (args_item [51, 51] - [51, 64]
               type: (type [51, 51] - [51, 59]
                 (type [51, 51] - [51, 57]
                   (type_intrinsic [51, 51] - [51, 57]))
                 (type_indexer [51, 57] - [51, 59]))
-              name: (identifier [51, 60] - [51, 64])))
-          (modifier [51, 66] - [51, 77])
-          (body [53, 4] - [65, 17]
+              name: (symbol [51, 60] - [51, 64])))
+          (part_modifier [51, 66] - [51, 77])
+          (part_body [53, 4] - [65, 17]
             (option_method [53, 4] - [53, 15])
             (comment [54, 4] - [54, 31])
             (option_method [55, 4] - [55, 16]
@@ -420,154 +523,188 @@
                 (args_item [56, 18] - [56, 26]
                   type: (type [56, 18] - [56, 22]
                     (type_intrinsic [56, 18] - [56, 22]))
-                  name: (identifier [56, 23] - [56, 26]))
+                  name: (symbol [56, 23] - [56, 26]))
                 (args_item [57, 13] - [57, 21]
                   type: (type [57, 13] - [57, 17]
                     (type_intrinsic [57, 13] - [57, 17]))
-                  name: (identifier [57, 18] - [57, 21]))))
+                  name: (symbol [57, 18] - [57, 21]))))
             (instruction [58, 4] - [58, 27]
-              label: (identifier [58, 4] - [58, 11])
+              label: (symbol [58, 4] - [58, 11])
               instruction: (integer [58, 25] - [58, 27]))
             (instruction [59, 4] - [59, 21]
-              label: (identifier [59, 4] - [59, 11]))
+              label: (symbol [59, 4] - [59, 11]))
             (instruction [60, 4] - [60, 21]
-              label: (identifier [60, 4] - [60, 11]))
+              label: (symbol [60, 4] - [60, 11]))
             (instruction [61, 4] - [61, 22]
-              label: (identifier [61, 4] - [61, 11]))
+              label: (symbol [61, 4] - [61, 11]))
             (instruction [62, 4] - [62, 17]
-              label: (identifier [62, 4] - [62, 11]))
+              label: (symbol [62, 4] - [62, 11]))
             (instruction [63, 4] - [63, 21]
-              label: (identifier [63, 4] - [63, 11]))
+              label: (symbol [63, 4] - [63, 11]))
             (instruction [64, 4] - [64, 21]
-              label: (identifier [64, 4] - [64, 11]))
+              label: (symbol [64, 4] - [64, 11]))
             (instruction [65, 4] - [65, 17]
-              label: (identifier [65, 4] - [65, 11]))))
+              label: (symbol [65, 4] - [65, 11]))))
         (comment [66, 4] - [66, 40])
         (def_method [68, 2] - [77, 3]
-          (modifier [68, 10] - [69, 18])
+          (part_modifier [68, 10] - [69, 18])
           return: (type [69, 19] - [69, 23]
             (type_intrinsic [69, 19] - [69, 23]))
-          name: (identifier [69, 25] - [69, 30])
+          name: (id_method [69, 25] - [69, 30])
           (args [69, 30] - [69, 32])
-          (modifier [69, 33] - [69, 44])
+          (part_modifier [69, 33] - [69, 44])
           (comment [71, 4] - [71, 31])
-          (body [72, 4] - [76, 17]
+          (part_body [72, 4] - [76, 17]
             (option_method [72, 4] - [72, 16]
               (integer [72, 15] - [72, 16]))
             (instruction [73, 4] - [73, 21]
-              label: (identifier [73, 4] - [73, 11]))
+              label: (symbol [73, 4] - [73, 11]))
             (instruction [74, 4] - [74, 77]
-              label: (identifier [74, 4] - [74, 11])
+              label: (symbol [74, 4] - [74, 11])
               instruction: (ref_method [74, 25] - [74, 77]
-                (modifier [74, 25] - [74, 33])
-                (ref_member [74, 34] - [74, 75]
-                  return: (type [74, 34] - [74, 38]
-                    (type_intrinsic [74, 34] - [74, 38]))
-                  parent: (ref_type [74, 39] - [74, 68]
-                    assembly: (ref_assembly [74, 39] - [74, 55]
-                      name: (identifier [74, 40] - [74, 54]))
-                    name: (identifier [74, 55] - [74, 68]))
-                  name: (identifier [74, 70] - [74, 75]))
+                (part_modifier [74, 25] - [74, 33])
+                return: (type [74, 34] - [74, 38]
+                  (type_intrinsic [74, 34] - [74, 38]))
+                parent: (ref_class [74, 39] - [74, 68]
+                  assembly: (ref_assembly [74, 39] - [74, 55]
+                    name: (id [74, 40] - [74, 54]
+                      (id_namespace [74, 40] - [74, 46]
+                        (symbol [74, 40] - [74, 46]))
+                      (symbol [74, 47] - [74, 54])))
+                  name: (id [74, 55] - [74, 68]
+                    (id_namespace [74, 55] - [74, 61]
+                      (symbol [74, 55] - [74, 61]))
+                    (symbol [74, 62] - [74, 68])))
+                name: (id_method [74, 70] - [74, 75])
                 (args [74, 75] - [74, 77])))
             (instruction [75, 4] - [75, 17]
-              label: (identifier [75, 4] - [75, 11]))
+              label: (symbol [75, 4] - [75, 11]))
             (instruction [76, 4] - [76, 17]
-              label: (identifier [76, 4] - [76, 11])))))
+              label: (symbol [76, 4] - [76, 11])))))
       (comment [77, 4] - [77, 36]))
     (comment [79, 2] - [79, 26])
     (def_type [81, 0] - [95, 1]
-      (modifier [81, 7] - [81, 39])
-      name: (identifier [81, 40] - [81, 52])
-      (body [84, 2] - [93, 3]
+      (part_modifier [81, 7] - [81, 39])
+      name: (id [81, 40] - [81, 52]
+        (symbol [81, 40] - [81, 52]))
+      (part_body [84, 2] - [93, 3]
         (def_method [84, 2] - [93, 3]
-          (modifier [84, 10] - [85, 18])
+          (part_modifier [84, 10] - [85, 18])
           return: (type [85, 19] - [85, 23]
             (type_intrinsic [85, 19] - [85, 23]))
-          name: (identifier [85, 25] - [85, 30])
+          name: (id_method [85, 25] - [85, 30])
           (args [85, 30] - [85, 44]
             (args_item [85, 31] - [85, 43]
               type: (type [85, 31] - [85, 36]
                 (type_intrinsic [85, 31] - [85, 36]))
-              name: (identifier [85, 37] - [85, 43])))
-          (modifier [85, 45] - [85, 56])
+              name: (symbol [85, 37] - [85, 43])))
+          (part_modifier [85, 45] - [85, 56])
           (comment [87, 4] - [87, 31])
-          (body [88, 4] - [92, 17]
+          (part_body [88, 4] - [92, 17]
             (option_method [88, 4] - [88, 16]
               (integer [88, 15] - [88, 16]))
             (instruction [89, 4] - [89, 21]
-              label: (identifier [89, 4] - [89, 11]))
+              label: (symbol [89, 4] - [89, 11]))
             (instruction [90, 4] - [90, 77]
-              label: (identifier [90, 4] - [90, 11])
+              label: (symbol [90, 4] - [90, 11])
               instruction: (ref_method [90, 25] - [90, 77]
-                (modifier [90, 25] - [90, 33])
-                (ref_member [90, 34] - [90, 75]
-                  return: (type [90, 34] - [90, 38]
-                    (type_intrinsic [90, 34] - [90, 38]))
-                  parent: (ref_type [90, 39] - [90, 68]
-                    assembly: (ref_assembly [90, 39] - [90, 55]
-                      name: (identifier [90, 40] - [90, 54]))
-                    name: (identifier [90, 55] - [90, 68]))
-                  name: (identifier [90, 70] - [90, 75]))
+                (part_modifier [90, 25] - [90, 33])
+                return: (type [90, 34] - [90, 38]
+                  (type_intrinsic [90, 34] - [90, 38]))
+                parent: (ref_class [90, 39] - [90, 68]
+                  assembly: (ref_assembly [90, 39] - [90, 55]
+                    name: (id [90, 40] - [90, 54]
+                      (id_namespace [90, 40] - [90, 46]
+                        (symbol [90, 40] - [90, 46]))
+                      (symbol [90, 47] - [90, 54])))
+                  name: (id [90, 55] - [90, 68]
+                    (id_namespace [90, 55] - [90, 61]
+                      (symbol [90, 55] - [90, 61]))
+                    (symbol [90, 62] - [90, 68])))
+                name: (id_method [90, 70] - [90, 75])
                 (args [90, 75] - [90, 77])))
             (instruction [91, 4] - [91, 17]
-              label: (identifier [91, 4] - [91, 11]))
+              label: (symbol [91, 4] - [91, 11]))
             (instruction [92, 4] - [92, 17]
-              label: (identifier [92, 4] - [92, 11])))))
+              label: (symbol [92, 4] - [92, 11])))))
       (comment [93, 4] - [93, 41]))
     (comment [95, 2] - [95, 31])
     (def_type [97, 0] - [134, 1]
-      (modifier [97, 7] - [97, 52])
-      name: (identifier [97, 53] - [97, 54])
-      base: (ref_type [98, 15] - [98, 47]
+      (part_modifier [97, 7] - [97, 52])
+      name: (id [97, 53] - [97, 54]
+        (symbol [97, 53] - [97, 54]))
+      base: (ref_class [98, 15] - [98, 47]
         assembly: (ref_assembly [98, 15] - [98, 31]
-          name: (identifier [98, 16] - [98, 30]))
-        name: (identifier [98, 31] - [98, 47]))
-      (body [100, 2] - [132, 3]
+          name: (id [98, 16] - [98, 30]
+            (id_namespace [98, 16] - [98, 22]
+              (symbol [98, 16] - [98, 22]))
+            (symbol [98, 23] - [98, 30])))
+        name: (id [98, 31] - [98, 47]
+          (id_namespace [98, 31] - [98, 37]
+            (symbol [98, 31] - [98, 37]))
+          (symbol [98, 38] - [98, 47])))
+      (part_body [100, 2] - [132, 3]
         (option_type [100, 2] - [100, 9]
           (integer [100, 8] - [100, 9]))
         (option_type [101, 2] - [101, 9]
           (integer [101, 8] - [101, 9]))
         (def_type [102, 2] - [107, 3]
-          (modifier [102, 9] - [102, 62])
-          name: (identifier [102, 63] - [102, 65])
-          base: (ref_type [103, 17] - [103, 49]
+          (part_modifier [102, 9] - [102, 62])
+          name: (id [102, 63] - [102, 65]
+            (symbol [102, 63] - [102, 65]))
+          base: (ref_class [103, 17] - [103, 49]
             assembly: (ref_assembly [103, 17] - [103, 33]
-              name: (identifier [103, 18] - [103, 32]))
-            name: (identifier [103, 33] - [103, 49]))
-          (body [105, 4] - [106, 11]
+              name: (id [103, 18] - [103, 32]
+                (id_namespace [103, 18] - [103, 24]
+                  (symbol [103, 18] - [103, 24]))
+                (symbol [103, 25] - [103, 32])))
+            name: (id [103, 33] - [103, 49]
+              (id_namespace [103, 33] - [103, 39]
+                (symbol [103, 33] - [103, 39]))
+              (symbol [103, 40] - [103, 49])))
+          (part_body [105, 4] - [106, 11]
             (option_type [105, 4] - [105, 11]
               (integer [105, 10] - [105, 11]))
             (option_type [106, 4] - [106, 11]
               (integer [106, 10] - [106, 11]))))
         (comment [107, 4] - [107, 23])
         (def_type [109, 2] - [114, 3]
-          (modifier [109, 9] - [109, 63])
-          name: (identifier [109, 64] - [109, 67])
-          base: (ref_type [110, 17] - [110, 49]
+          (part_modifier [109, 9] - [109, 63])
+          name: (id [109, 64] - [109, 67]
+            (symbol [109, 64] - [109, 67]))
+          base: (ref_class [110, 17] - [110, 49]
             assembly: (ref_assembly [110, 17] - [110, 33]
-              name: (identifier [110, 18] - [110, 32]))
-            name: (identifier [110, 33] - [110, 49]))
-          (body [112, 4] - [113, 11]
+              name: (id [110, 18] - [110, 32]
+                (id_namespace [110, 18] - [110, 24]
+                  (symbol [110, 18] - [110, 24]))
+                (symbol [110, 25] - [110, 32])))
+            name: (id [110, 33] - [110, 49]
+              (id_namespace [110, 33] - [110, 39]
+                (symbol [110, 33] - [110, 39]))
+              (symbol [110, 40] - [110, 49])))
+          (part_body [112, 4] - [113, 11]
             (option_type [112, 4] - [112, 11]
               (integer [112, 10] - [112, 11]))
             (option_type [113, 4] - [113, 11]
               (integer [113, 10] - [113, 11]))))
         (comment [114, 4] - [114, 24])
         (def_type [116, 2] - [132, 3]
-          (modifier [116, 9] - [116, 48])
-          name: (identifier [116, 49] - [116, 51])
-          base: (ref_type [117, 17] - [117, 29]
-            name: (identifier [117, 17] - [117, 29]))
-          (body [119, 4] - [130, 5]
+          (part_modifier [116, 9] - [116, 48])
+          name: (id [116, 49] - [116, 51]
+            (symbol [116, 49] - [116, 51]))
+          base: (ref_class [117, 17] - [117, 29]
+            name: (id [117, 17] - [117, 29]
+              (symbol [117, 17] - [117, 29])))
+          (part_body [119, 4] - [130, 5]
             (def_method [119, 4] - [130, 5]
-              (modifier [119, 12] - [120, 20])
+              (part_modifier [119, 12] - [120, 20])
               return: (type [120, 21] - [120, 25]
                 (type_intrinsic [120, 21] - [120, 25]))
-              name: (identifier [120, 27] - [120, 32])
+              name: (id_method [120, 27] - [120, 32])
               (args [120, 32] - [120, 34])
-              (modifier [120, 35] - [120, 46])
+              (part_modifier [120, 35] - [120, 46])
               (comment [122, 6] - [122, 33])
-              (body [123, 6] - [129, 19]
+              (part_body [123, 6] - [129, 19]
                 (option_method [123, 6] - [123, 18]
                   (integer [123, 17] - [123, 18]))
                 (option_method [124, 6] - [124, 43]
@@ -584,34 +721,35 @@
                             (integer [124, 36] - [124, 37])
                             (integer [124, 40] - [124, 41])))))))
                 (instruction [125, 6] - [125, 19]
-                  instruction: (identifier [125, 9] - [125, 19]))
+                  instruction: (symbol [125, 9] - [125, 19]))
                 (instruction [126, 6] - [126, 23]
-                  label: (identifier [126, 6] - [126, 13]))
+                  label: (symbol [126, 6] - [126, 13]))
                 (instruction [127, 6] - [127, 72]
-                  label: (identifier [127, 6] - [127, 16])
+                  label: (symbol [127, 6] - [127, 16])
                   instruction: (ref_method [127, 30] - [127, 72]
-                    (modifier [127, 30] - [127, 38])
-                    (ref_member [127, 39] - [127, 63]
-                      return: (type [127, 39] - [127, 43]
-                        (type_intrinsic [127, 39] - [127, 43]))
-                      parent: (ref_type [127, 44] - [127, 56]
-                        name: (identifier [127, 44] - [127, 56]))
-                      name: (identifier [127, 58] - [127, 63]))
+                    (part_modifier [127, 30] - [127, 38])
+                    return: (type [127, 39] - [127, 43]
+                      (type_intrinsic [127, 39] - [127, 43]))
+                    parent: (ref_class [127, 44] - [127, 56]
+                      name: (id [127, 44] - [127, 56]
+                        (symbol [127, 44] - [127, 56])))
+                    name: (id_method [127, 58] - [127, 63])
                     (args [127, 63] - [127, 72]
                       (args_item [127, 64] - [127, 71]
                         type: (type [127, 64] - [127, 69]
                           (type_intrinsic [127, 64] - [127, 69]))
-                        name: (identifier [127, 70] - [127, 71])))))
+                        name: (symbol [127, 70] - [127, 71])))))
                 (instruction [128, 6] - [128, 19]
-                  label: (identifier [128, 6] - [128, 13]))
+                  label: (symbol [128, 6] - [128, 13]))
                 (instruction [129, 6] - [129, 19]
-                  label: (identifier [129, 6] - [129, 13])))))
+                  label: (symbol [129, 6] - [129, 13])))))
           (comment [130, 6] - [130, 33])))
       (comment [132, 4] - [132, 23]))
     (comment [134, 2] - [134, 20])
     (def_type [136, 0] - [138, 1]
-      (modifier [136, 7] - [136, 59])
-      name: (identifier [136, 60] - [136, 61])))
+      (part_modifier [136, 7] - [136, 59])
+      name: (id [136, 60] - [136, 61]
+        (symbol [136, 60] - [136, 61]))))
   (comment [138, 2] - [138, 20])
   (comment [141, 0] - [141, 65])
   (comment [143, 0] - [143, 60])
