@@ -1,14 +1,67 @@
 
-; Evidenzia un identificatore come "variable"
-(identifier) @variable
+(comment) @comment
 
-; Evidenzia i numeri come "number"
-(number) @number
+[
+  (byte)
+  (integer)
+  (version)
+] @constant.numeric.integer
 
-; Evidenzia l'operatore '=' come "operator"
-("=") @operator
+(string) @string
 
-; Evidenzia un assegnamento come "assignment"
-(assignment
-  left: (identifier) @variable
-  right: (_) @value)
+(string_escape) @constant.character.escape
+
+(part_modifier) @keyword
+
+(part_keyword) @keyword.control
+
+(part_keyword ".method") @keyword.function
+
+(part_keyword (".locals" "init")) @keyword.storage.type
+
+(type_intrinsic) @type.builtin
+
+(args_item
+  name: (symbol) @variable.parameter)
+
+(id_namespace) @namespace
+
+(id_class
+  (id
+    (symbol) @type))
+
+(id_member) @variable.other.member
+
+(id_method
+  [
+    (id) @function
+    (part_keyword) @constructor
+  ])
+
+(id_label) @label
+
+(instruction
+  instruction: (
+    (_ @function)
+    _*
+  ))
+
+[
+  "("
+  ")"
+  "["
+  "]"
+  "{"
+  "}"
+]  @punctuation.bracket
+
+[
+  ";"
+  "."
+  ","
+] @punctuation.delimiter
+
+[
+  "=",
+  "..."
+] @operator

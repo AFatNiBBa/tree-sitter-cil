@@ -29,13 +29,13 @@ module.exports = grammar({
     ),
 
     instruction: $ => seq(
-      repeat(seq(field("label", $.symbol), ":")),
+      repeat(seq(field("label", $.id_label), ":")),
       field(
         "instruction",
         choice(
           seq("call", $.ref_method),
           seq("ldc.i4.s", $.integer),
-          seq("br", $.symbol),
+          seq("br", $.id_label),
           seq("ldstr", $.string),
           "ldarg.0",
           "stloc.0",
@@ -64,7 +64,13 @@ module.exports = grammar({
  
     id_namespace: $ => choice($.symbol, seq($.id_namespace, ".", $.symbol)),
 
-    id_method: $ => choice($.id, ".ctor", ".cctor"),
+    id_class: $ => $.id,
+
+    id_member: $ => $.id,
+
+    id_method: $ => choice($.id, alias(choice(".ctor", ".cctor"), $.part_keyword)),
+
+    id_label: $ => $.symbol,
 
     id: $ => seq(
       optional(seq(
@@ -95,29 +101,35 @@ module.exports = grammar({
 
     //#region DEF
 
-    def_module: $ => repeat1(choice(
-      $.attribute,
-      $.option_module,
-      $.def_assembly,
-      $.def_type
-    )),
+    def_module: $ => alias(
+      repeat1(choice(
+        $.attribute,
+        $.option_module,
+        $.def_assembly,
+        $.def_class,
+        $.def_method,
+        ";"
+      )),
+      $.part_body
+    ),
 
     def_assembly: $ => seq(
       alias(".assembly", $.part_keyword),
       alias(optional("extern"), $.part_modifier),
-      field("name", $.id),
+      field("name", $.id_namespace),
       "{",
       alias(
         repeat(choice(
           $.attribute,
-          $.option_assembly
+          $.option_assembly,
+          ";"
         )),
         $.part_body
       ),
       "}"
     ),
 
-    def_type: $ => seq(
+    def_class: $ => seq(
       alias(".class", $.part_keyword),
       alias(
         repeat(choice(
@@ -135,15 +147,16 @@ module.exports = grammar({
         )),
         $.part_modifier
       ),
-      field("name", $.id),
-      optional(seq("extends", field("base", $.ref_class))),
+      field("name", $.id_class),
+      optional(seq(alias("extends", $.part_modifier), field("base", $.ref_class))),
       "{",
       alias(
         repeat(choice(
           $.attribute,
           $.option_type,
-          $.def_type,
-          $.def_method
+          $.def_class,
+          $.def_method,
+          ";"
         )),
         $.part_body
       ),
@@ -179,7 +192,8 @@ module.exports = grammar({
         repeat(choice(
           $.attribute,
           $.option_method,
-          $.instruction
+          $.instruction,
+          ";"
         )),
         $.part_body
       ),
@@ -190,15 +204,15 @@ module.exports = grammar({
 
     //#region REF
 
-    ref_assembly: $ => seq("[", field("name", $.id), "]"),
+    ref_assembly: $ => seq("[", field("name", $.id_namespace), "]"),
 
-    ref_class: $ => seq(optional(field("assembly", $.ref_assembly)), field("name", $.id)),
+    ref_class: $ => seq(optional(field("assembly", $.ref_assembly)), field("name", $.id_class)),
 
     ref_member: $ => seq(
       field("return", $.type),
       field("parent", $.ref_class),
       "::",
-      field("name", $.id)
+      field("name", $.id_member)
     ),
 
     ref_method: $ => seq(
@@ -223,7 +237,7 @@ module.exports = grammar({
       seq(
         alias(".module", $.part_keyword),
         alias(optional("extern"), $.part_modifier),
-        $.id
+        $.id_namespace
       ),
     ),
 
