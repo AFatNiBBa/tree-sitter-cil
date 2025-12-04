@@ -57,6 +57,8 @@
     .locals init (char V_0,
              char V_1)
     IL_0000:  ldc.i4.s   97
+    ldstr "ci\nao"
+    pop
     IL_0002:  stloc.0
     IL_0003:  ldloc.0
     IL_0004:  ldc.i4.1

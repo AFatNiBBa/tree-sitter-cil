@@ -1,8 +1,8 @@
-(file [1, 0] - [145, 0]
+(file [1, 0] - [147, 0]
   (comment [1, 0] - [1, 70])
   (comment [2, 0] - [2, 68])
   (comment [6, 0] - [6, 32])
-  (def_module [7, 0] - [138, 1]
+  (def_module [7, 0] - [140, 1]
     (def_assembly [7, 0] - [11, 1]
       (part_keyword [7, 0] - [7, 9])
       (part_modifier [7, 10] - [7, 16])
@@ -481,7 +481,7 @@
     (comment [41, 24] - [41, 35])
     (comment [42, 0] - [42, 34])
     (comment [45, 0] - [45, 65])
-    (def_type [47, 0] - [79, 1]
+    (def_type [47, 0] - [81, 1]
       (part_keyword [47, 0] - [47, 6])
       (part_modifier [47, 7] - [47, 40])
       name: (id [47, 41] - [47, 48]
@@ -496,7 +496,7 @@
           (id_namespace [48, 31] - [48, 37]
             (symbol [48, 31] - [48, 37]))
           (symbol [48, 38] - [48, 44])))
-      (part_body [50, 2] - [77, 3]
+      (part_body [50, 2] - [79, 3]
         (attribute [50, 2] - [50, 125]
           (part_keyword [50, 2] - [50, 9])
           ctor: (ref_method [50, 10] - [50, 107]
@@ -524,7 +524,7 @@
             (byte [50, 115] - [50, 117])
             (byte [50, 118] - [50, 120])
             (byte [50, 121] - [50, 123])))
-        (def_method [51, 2] - [66, 3]
+        (def_method [51, 2] - [68, 3]
           (part_keyword [51, 2] - [51, 9])
           (part_modifier [51, 10] - [51, 34])
           return: (type [51, 35] - [51, 39]
@@ -540,7 +540,7 @@
                 (type_indexer [51, 57] - [51, 59]))
               name: (symbol [51, 60] - [51, 64])))
           (part_modifier [51, 66] - [51, 77])
-          (part_body [53, 4] - [65, 17]
+          (part_body [53, 4] - [67, 17]
             (option_method [53, 4] - [53, 15]
               (part_keyword [53, 4] - [53, 15]))
             (comment [54, 4] - [54, 31])
@@ -562,246 +562,252 @@
             (instruction [58, 4] - [58, 27]
               label: (symbol [58, 4] - [58, 11])
               instruction: (integer [58, 25] - [58, 27]))
-            (instruction [59, 4] - [59, 21]
-              label: (symbol [59, 4] - [59, 11]))
-            (instruction [60, 4] - [60, 21]
-              label: (symbol [60, 4] - [60, 11]))
-            (instruction [61, 4] - [61, 22]
+            (instruction [59, 4] - [59, 18]
+              instruction: (string [59, 10] - [59, 18]
+                (string_content [59, 11] - [59, 13])
+                (string_escape [59, 13] - [59, 15])
+                (string_content [59, 15] - [59, 17])))
+            (instruction [60, 4] - [60, 7])
+            (instruction [61, 4] - [61, 21]
               label: (symbol [61, 4] - [61, 11]))
-            (instruction [62, 4] - [62, 17]
+            (instruction [62, 4] - [62, 21]
               label: (symbol [62, 4] - [62, 11]))
-            (instruction [63, 4] - [63, 21]
+            (instruction [63, 4] - [63, 22]
               label: (symbol [63, 4] - [63, 11]))
-            (instruction [64, 4] - [64, 21]
+            (instruction [64, 4] - [64, 17]
               label: (symbol [64, 4] - [64, 11]))
-            (instruction [65, 4] - [65, 17]
-              label: (symbol [65, 4] - [65, 11]))))
-        (comment [66, 4] - [66, 40])
-        (def_method [68, 2] - [77, 3]
-          (part_keyword [68, 2] - [68, 9])
-          (part_modifier [68, 10] - [69, 18])
-          return: (type [69, 19] - [69, 23]
-            (type_intrinsic [69, 19] - [69, 23]))
-          name: (id_method [69, 25] - [69, 30])
-          (args [69, 30] - [69, 32])
-          (part_modifier [69, 33] - [69, 44])
-          (comment [71, 4] - [71, 31])
-          (part_body [72, 4] - [76, 17]
-            (option_method [72, 4] - [72, 16]
-              (part_keyword [72, 4] - [72, 13])
-              (integer [72, 15] - [72, 16]))
-            (instruction [73, 4] - [73, 21]
-              label: (symbol [73, 4] - [73, 11]))
-            (instruction [74, 4] - [74, 77]
-              label: (symbol [74, 4] - [74, 11])
-              instruction: (ref_method [74, 25] - [74, 77]
-                (part_modifier [74, 25] - [74, 33])
-                return: (type [74, 34] - [74, 38]
-                  (type_intrinsic [74, 34] - [74, 38]))
-                parent: (ref_class [74, 39] - [74, 68]
-                  assembly: (ref_assembly [74, 39] - [74, 55]
-                    name: (id [74, 40] - [74, 54]
-                      (id_namespace [74, 40] - [74, 46]
-                        (symbol [74, 40] - [74, 46]))
-                      (symbol [74, 47] - [74, 54])))
-                  name: (id [74, 55] - [74, 68]
-                    (id_namespace [74, 55] - [74, 61]
-                      (symbol [74, 55] - [74, 61]))
-                    (symbol [74, 62] - [74, 68])))
-                name: (id_method [74, 70] - [74, 75])
-                (args [74, 75] - [74, 77])))
-            (instruction [75, 4] - [75, 17]
+            (instruction [65, 4] - [65, 21]
+              label: (symbol [65, 4] - [65, 11]))
+            (instruction [66, 4] - [66, 21]
+              label: (symbol [66, 4] - [66, 11]))
+            (instruction [67, 4] - [67, 17]
+              label: (symbol [67, 4] - [67, 11]))))
+        (comment [68, 4] - [68, 40])
+        (def_method [70, 2] - [79, 3]
+          (part_keyword [70, 2] - [70, 9])
+          (part_modifier [70, 10] - [71, 18])
+          return: (type [71, 19] - [71, 23]
+            (type_intrinsic [71, 19] - [71, 23]))
+          name: (id_method [71, 25] - [71, 30])
+          (args [71, 30] - [71, 32])
+          (part_modifier [71, 33] - [71, 44])
+          (comment [73, 4] - [73, 31])
+          (part_body [74, 4] - [78, 17]
+            (option_method [74, 4] - [74, 16]
+              (part_keyword [74, 4] - [74, 13])
+              (integer [74, 15] - [74, 16]))
+            (instruction [75, 4] - [75, 21]
               label: (symbol [75, 4] - [75, 11]))
-            (instruction [76, 4] - [76, 17]
-              label: (symbol [76, 4] - [76, 11])))))
-      (comment [77, 4] - [77, 36]))
-    (comment [79, 2] - [79, 26])
-    (def_type [81, 0] - [95, 1]
-      (part_keyword [81, 0] - [81, 6])
-      (part_modifier [81, 7] - [81, 39])
-      name: (id [81, 40] - [81, 52]
-        (symbol [81, 40] - [81, 52]))
-      (part_body [84, 2] - [93, 3]
-        (def_method [84, 2] - [93, 3]
-          (part_keyword [84, 2] - [84, 9])
-          (part_modifier [84, 10] - [85, 18])
-          return: (type [85, 19] - [85, 23]
-            (type_intrinsic [85, 19] - [85, 23]))
-          name: (id_method [85, 25] - [85, 30])
-          (args [85, 30] - [85, 44]
-            (args_item [85, 31] - [85, 43]
-              type: (type [85, 31] - [85, 36]
-                (type_intrinsic [85, 31] - [85, 36]))
-              name: (symbol [85, 37] - [85, 43])))
-          (part_modifier [85, 45] - [85, 56])
-          (comment [87, 4] - [87, 31])
-          (part_body [88, 4] - [92, 17]
-            (option_method [88, 4] - [88, 16]
-              (part_keyword [88, 4] - [88, 13])
-              (integer [88, 15] - [88, 16]))
-            (instruction [89, 4] - [89, 21]
-              label: (symbol [89, 4] - [89, 11]))
-            (instruction [90, 4] - [90, 77]
-              label: (symbol [90, 4] - [90, 11])
-              instruction: (ref_method [90, 25] - [90, 77]
-                (part_modifier [90, 25] - [90, 33])
-                return: (type [90, 34] - [90, 38]
-                  (type_intrinsic [90, 34] - [90, 38]))
-                parent: (ref_class [90, 39] - [90, 68]
-                  assembly: (ref_assembly [90, 39] - [90, 55]
-                    name: (id [90, 40] - [90, 54]
-                      (id_namespace [90, 40] - [90, 46]
-                        (symbol [90, 40] - [90, 46]))
-                      (symbol [90, 47] - [90, 54])))
-                  name: (id [90, 55] - [90, 68]
-                    (id_namespace [90, 55] - [90, 61]
-                      (symbol [90, 55] - [90, 61]))
-                    (symbol [90, 62] - [90, 68])))
-                name: (id_method [90, 70] - [90, 75])
-                (args [90, 75] - [90, 77])))
-            (instruction [91, 4] - [91, 17]
+            (instruction [76, 4] - [76, 77]
+              label: (symbol [76, 4] - [76, 11])
+              instruction: (ref_method [76, 25] - [76, 77]
+                (part_modifier [76, 25] - [76, 33])
+                return: (type [76, 34] - [76, 38]
+                  (type_intrinsic [76, 34] - [76, 38]))
+                parent: (ref_class [76, 39] - [76, 68]
+                  assembly: (ref_assembly [76, 39] - [76, 55]
+                    name: (id [76, 40] - [76, 54]
+                      (id_namespace [76, 40] - [76, 46]
+                        (symbol [76, 40] - [76, 46]))
+                      (symbol [76, 47] - [76, 54])))
+                  name: (id [76, 55] - [76, 68]
+                    (id_namespace [76, 55] - [76, 61]
+                      (symbol [76, 55] - [76, 61]))
+                    (symbol [76, 62] - [76, 68])))
+                name: (id_method [76, 70] - [76, 75])
+                (args [76, 75] - [76, 77])))
+            (instruction [77, 4] - [77, 17]
+              label: (symbol [77, 4] - [77, 11]))
+            (instruction [78, 4] - [78, 17]
+              label: (symbol [78, 4] - [78, 11])))))
+      (comment [79, 4] - [79, 36]))
+    (comment [81, 2] - [81, 26])
+    (def_type [83, 0] - [97, 1]
+      (part_keyword [83, 0] - [83, 6])
+      (part_modifier [83, 7] - [83, 39])
+      name: (id [83, 40] - [83, 52]
+        (symbol [83, 40] - [83, 52]))
+      (part_body [86, 2] - [95, 3]
+        (def_method [86, 2] - [95, 3]
+          (part_keyword [86, 2] - [86, 9])
+          (part_modifier [86, 10] - [87, 18])
+          return: (type [87, 19] - [87, 23]
+            (type_intrinsic [87, 19] - [87, 23]))
+          name: (id_method [87, 25] - [87, 30])
+          (args [87, 30] - [87, 44]
+            (args_item [87, 31] - [87, 43]
+              type: (type [87, 31] - [87, 36]
+                (type_intrinsic [87, 31] - [87, 36]))
+              name: (symbol [87, 37] - [87, 43])))
+          (part_modifier [87, 45] - [87, 56])
+          (comment [89, 4] - [89, 31])
+          (part_body [90, 4] - [94, 17]
+            (option_method [90, 4] - [90, 16]
+              (part_keyword [90, 4] - [90, 13])
+              (integer [90, 15] - [90, 16]))
+            (instruction [91, 4] - [91, 21]
               label: (symbol [91, 4] - [91, 11]))
-            (instruction [92, 4] - [92, 17]
-              label: (symbol [92, 4] - [92, 11])))))
-      (comment [93, 4] - [93, 41]))
-    (comment [95, 2] - [95, 31])
-    (def_type [97, 0] - [134, 1]
-      (part_keyword [97, 0] - [97, 6])
-      (part_modifier [97, 7] - [97, 52])
-      name: (id [97, 53] - [97, 54]
-        (symbol [97, 53] - [97, 54]))
-      base: (ref_class [98, 15] - [98, 47]
-        assembly: (ref_assembly [98, 15] - [98, 31]
-          name: (id [98, 16] - [98, 30]
-            (id_namespace [98, 16] - [98, 22]
-              (symbol [98, 16] - [98, 22]))
-            (symbol [98, 23] - [98, 30])))
-        name: (id [98, 31] - [98, 47]
-          (id_namespace [98, 31] - [98, 37]
-            (symbol [98, 31] - [98, 37]))
-          (symbol [98, 38] - [98, 47])))
-      (part_body [100, 2] - [132, 3]
-        (option_type [100, 2] - [100, 9]
-          (part_keyword [100, 2] - [100, 7])
-          (integer [100, 8] - [100, 9]))
-        (option_type [101, 2] - [101, 9]
-          (part_keyword [101, 2] - [101, 7])
-          (integer [101, 8] - [101, 9]))
-        (def_type [102, 2] - [107, 3]
-          (part_keyword [102, 2] - [102, 8])
-          (part_modifier [102, 9] - [102, 62])
-          name: (id [102, 63] - [102, 65]
-            (symbol [102, 63] - [102, 65]))
-          base: (ref_class [103, 17] - [103, 49]
-            assembly: (ref_assembly [103, 17] - [103, 33]
-              name: (id [103, 18] - [103, 32]
-                (id_namespace [103, 18] - [103, 24]
-                  (symbol [103, 18] - [103, 24]))
-                (symbol [103, 25] - [103, 32])))
-            name: (id [103, 33] - [103, 49]
-              (id_namespace [103, 33] - [103, 39]
-                (symbol [103, 33] - [103, 39]))
-              (symbol [103, 40] - [103, 49])))
-          (part_body [105, 4] - [106, 11]
-            (option_type [105, 4] - [105, 11]
-              (part_keyword [105, 4] - [105, 9])
-              (integer [105, 10] - [105, 11]))
-            (option_type [106, 4] - [106, 11]
-              (part_keyword [106, 4] - [106, 9])
-              (integer [106, 10] - [106, 11]))))
-        (comment [107, 4] - [107, 23])
-        (def_type [109, 2] - [114, 3]
-          (part_keyword [109, 2] - [109, 8])
-          (part_modifier [109, 9] - [109, 63])
-          name: (id [109, 64] - [109, 67]
-            (symbol [109, 64] - [109, 67]))
-          base: (ref_class [110, 17] - [110, 49]
-            assembly: (ref_assembly [110, 17] - [110, 33]
-              name: (id [110, 18] - [110, 32]
-                (id_namespace [110, 18] - [110, 24]
-                  (symbol [110, 18] - [110, 24]))
-                (symbol [110, 25] - [110, 32])))
-            name: (id [110, 33] - [110, 49]
-              (id_namespace [110, 33] - [110, 39]
-                (symbol [110, 33] - [110, 39]))
-              (symbol [110, 40] - [110, 49])))
-          (part_body [112, 4] - [113, 11]
-            (option_type [112, 4] - [112, 11]
-              (part_keyword [112, 4] - [112, 9])
-              (integer [112, 10] - [112, 11]))
-            (option_type [113, 4] - [113, 11]
-              (part_keyword [113, 4] - [113, 9])
-              (integer [113, 10] - [113, 11]))))
-        (comment [114, 4] - [114, 24])
-        (def_type [116, 2] - [132, 3]
-          (part_keyword [116, 2] - [116, 8])
-          (part_modifier [116, 9] - [116, 48])
-          name: (id [116, 49] - [116, 51]
-            (symbol [116, 49] - [116, 51]))
-          base: (ref_class [117, 17] - [117, 29]
-            name: (id [117, 17] - [117, 29]
-              (symbol [117, 17] - [117, 29])))
-          (part_body [119, 4] - [130, 5]
-            (def_method [119, 4] - [130, 5]
-              (part_keyword [119, 4] - [119, 11])
-              (part_modifier [119, 12] - [120, 20])
-              return: (type [120, 21] - [120, 25]
-                (type_intrinsic [120, 21] - [120, 25]))
-              name: (id_method [120, 27] - [120, 32])
-              (args [120, 32] - [120, 34])
-              (part_modifier [120, 35] - [120, 46])
-              (comment [122, 6] - [122, 33])
-              (part_body [123, 6] - [129, 19]
-                (option_method [123, 6] - [123, 18]
-                  (part_keyword [123, 6] - [123, 15])
-                  (integer [123, 17] - [123, 18]))
-                (option_method [124, 6] - [124, 43]
-                  (part_keyword [124, 6] - [124, 13])
-                  (part_keyword [124, 14] - [124, 18])
-                  (args [124, 19] - [124, 43]
-                    (args_item [124, 20] - [124, 42]
-                      type: (type [124, 20] - [124, 42]
-                        (type [124, 20] - [124, 25]
-                          (type_intrinsic [124, 20] - [124, 25]))
-                        (type_indexer [124, 25] - [124, 42]
-                          (type_indexer_range [124, 26] - [124, 30]
-                            (integer [124, 26] - [124, 27]))
-                          (type_indexer_range [124, 32] - [124, 35])
-                          (type_indexer_range [124, 36] - [124, 41]
-                            (integer [124, 36] - [124, 37])
-                            (integer [124, 40] - [124, 41])))))))
-                (instruction [125, 6] - [125, 19]
-                  instruction: (symbol [125, 9] - [125, 19]))
-                (instruction [126, 6] - [126, 23]
-                  label: (symbol [126, 6] - [126, 13]))
-                (instruction [127, 6] - [127, 72]
-                  label: (symbol [127, 6] - [127, 16])
-                  instruction: (ref_method [127, 30] - [127, 72]
-                    (part_modifier [127, 30] - [127, 38])
-                    return: (type [127, 39] - [127, 43]
-                      (type_intrinsic [127, 39] - [127, 43]))
-                    parent: (ref_class [127, 44] - [127, 56]
-                      name: (id [127, 44] - [127, 56]
-                        (symbol [127, 44] - [127, 56])))
-                    name: (id_method [127, 58] - [127, 63])
-                    (args [127, 63] - [127, 72]
-                      (args_item [127, 64] - [127, 71]
-                        type: (type [127, 64] - [127, 69]
-                          (type_intrinsic [127, 64] - [127, 69]))
-                        name: (symbol [127, 70] - [127, 71])))))
-                (instruction [128, 6] - [128, 19]
+            (instruction [92, 4] - [92, 77]
+              label: (symbol [92, 4] - [92, 11])
+              instruction: (ref_method [92, 25] - [92, 77]
+                (part_modifier [92, 25] - [92, 33])
+                return: (type [92, 34] - [92, 38]
+                  (type_intrinsic [92, 34] - [92, 38]))
+                parent: (ref_class [92, 39] - [92, 68]
+                  assembly: (ref_assembly [92, 39] - [92, 55]
+                    name: (id [92, 40] - [92, 54]
+                      (id_namespace [92, 40] - [92, 46]
+                        (symbol [92, 40] - [92, 46]))
+                      (symbol [92, 47] - [92, 54])))
+                  name: (id [92, 55] - [92, 68]
+                    (id_namespace [92, 55] - [92, 61]
+                      (symbol [92, 55] - [92, 61]))
+                    (symbol [92, 62] - [92, 68])))
+                name: (id_method [92, 70] - [92, 75])
+                (args [92, 75] - [92, 77])))
+            (instruction [93, 4] - [93, 17]
+              label: (symbol [93, 4] - [93, 11]))
+            (instruction [94, 4] - [94, 17]
+              label: (symbol [94, 4] - [94, 11])))))
+      (comment [95, 4] - [95, 41]))
+    (comment [97, 2] - [97, 31])
+    (def_type [99, 0] - [136, 1]
+      (part_keyword [99, 0] - [99, 6])
+      (part_modifier [99, 7] - [99, 52])
+      name: (id [99, 53] - [99, 54]
+        (symbol [99, 53] - [99, 54]))
+      base: (ref_class [100, 15] - [100, 47]
+        assembly: (ref_assembly [100, 15] - [100, 31]
+          name: (id [100, 16] - [100, 30]
+            (id_namespace [100, 16] - [100, 22]
+              (symbol [100, 16] - [100, 22]))
+            (symbol [100, 23] - [100, 30])))
+        name: (id [100, 31] - [100, 47]
+          (id_namespace [100, 31] - [100, 37]
+            (symbol [100, 31] - [100, 37]))
+          (symbol [100, 38] - [100, 47])))
+      (part_body [102, 2] - [134, 3]
+        (option_type [102, 2] - [102, 9]
+          (part_keyword [102, 2] - [102, 7])
+          (integer [102, 8] - [102, 9]))
+        (option_type [103, 2] - [103, 9]
+          (part_keyword [103, 2] - [103, 7])
+          (integer [103, 8] - [103, 9]))
+        (def_type [104, 2] - [109, 3]
+          (part_keyword [104, 2] - [104, 8])
+          (part_modifier [104, 9] - [104, 62])
+          name: (id [104, 63] - [104, 65]
+            (symbol [104, 63] - [104, 65]))
+          base: (ref_class [105, 17] - [105, 49]
+            assembly: (ref_assembly [105, 17] - [105, 33]
+              name: (id [105, 18] - [105, 32]
+                (id_namespace [105, 18] - [105, 24]
+                  (symbol [105, 18] - [105, 24]))
+                (symbol [105, 25] - [105, 32])))
+            name: (id [105, 33] - [105, 49]
+              (id_namespace [105, 33] - [105, 39]
+                (symbol [105, 33] - [105, 39]))
+              (symbol [105, 40] - [105, 49])))
+          (part_body [107, 4] - [108, 11]
+            (option_type [107, 4] - [107, 11]
+              (part_keyword [107, 4] - [107, 9])
+              (integer [107, 10] - [107, 11]))
+            (option_type [108, 4] - [108, 11]
+              (part_keyword [108, 4] - [108, 9])
+              (integer [108, 10] - [108, 11]))))
+        (comment [109, 4] - [109, 23])
+        (def_type [111, 2] - [116, 3]
+          (part_keyword [111, 2] - [111, 8])
+          (part_modifier [111, 9] - [111, 63])
+          name: (id [111, 64] - [111, 67]
+            (symbol [111, 64] - [111, 67]))
+          base: (ref_class [112, 17] - [112, 49]
+            assembly: (ref_assembly [112, 17] - [112, 33]
+              name: (id [112, 18] - [112, 32]
+                (id_namespace [112, 18] - [112, 24]
+                  (symbol [112, 18] - [112, 24]))
+                (symbol [112, 25] - [112, 32])))
+            name: (id [112, 33] - [112, 49]
+              (id_namespace [112, 33] - [112, 39]
+                (symbol [112, 33] - [112, 39]))
+              (symbol [112, 40] - [112, 49])))
+          (part_body [114, 4] - [115, 11]
+            (option_type [114, 4] - [114, 11]
+              (part_keyword [114, 4] - [114, 9])
+              (integer [114, 10] - [114, 11]))
+            (option_type [115, 4] - [115, 11]
+              (part_keyword [115, 4] - [115, 9])
+              (integer [115, 10] - [115, 11]))))
+        (comment [116, 4] - [116, 24])
+        (def_type [118, 2] - [134, 3]
+          (part_keyword [118, 2] - [118, 8])
+          (part_modifier [118, 9] - [118, 48])
+          name: (id [118, 49] - [118, 51]
+            (symbol [118, 49] - [118, 51]))
+          base: (ref_class [119, 17] - [119, 29]
+            name: (id [119, 17] - [119, 29]
+              (symbol [119, 17] - [119, 29])))
+          (part_body [121, 4] - [132, 5]
+            (def_method [121, 4] - [132, 5]
+              (part_keyword [121, 4] - [121, 11])
+              (part_modifier [121, 12] - [122, 20])
+              return: (type [122, 21] - [122, 25]
+                (type_intrinsic [122, 21] - [122, 25]))
+              name: (id_method [122, 27] - [122, 32])
+              (args [122, 32] - [122, 34])
+              (part_modifier [122, 35] - [122, 46])
+              (comment [124, 6] - [124, 33])
+              (part_body [125, 6] - [131, 19]
+                (option_method [125, 6] - [125, 18]
+                  (part_keyword [125, 6] - [125, 15])
+                  (integer [125, 17] - [125, 18]))
+                (option_method [126, 6] - [126, 43]
+                  (part_keyword [126, 6] - [126, 13])
+                  (part_keyword [126, 14] - [126, 18])
+                  (args [126, 19] - [126, 43]
+                    (args_item [126, 20] - [126, 42]
+                      type: (type [126, 20] - [126, 42]
+                        (type [126, 20] - [126, 25]
+                          (type_intrinsic [126, 20] - [126, 25]))
+                        (type_indexer [126, 25] - [126, 42]
+                          (type_indexer_range [126, 26] - [126, 30]
+                            (integer [126, 26] - [126, 27]))
+                          (type_indexer_range [126, 32] - [126, 35])
+                          (type_indexer_range [126, 36] - [126, 41]
+                            (integer [126, 36] - [126, 37])
+                            (integer [126, 40] - [126, 41])))))))
+                (instruction [127, 6] - [127, 19]
+                  instruction: (symbol [127, 9] - [127, 19]))
+                (instruction [128, 6] - [128, 23]
                   label: (symbol [128, 6] - [128, 13]))
-                (instruction [129, 6] - [129, 19]
-                  label: (symbol [129, 6] - [129, 13])))))
-          (comment [130, 6] - [130, 33])))
-      (comment [132, 4] - [132, 23]))
-    (comment [134, 2] - [134, 20])
-    (def_type [136, 0] - [138, 1]
-      (part_keyword [136, 0] - [136, 6])
-      (part_modifier [136, 7] - [136, 59])
-      name: (id [136, 60] - [136, 61]
-        (symbol [136, 60] - [136, 61]))))
-  (comment [138, 2] - [138, 20])
-  (comment [141, 0] - [141, 65])
-  (comment [143, 0] - [143, 60])
-  (comment [144, 0] - [144, 47]))
+                (instruction [129, 6] - [129, 72]
+                  label: (symbol [129, 6] - [129, 16])
+                  instruction: (ref_method [129, 30] - [129, 72]
+                    (part_modifier [129, 30] - [129, 38])
+                    return: (type [129, 39] - [129, 43]
+                      (type_intrinsic [129, 39] - [129, 43]))
+                    parent: (ref_class [129, 44] - [129, 56]
+                      name: (id [129, 44] - [129, 56]
+                        (symbol [129, 44] - [129, 56])))
+                    name: (id_method [129, 58] - [129, 63])
+                    (args [129, 63] - [129, 72]
+                      (args_item [129, 64] - [129, 71]
+                        type: (type [129, 64] - [129, 69]
+                          (type_intrinsic [129, 64] - [129, 69]))
+                        name: (symbol [129, 70] - [129, 71])))))
+                (instruction [130, 6] - [130, 19]
+                  label: (symbol [130, 6] - [130, 13]))
+                (instruction [131, 6] - [131, 19]
+                  label: (symbol [131, 6] - [131, 13])))))
+          (comment [132, 6] - [132, 33])))
+      (comment [134, 4] - [134, 23]))
+    (comment [136, 2] - [136, 20])
+    (def_type [138, 0] - [140, 1]
+      (part_keyword [138, 0] - [138, 6])
+      (part_modifier [138, 7] - [138, 59])
+      name: (id [138, 60] - [138, 61]
+        (symbol [138, 60] - [138, 61]))))
+  (comment [140, 2] - [140, 20])
+  (comment [143, 0] - [143, 65])
+  (comment [145, 0] - [145, 60])
+  (comment [146, 0] - [146, 47]))

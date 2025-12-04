@@ -36,6 +36,7 @@ module.exports = grammar({
           seq("call", $.ref_method),
           seq("ldc.i4.s", $.integer),
           seq("br", $.symbol),
+          seq("ldstr", $.string),
           "ldarg.0",
           "stloc.0",
           "stloc.1",
@@ -46,6 +47,7 @@ module.exports = grammar({
           "conv.u2",
           "ret",
           "nop",
+          "pop"
         )
       )
     ),
@@ -240,6 +242,20 @@ module.exports = grammar({
       seq(alias(seq(".locals", "init"), $.part_keyword), $.args),
       seq(alias(".maxstack", $.part_keyword), $.integer),
       alias(".entrypoint", $.part_keyword)
+    ),
+
+    //#endregion
+
+    //#region STRING
+
+    string_content: () => token.immediate(/[^"\\\n]+/),
+
+    string_escape: () => token.immediate(/\\./),
+
+    string: $ => seq(
+      '"',
+      repeat(choice($.string_content, $.string_escape)), // I don't wrap everything in a single token because I want to be able to highlight these two differently
+      token.immediate('"')
     ),
 
     //#endregion
