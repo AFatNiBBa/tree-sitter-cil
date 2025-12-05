@@ -15,14 +15,14 @@
 
 (part_keyword) @keyword.control
 
-(part_keyword ".method") @keyword.function
+; (part_keyword ".method") @keyword.function
 
-(part_keyword (".locals" "init")) @keyword.storage.type
+; (part_keyword (".locals" "init")) @keyword.storage.type
 
 (type_intrinsic) @type.builtin
 
-(args_item
-  name: (symbol) @variable.parameter)
+; (args_item
+;   name: (symbol) @variable.parameter)
 
 (id_namespace) @namespace
 
@@ -30,7 +30,7 @@
   (id
     (symbol) @type))
 
-(id_member) @variable.other.member
+; (id_member) @variable.other.member
 
 (id_method
   [
@@ -40,11 +40,11 @@
 
 (id_label) @label
 
-(instruction
-  instruction: (
-    (_ @function)
-    _*
-  ))
+; (instruction
+;   instruction: (
+;     (_ @function)
+;     _*
+;   ))
 
 [
   "("
@@ -62,6 +62,6 @@
 ] @punctuation.delimiter
 
 [
-  "=",
+  "="
   "..."
 ] @operator
