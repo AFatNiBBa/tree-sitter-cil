@@ -39,11 +39,7 @@
 
 (id_label) @label
 
-(instruction
-  instruction: (
-    (_ @function)
-    _*
-  ))
+(part_instruction) @function
 
 [
   "("

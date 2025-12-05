@@ -30,24 +30,26 @@ module.exports = grammar({
 
     instruction: $ => seq(
       repeat(seq(field("label", $.id_label), ":")),
-      field(
-        "instruction",
-        choice(
-          seq("call", $.ref_method),
-          seq("ldc.i4.s", $.integer),
-          seq("br", $.id_label),
-          seq("ldstr", $.string),
-          "ldarg.0",
-          "stloc.0",
-          "stloc.1",
-          "ldloc.0",
-          "ldloc.1",
-          "ldc.i4.1",
-          "add",
-          "conv.u2",
-          "ret",
-          "nop",
-          "pop"
+      choice(
+        seq(alias("call", $.part_instruction), $.ref_method),
+        seq(alias("ldc.i4.s", $.part_instruction), $.integer),
+        seq(alias("br", $.part_instruction), $.id_label),
+        seq(alias("ldstr", $.part_instruction), $.string),
+        alias(
+          choice(
+            "ldarg.0",
+            "stloc.0",
+            "stloc.1",
+            "ldloc.0",
+            "ldloc.1",
+            "ldc.i4.1",
+            "add",
+            "conv.u2",
+            "ret",
+            "nop",
+            "pop"
+          ),
+          $.part_instruction
         )
       )
     ),

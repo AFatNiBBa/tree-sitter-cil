@@ -591,32 +591,42 @@
               (instruction [58, 4] - [58, 27]
                 label: (id_label [58, 4] - [58, 11]
                   (symbol [58, 4] - [58, 11]))
-                instruction: (integer [58, 25] - [58, 27]))
+                (part_instruction [58, 14] - [58, 22])
+                (integer [58, 25] - [58, 27]))
               (instruction [59, 4] - [59, 18]
-                instruction: (string [59, 10] - [59, 18]
+                (part_instruction [59, 4] - [59, 9])
+                (string [59, 10] - [59, 18]
                   (string_content [59, 11] - [59, 13])
                   (string_escape [59, 13] - [59, 15])
                   (string_content [59, 15] - [59, 17])))
-              (instruction [60, 4] - [60, 7])
+              (instruction [60, 4] - [60, 7]
+                (part_instruction [60, 4] - [60, 7]))
               (instruction [61, 4] - [61, 21]
                 label: (id_label [61, 4] - [61, 11]
-                  (symbol [61, 4] - [61, 11])))
+                  (symbol [61, 4] - [61, 11]))
+                (part_instruction [61, 14] - [61, 21]))
               (instruction [62, 4] - [62, 21]
                 label: (id_label [62, 4] - [62, 11]
-                  (symbol [62, 4] - [62, 11])))
+                  (symbol [62, 4] - [62, 11]))
+                (part_instruction [62, 14] - [62, 21]))
               (instruction [62, 22] - [62, 40]
                 label: (id_label [62, 22] - [62, 29]
-                  (symbol [62, 22] - [62, 29])))
-              (instruction [62, 42] - [62, 45])
+                  (symbol [62, 22] - [62, 29]))
+                (part_instruction [62, 32] - [62, 40]))
+              (instruction [62, 42] - [62, 45]
+                (part_instruction [62, 42] - [62, 45]))
               (instruction [63, 4] - [63, 21]
                 label: (id_label [63, 4] - [63, 11]
-                  (symbol [63, 4] - [63, 11])))
+                  (symbol [63, 4] - [63, 11]))
+                (part_instruction [63, 14] - [63, 21]))
               (instruction [63, 23] - [63, 40]
                 label: (id_label [63, 23] - [63, 30]
-                  (symbol [63, 23] - [63, 30])))
+                  (symbol [63, 23] - [63, 30]))
+                (part_instruction [63, 33] - [63, 40]))
               (instruction [64, 4] - [64, 17]
                 label: (id_label [64, 4] - [64, 11]
-                  (symbol [64, 4] - [64, 11])))))
+                  (symbol [64, 4] - [64, 11]))
+                (part_instruction [64, 14] - [64, 17]))))
           (comment [65, 4] - [65, 39])
           (def_method [67, 2] - [76, 3]
             (part_keyword [67, 2] - [67, 9])
@@ -634,11 +644,13 @@
                 (integer [71, 15] - [71, 16]))
               (instruction [72, 4] - [72, 21]
                 label: (id_label [72, 4] - [72, 11]
-                  (symbol [72, 4] - [72, 11])))
+                  (symbol [72, 4] - [72, 11]))
+                (part_instruction [72, 14] - [72, 21]))
               (instruction [73, 4] - [73, 77]
                 label: (id_label [73, 4] - [73, 11]
                   (symbol [73, 4] - [73, 11]))
-                instruction: (ref_method [73, 25] - [73, 77]
+                (part_instruction [73, 14] - [73, 18])
+                (ref_method [73, 25] - [73, 77]
                   (part_modifier [73, 25] - [73, 33])
                   return: (type [73, 34] - [73, 38]
                     (type_intrinsic [73, 34] - [73, 38]))
@@ -658,10 +670,12 @@
                   (args [73, 75] - [73, 77])))
               (instruction [74, 4] - [74, 17]
                 label: (id_label [74, 4] - [74, 11]
-                  (symbol [74, 4] - [74, 11])))
+                  (symbol [74, 4] - [74, 11]))
+                (part_instruction [74, 14] - [74, 17]))
               (instruction [75, 4] - [75, 17]
                 label: (id_label [75, 4] - [75, 11]
-                  (symbol [75, 4] - [75, 11]))))))
+                  (symbol [75, 4] - [75, 11]))
+                (part_instruction [75, 14] - [75, 17])))))
         (comment [76, 4] - [76, 35]))
       (comment [78, 2] - [78, 25])
       (def_class [80, 0] - [94, 1]
@@ -692,11 +706,13 @@
                 (integer [87, 15] - [87, 16]))
               (instruction [88, 4] - [88, 21]
                 label: (id_label [88, 4] - [88, 11]
-                  (symbol [88, 4] - [88, 11])))
+                  (symbol [88, 4] - [88, 11]))
+                (part_instruction [88, 14] - [88, 21]))
               (instruction [89, 4] - [89, 77]
                 label: (id_label [89, 4] - [89, 11]
                   (symbol [89, 4] - [89, 11]))
-                instruction: (ref_method [89, 25] - [89, 77]
+                (part_instruction [89, 14] - [89, 18])
+                (ref_method [89, 25] - [89, 77]
                   (part_modifier [89, 25] - [89, 33])
                   return: (type [89, 34] - [89, 38]
                     (type_intrinsic [89, 34] - [89, 38]))
@@ -716,10 +732,12 @@
                   (args [89, 75] - [89, 77])))
               (instruction [90, 4] - [90, 17]
                 label: (id_label [90, 4] - [90, 11]
-                  (symbol [90, 4] - [90, 11])))
+                  (symbol [90, 4] - [90, 11]))
+                (part_instruction [90, 14] - [90, 17]))
               (instruction [91, 4] - [91, 17]
                 label: (id_label [91, 4] - [91, 11]
-                  (symbol [91, 4] - [91, 11]))))))
+                  (symbol [91, 4] - [91, 11]))
+                (part_instruction [91, 14] - [91, 17])))))
         (comment [92, 4] - [92, 40]))
       (comment [94, 2] - [94, 30])
       (def_class [96, 0] - [134, 1]
@@ -841,15 +859,18 @@
                               (integer [123, 36] - [123, 37])
                               (integer [123, 40] - [123, 41])))))))
                   (instruction [124, 6] - [124, 19]
-                    instruction: (id_label [124, 9] - [124, 19]
+                    (part_instruction [124, 6] - [124, 8])
+                    (id_label [124, 9] - [124, 19]
                       (symbol [124, 9] - [124, 19])))
                   (instruction [125, 6] - [125, 23]
                     label: (id_label [125, 6] - [125, 13]
-                      (symbol [125, 6] - [125, 13])))
+                      (symbol [125, 6] - [125, 13]))
+                    (part_instruction [125, 16] - [125, 23]))
                   (instruction [126, 6] - [126, 72]
                     label: (id_label [126, 6] - [126, 16]
                       (symbol [126, 6] - [126, 16]))
-                    instruction: (ref_method [126, 30] - [126, 72]
+                    (part_instruction [126, 19] - [126, 23])
+                    (ref_method [126, 30] - [126, 72]
                       (part_modifier [126, 30] - [126, 38])
                       return: (type [126, 39] - [126, 43]
                         (type_intrinsic [126, 39] - [126, 43]))
@@ -866,7 +887,8 @@
                           name: (id_parameter [126, 70] - [126, 71]
                             (symbol [126, 70] - [126, 71]))))))
                   (instruction [127, 6] - [127, 33]
-                    instruction: (ref_method [127, 17] - [127, 33]
+                    (part_instruction [127, 6] - [127, 10])
+                    (ref_method [127, 17] - [127, 33]
                       return: (type [127, 17] - [127, 21]
                         (type_intrinsic [127, 17] - [127, 21]))
                       name: (id_method [127, 22] - [127, 31]
@@ -875,10 +897,12 @@
                       (args [127, 31] - [127, 33])))
                   (instruction [128, 6] - [128, 19]
                     label: (id_label [128, 6] - [128, 13]
-                      (symbol [128, 6] - [128, 13])))
+                      (symbol [128, 6] - [128, 13]))
+                    (part_instruction [128, 16] - [128, 19]))
                   (instruction [129, 6] - [129, 19]
                     label: (id_label [129, 6] - [129, 13]
-                      (symbol [129, 6] - [129, 13]))))))
+                      (symbol [129, 6] - [129, 13]))
+                    (part_instruction [129, 16] - [129, 19])))))
             (comment [130, 6] - [130, 32])))
         (comment [132, 4] - [132, 22]))
       (comment [134, 2] - [134, 19])
@@ -899,7 +923,8 @@
         (args [140, 22] - [140, 24])
         (part_modifier [140, 25] - [140, 36])
         (part_body [142, 2] - [142, 5]
-          (instruction [142, 2] - [142, 5])))))
+          (instruction [142, 2] - [142, 5]
+            (part_instruction [142, 2] - [142, 5]))))))
   (comment [146, 0] - [146, 64])
   (comment [148, 0] - [148, 59])
   (comment [149, 0] - [149, 46]))
