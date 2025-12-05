@@ -1,0 +1,7 @@
+
+inherits = "dark_plus"
+
+"constructor"               = "special"
+"label"                     = "#a49db9"
+"namespace"                 = "#c2b4a8"
+"type.builtin"              = "blue2"

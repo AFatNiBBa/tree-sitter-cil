@@ -62,6 +62,8 @@
 ] @punctuation.delimiter
 
 [
-  "=",
+  "="
+  ":"
+  "::"
   "..."
 ] @operator
