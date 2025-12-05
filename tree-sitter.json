@@ -1,0 +1,40 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "cil",
+      "camelcase": "Cil",
+      "title": "Common Intermediate Language",
+      "scope": "source.cil",
+      "file-types": [
+        "msil",
+        "il",
+        "cil"
+      ],
+      "injection-regex": "^cil$",
+      "class-name": "TreeSitterCil"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": ".NET's Common Intermediate Language",
+    "authors": [
+      {
+        "name": "AFatNiBBa"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/AFatNiBBa/tree-sitter-cil"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true,
+    "zig": false
+  }
+}
