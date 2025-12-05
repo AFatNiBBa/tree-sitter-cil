@@ -21,9 +21,6 @@
 
 (type_intrinsic) @type.builtin
 
-(args_item
-  name: (symbol) @variable.parameter)
-
 (id_namespace) @namespace
 
 (id_class
@@ -37,6 +34,8 @@
     (id) @function
     (part_keyword) @constructor
   ])
+
+(id_parameter) @variable.parameter
 
 (id_label) @label
 

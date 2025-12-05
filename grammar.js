@@ -56,7 +56,7 @@ module.exports = grammar({
 
     args: $ => seq("(", optional(join(",", $.args_item)), ")"),
 
-    args_item: $ => seq(field("type", $.type), optional(field("name", $.symbol))),
+    args_item: $ => seq(field("type", $.type), optional(field("name", $.id_parameter))),
 
     //#endregion
 
@@ -69,6 +69,8 @@ module.exports = grammar({
     id_member: $ => $.id,
 
     id_method: $ => choice($.id, alias(choice(".ctor", ".cctor"), $.part_keyword)),
+
+    id_parameter: $ => $.symbol,
 
     id_label: $ => $.symbol,
 
