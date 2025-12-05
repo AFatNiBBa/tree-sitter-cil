@@ -218,8 +218,10 @@ module.exports = grammar({
     ref_method: $ => seq(
       alias(optional("instance"), $.part_modifier),
       field("return", $.type),
-      field("parent", $.ref_class),
-      "::",
+      optional(seq(
+        field("parent", $.ref_class),
+        "::"
+      )),
       field("name", $.id_method),
       $.args
     ),

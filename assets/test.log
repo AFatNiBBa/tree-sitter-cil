@@ -1,9 +1,9 @@
-(file [1, 0] - [149, 0]
+(file [1, 0] - [150, 0]
   (comment [1, 0] - [1, 70])
   (comment [2, 0] - [2, 68])
   (comment [6, 0] - [6, 32])
-  (def_module [7, 0] - [142, 1]
-    (part_body [7, 0] - [142, 1]
+  (def_module [7, 0] - [143, 1]
+    (part_body [7, 0] - [143, 1]
       (def_assembly [7, 0] - [11, 1]
         (part_keyword [7, 0] - [7, 9])
         (part_modifier [7, 10] - [7, 16])
@@ -718,7 +718,7 @@
                   (symbol [91, 4] - [91, 11]))))))
         (comment [92, 4] - [92, 41]))
       (comment [94, 2] - [94, 31])
-      (def_class [96, 0] - [133, 1]
+      (def_class [96, 0] - [134, 1]
         (part_keyword [96, 0] - [96, 6])
         (part_modifier [96, 7] - [96, 52])
         name: (id_class [96, 53] - [96, 54]
@@ -736,7 +736,7 @@
               (id_namespace [97, 31] - [97, 37]
                 (symbol [97, 31] - [97, 37]))
               (symbol [97, 38] - [97, 47]))))
-        (part_body [99, 2] - [131, 3]
+        (part_body [99, 2] - [132, 3]
           (option_type [99, 2] - [99, 9]
             (part_keyword [99, 2] - [99, 7])
             (integer [99, 8] - [99, 9]))
@@ -795,7 +795,7 @@
                 (part_keyword [112, 4] - [112, 9])
                 (integer [112, 10] - [112, 11]))))
           (comment [113, 4] - [113, 24])
-          (def_class [115, 2] - [131, 3]
+          (def_class [115, 2] - [132, 3]
             (part_keyword [115, 2] - [115, 8])
             (part_modifier [115, 9] - [115, 48])
             name: (id_class [115, 49] - [115, 51]
@@ -806,8 +806,8 @@
               name: (id_class [116, 17] - [116, 29]
                 (id [116, 17] - [116, 29]
                   (symbol [116, 17] - [116, 29]))))
-            (part_body [118, 4] - [129, 5]
-              (def_method [118, 4] - [129, 5]
+            (part_body [118, 4] - [130, 5]
+              (def_method [118, 4] - [130, 5]
                 (part_keyword [118, 4] - [118, 11])
                 (part_modifier [118, 12] - [119, 20])
                 return: (type [119, 21] - [119, 25]
@@ -817,7 +817,7 @@
                 (args [119, 32] - [119, 34])
                 (part_modifier [119, 35] - [119, 46])
                 (comment [121, 6] - [121, 33])
-                (part_body [122, 6] - [128, 19]
+                (part_body [122, 6] - [129, 19]
                   (option_method [122, 6] - [122, 18]
                     (part_keyword [122, 6] - [122, 15])
                     (integer [122, 17] - [122, 18]))
@@ -860,33 +860,41 @@
                           type: (type [126, 64] - [126, 69]
                             (type_intrinsic [126, 64] - [126, 69]))
                           name: (symbol [126, 70] - [126, 71])))))
-                  (instruction [127, 6] - [127, 19]
-                    label: (id_label [127, 6] - [127, 13]
-                      (symbol [127, 6] - [127, 13])))
+                  (instruction [127, 6] - [127, 33]
+                    instruction: (ref_method [127, 17] - [127, 33]
+                      return: (type [127, 17] - [127, 21]
+                        (type_intrinsic [127, 17] - [127, 21]))
+                      name: (id_method [127, 22] - [127, 31]
+                        (id [127, 22] - [127, 31]
+                          (symbol [127, 22] - [127, 31])))
+                      (args [127, 31] - [127, 33])))
                   (instruction [128, 6] - [128, 19]
                     label: (id_label [128, 6] - [128, 13]
-                      (symbol [128, 6] - [128, 13]))))))
-            (comment [129, 6] - [129, 33])))
-        (comment [131, 4] - [131, 23]))
-      (comment [133, 2] - [133, 20])
-      (def_class [135, 0] - [137, 1]
-        (part_keyword [135, 0] - [135, 6])
-        (part_modifier [135, 7] - [135, 59])
-        name: (id_class [135, 60] - [135, 61]
-          (id [135, 60] - [135, 61]
-            (symbol [135, 60] - [135, 61]))))
-      (comment [137, 2] - [137, 20])
-      (def_method [139, 0] - [142, 1]
-        (part_keyword [139, 0] - [139, 7])
-        return: (type [139, 8] - [139, 12]
-          (type_intrinsic [139, 8] - [139, 12]))
-        name: (id_method [139, 13] - [139, 22]
-          (id [139, 13] - [139, 22]
-            (symbol [139, 13] - [139, 22])))
-        (args [139, 22] - [139, 24])
-        (part_modifier [139, 25] - [139, 36])
-        (part_body [141, 2] - [141, 5]
-          (instruction [141, 2] - [141, 5])))))
-  (comment [145, 0] - [145, 65])
-  (comment [147, 0] - [147, 60])
-  (comment [148, 0] - [148, 47]))
+                      (symbol [128, 6] - [128, 13])))
+                  (instruction [129, 6] - [129, 19]
+                    label: (id_label [129, 6] - [129, 13]
+                      (symbol [129, 6] - [129, 13]))))))
+            (comment [130, 6] - [130, 33])))
+        (comment [132, 4] - [132, 23]))
+      (comment [134, 2] - [134, 20])
+      (def_class [136, 0] - [138, 1]
+        (part_keyword [136, 0] - [136, 6])
+        (part_modifier [136, 7] - [136, 59])
+        name: (id_class [136, 60] - [136, 61]
+          (id [136, 60] - [136, 61]
+            (symbol [136, 60] - [136, 61]))))
+      (comment [138, 2] - [138, 20])
+      (def_method [140, 0] - [143, 1]
+        (part_keyword [140, 0] - [140, 7])
+        return: (type [140, 8] - [140, 12]
+          (type_intrinsic [140, 8] - [140, 12]))
+        name: (id_method [140, 13] - [140, 22]
+          (id [140, 13] - [140, 22]
+            (symbol [140, 13] - [140, 22])))
+        (args [140, 22] - [140, 24])
+        (part_modifier [140, 25] - [140, 36])
+        (part_body [142, 2] - [142, 5]
+          (instruction [142, 2] - [142, 5])))))
+  (comment [146, 0] - [146, 65])
+  (comment [148, 0] - [148, 60])
+  (comment [149, 0] - [149, 47]))

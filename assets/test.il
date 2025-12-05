@@ -125,6 +125,7 @@
       br 'IL_ 0001'
       IL_0000:  ldarg.0
       'IL_ 0001':  call       instance void 'AProgramΣ'::.ctor(int32 f)
+      call       void Something()
       IL_0006:  nop
       IL_0007:  ret
     } // end of method BD::.ctor

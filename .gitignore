@@ -3,7 +3,11 @@
 node_modules/
 package-lock.json
 
+# Rust
+Cargo.lock
+
 # Tree-sitter
+target/
 src/
 cil.dll
 parser.lib
