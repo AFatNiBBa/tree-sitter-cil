@@ -20,6 +20,8 @@ namespace A.B.C.D {
   
 }
 
+// ciao
+
 @ciuoac(1)
 class B {
   constructor() {
