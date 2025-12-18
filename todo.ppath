@@ -22,3 +22,18 @@ query > capisci il funzionamento > {
 
     se faccio "repeat(field($1, alias(seq(field($2, $3), field($4, $5)), $6)))" mi fa "{ $1: { $2: $3, $4: $5 }[] }"?
 } >> ripassa tutta la grammatica
+
+ci stanno le stringhe costanti col + > "
+    IL_0008:  ldstr      "INSERT INTO Anagrafica_Percipienti (Anno, Id, CodC"
+    + "omuneRes, CodFiscEstero, CodiceFiscale, CodiceRegioneRes, CodStatoEster"
+    + "o, Cognome, ComuneNascita, ComuneRes, DataNascita, IndirizzoEstero, Ind"
+    + "irizzoRes, LocResEstera, Nome, ProvinciaNascita, ProvinciaRes, Sesso, N"
+    + "onResidentiSchumacker, LuogoAttinenza, Frontalieri)\r\nSELECT @annoDestRi"
+    + "f1, Id + @max, CodComuneRes, CodFiscEstero, CodiceFiscale, CodiceRegion"
+    + "eRes, CodStatoEstero, Cognome, ComuneNascita, ComuneRes, DataNascita, I"
+    + "ndirizzoEstero, IndirizzoRes, LocResEstera, Nome, ProvinciaNascita, Pro"
+    + "vinciaRes, Sesso, NonResidentiSchumacker, LuogoAttinenza, Frontalieri\r\n"
+    + "FROM Anagrafica_Percipienti\r\nWHERE\r\n  Anno = @annoSrc AND\r\n  CodiceFisc"
+    + "ale NOT IN (SELECT CodiceFiscale FROM Anagrafica_Percipienti WHERE Anno"
+    + " = @annoDestRif2)"
+"
