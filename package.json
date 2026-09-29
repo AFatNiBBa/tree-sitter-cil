@@ -1,10 +1,29 @@
 {
   "name": "tree-sitter-cil",
+  "version": "0.1.0",
+  "description": ".NET's common intermediate language",
+  "author": "AFatNiBBa",
+  "license": "MIT",
+  "type": "module",
   "scripts": {
-    "build": "tree-sitter generate && tree-sitter build",
-    "test": "npm run build && tree-sitter parse ./assets/test.il > ./assets/test.log"
+    "start": "tree-sitter playground",
+    "prestart": "npm run build",
+    "build": "npm run generate && tree-sitter build --wasm",
+    "generate": "tree-sitter generate",
+    "test": "tree-sitter test",
+    "ssl": "echo ssl-revoke-best-effort >> %userprofile%/.curlrc"
   },
   "devDependencies": {
-    "tree-sitter-cli": "^0.25.10"
-  }
+    "tree-sitter-cli": "^0.27.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AFatNiBBa/tree-sitter-cil.git"
+  },
+  "keywords": [
+    "incremental",
+    "parsing",
+    "tree-sitter",
+    "cil"
+  ]
 }
