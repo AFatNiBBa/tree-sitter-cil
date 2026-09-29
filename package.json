@@ -10,7 +10,8 @@
     "prestart": "npm run build",
     "build": "npm run generate && tree-sitter build --wasm",
     "generate": "tree-sitter generate",
-    "test": "tree-sitter test"
+    "test": "tree-sitter test",
+    "ssl": "echo ssl-revoke-best-effort >> %userprofile%/.curlrc"
   },
   "devDependencies": {
     "tree-sitter-cli": "^0.27.0"
