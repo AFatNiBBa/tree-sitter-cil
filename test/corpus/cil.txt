@@ -1,0 +1,248 @@
+==================
+Hello World
+==================
+
+.assembly Hello
+{
+  .ver 1:0:0:0
+}
+
+.method public static void Main() cil managed
+{
+  .entrypoint
+  ldstr "Hello, World!"
+  call void [System.Console]System.Console::WriteLine(string)
+  ret
+}
+
+---
+
+(file
+  (def_module
+    (part_body
+      (def_assembly
+        (part_keyword)
+        (id_namespace
+          (symbol))
+        (part_body
+          (option_assembly
+            (part_keyword)
+            (version))))
+      (def_method
+        (part_keyword)
+        (part_modifier)
+        (type
+          (type_intrinsic))
+        (id_method
+          (id
+            (symbol)))
+        (args)
+        (part_modifier)
+        (part_body
+          (option_method
+            (part_keyword))
+          (instruction
+            (part_instruction)
+            (string
+              (string_content)))
+          (instruction
+            (part_instruction)
+            (ref_method
+              (type
+                (type_intrinsic))
+              (ref_class
+                (ref_assembly
+                  (id_namespace
+                    (id_namespace
+                      (symbol))
+                    (symbol)))
+                (id_class
+                  (id
+                    (id_namespace
+                      (symbol))
+                    (symbol))))
+              (id_method
+                (id
+                  (symbol)))
+              (args
+                (args_item
+                  (type
+                    (type_intrinsic))))))
+          (instruction
+            (part_instruction)))))))
+
+==================
+Class Definition
+==================
+
+.class public auto ansi beforefieldinit MyNamespace.MyClass
+       extends [System.Runtime]System.Object
+{
+  .custom instance void [System.Runtime]System.Runtime.CompilerServices.NullableContextAttribute::.ctor(int8) = ( 01 00 01 00 00 )
+
+  .method public hidebysig specialname rtspecialname 
+          instance void .ctor() cil managed
+  {
+    ldarg.0
+    call instance void [System.Runtime]System.Object::.ctor()
+    ret
+  }
+}
+
+---
+
+(file
+  (def_module
+    (part_body
+      (def_class
+        (part_keyword)
+        (part_modifier)
+        (id_class
+          (id
+            (id_namespace
+              (symbol))
+            (symbol)))
+        (part_modifier)
+        (ref_class
+          (ref_assembly
+            (id_namespace
+              (id_namespace
+                (symbol))
+              (symbol)))
+          (id_class
+            (id
+              (id_namespace
+                (symbol))
+              (symbol))))
+        (part_body
+          (attribute
+            (part_keyword)
+            (ref_method
+              (part_modifier)
+              (type
+                (type_intrinsic))
+              (ref_class
+                (ref_assembly
+                  (id_namespace
+                    (id_namespace
+                      (symbol))
+                    (symbol)))
+                (id_class
+                  (id
+                    (id_namespace
+                      (id_namespace
+                        (id_namespace
+                          (symbol))
+                        (symbol))
+                      (symbol))
+                    (symbol))))
+              (id_method
+                (part_keyword))
+              (args
+                (args_item
+                  (type
+                    (type_intrinsic)))))
+            (blob
+              (byte)
+              (byte)
+              (byte)
+              (byte)
+              (byte)))
+          (def_method
+            (part_keyword)
+            (part_modifier)
+            (type
+              (type_intrinsic))
+            (id_method
+              (part_keyword))
+            (args)
+            (part_modifier)
+            (part_body
+              (instruction
+                (part_instruction))
+              (instruction
+                (part_instruction)
+                (ref_method
+                  (part_modifier)
+                  (type
+                    (type_intrinsic))
+                  (ref_class
+                    (ref_assembly
+                      (id_namespace
+                        (id_namespace
+                          (symbol))
+                        (symbol)))
+                    (id_class
+                      (id
+                        (id_namespace
+                          (symbol))
+                        (symbol))))
+                  (id_method
+                    (part_keyword))
+                  (args)))
+              (instruction
+                (part_instruction)))))))))
+
+==================
+Method Locals and Instructions
+==================
+
+.method private hidebysig static void Foo(int32 x) cil managed
+{
+  .locals init (int32 V_0, string V_1)
+  .maxstack 2
+  ldarg.0
+  ldc.i4.s 10
+  br label_exit
+  ret
+}
+
+---
+
+(file
+  (def_module
+    (part_body
+      (def_method
+        (part_keyword)
+        (part_modifier)
+        (type
+          (type_intrinsic))
+        (id_method
+          (id
+            (symbol)))
+        (args
+          (args_item
+            (type
+              (type_intrinsic))
+            (id_parameter
+              (symbol))))
+        (part_modifier)
+        (part_body
+          (option_method
+            (part_keyword)
+            (part_keyword)
+            (args
+              (args_item
+                (type
+                  (type_intrinsic))
+                (id_parameter
+                  (symbol)))
+              (args_item
+                (type
+                  (type_intrinsic))
+                (id_parameter
+                  (symbol)))))
+          (option_method
+            (part_keyword)
+            (integer))
+          (instruction
+            (part_instruction))
+          (instruction
+            (part_instruction)
+            (integer))
+          (instruction
+            (part_instruction)
+            (id_label
+              (symbol)))
+          (instruction
+            (part_instruction)))))))

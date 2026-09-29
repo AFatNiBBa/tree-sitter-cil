@@ -3,6 +3,7 @@
 
 /// <reference types="tree-sitter-cli/dsl" />
 
+/** A single hexadecimal digit, case-insensitive, with optional underscores */
 const HEX_DIGIT = /[a-f\d_]/i;
 
 /**
@@ -12,7 +13,7 @@ const HEX_DIGIT = /[a-f\d_]/i;
  */
 const join = (sep, rule) => seq(rule, repeat(seq(sep, rule)));
 
-module.exports = grammar({
+export default grammar({
   name: "cil",
   extras: $ => [ /\s+/, $.comment ],
 

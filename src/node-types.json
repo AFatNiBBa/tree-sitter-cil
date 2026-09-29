@@ -1,0 +1,899 @@
+[
+  {
+    "type": "args",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "args_item",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "args_item",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "id_parameter",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "type",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "attribute",
+    "named": true,
+    "fields": {
+      "ctor": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "ref_method",
+            "named": true
+          }
+        ]
+      },
+      "data": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "blob",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "part_keyword",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "blob",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "byte",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "def_assembly",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "id_namespace",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "part_body",
+          "named": true
+        },
+        {
+          "type": "part_keyword",
+          "named": true
+        },
+        {
+          "type": "part_modifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "def_class",
+    "named": true,
+    "fields": {
+      "base": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "ref_class",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "id_class",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "part_body",
+          "named": true
+        },
+        {
+          "type": "part_keyword",
+          "named": true
+        },
+        {
+          "type": "part_modifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "def_method",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "id_method",
+            "named": true
+          }
+        ]
+      },
+      "return": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "type",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "args",
+          "named": true
+        },
+        {
+          "type": "part_body",
+          "named": true
+        },
+        {
+          "type": "part_keyword",
+          "named": true
+        },
+        {
+          "type": "part_modifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "def_module",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "part_body",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "file",
+    "named": true,
+    "root": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "def_module",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "id",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "id_namespace",
+          "named": true
+        },
+        {
+          "type": "symbol",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "id_class",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "id",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "id_label",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "symbol",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "id_method",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "id",
+          "named": true
+        },
+        {
+          "type": "part_keyword",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "id_namespace",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "id_namespace",
+          "named": true
+        },
+        {
+          "type": "symbol",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "id_parameter",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "symbol",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "instruction",
+    "named": true,
+    "fields": {
+      "label": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "id_label",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "id_label",
+          "named": true
+        },
+        {
+          "type": "integer",
+          "named": true
+        },
+        {
+          "type": "part_instruction",
+          "named": true
+        },
+        {
+          "type": "ref_method",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "option_assembly",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "blob",
+          "named": true
+        },
+        {
+          "type": "integer",
+          "named": true
+        },
+        {
+          "type": "part_keyword",
+          "named": true
+        },
+        {
+          "type": "version",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "option_method",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "args",
+          "named": true
+        },
+        {
+          "type": "integer",
+          "named": true
+        },
+        {
+          "type": "part_keyword",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "option_module",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "id_namespace",
+          "named": true
+        },
+        {
+          "type": "integer",
+          "named": true
+        },
+        {
+          "type": "part_keyword",
+          "named": true
+        },
+        {
+          "type": "part_modifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "option_type",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "integer",
+          "named": true
+        },
+        {
+          "type": "part_keyword",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "part_body",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "attribute",
+          "named": true
+        },
+        {
+          "type": "def_assembly",
+          "named": true
+        },
+        {
+          "type": "def_class",
+          "named": true
+        },
+        {
+          "type": "def_method",
+          "named": true
+        },
+        {
+          "type": "instruction",
+          "named": true
+        },
+        {
+          "type": "option_assembly",
+          "named": true
+        },
+        {
+          "type": "option_method",
+          "named": true
+        },
+        {
+          "type": "option_module",
+          "named": true
+        },
+        {
+          "type": "option_type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "part_modifier",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "ref_assembly",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "id_namespace",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "ref_class",
+    "named": true,
+    "fields": {
+      "assembly": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "ref_assembly",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "id_class",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "ref_method",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "id_method",
+            "named": true
+          }
+        ]
+      },
+      "parent": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "ref_class",
+            "named": true
+          }
+        ]
+      },
+      "return": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "type",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "args",
+          "named": true
+        },
+        {
+          "type": "part_modifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "string",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "string_content",
+          "named": true
+        },
+        {
+          "type": "string_escape",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "type",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "type",
+          "named": true
+        },
+        {
+          "type": "type_custom",
+          "named": true
+        },
+        {
+          "type": "type_indexer",
+          "named": true
+        },
+        {
+          "type": "type_intrinsic",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "type_custom",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "part_modifier",
+          "named": true
+        },
+        {
+          "type": "ref_class",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "type_indexer",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "type_indexer_range",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "type_indexer_range",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "integer",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "\"",
+    "named": false
+  },
+  {
+    "type": "(",
+    "named": false
+  },
+  {
+    "type": ")",
+    "named": false
+  },
+  {
+    "type": ",",
+    "named": false
+  },
+  {
+    "type": ".",
+    "named": false
+  },
+  {
+    "type": "...",
+    "named": false
+  },
+  {
+    "type": ":",
+    "named": false
+  },
+  {
+    "type": "::",
+    "named": false
+  },
+  {
+    "type": ";",
+    "named": false
+  },
+  {
+    "type": "=",
+    "named": false
+  },
+  {
+    "type": "[",
+    "named": false
+  },
+  {
+    "type": "]",
+    "named": false
+  },
+  {
+    "type": "abstract",
+    "named": false
+  },
+  {
+    "type": "ansi",
+    "named": false
+  },
+  {
+    "type": "assembly",
+    "named": false
+  },
+  {
+    "type": "auto",
+    "named": false
+  },
+  {
+    "type": "beforefieldinit",
+    "named": false
+  },
+  {
+    "type": "byte",
+    "named": true
+  },
+  {
+    "type": "cil",
+    "named": false
+  },
+  {
+    "type": "comment",
+    "named": true,
+    "extra": true
+  },
+  {
+    "type": "hidebysig",
+    "named": false
+  },
+  {
+    "type": "instance",
+    "named": false
+  },
+  {
+    "type": "integer",
+    "named": true
+  },
+  {
+    "type": "interface",
+    "named": false
+  },
+  {
+    "type": "managed",
+    "named": false
+  },
+  {
+    "type": "nested",
+    "named": false
+  },
+  {
+    "type": "part_instruction",
+    "named": true
+  },
+  {
+    "type": "part_keyword",
+    "named": true
+  },
+  {
+    "type": "private",
+    "named": false
+  },
+  {
+    "type": "public",
+    "named": false
+  },
+  {
+    "type": "rtspecialname",
+    "named": false
+  },
+  {
+    "type": "sealed",
+    "named": false
+  },
+  {
+    "type": "sequential",
+    "named": false
+  },
+  {
+    "type": "specialname",
+    "named": false
+  },
+  {
+    "type": "static",
+    "named": false
+  },
+  {
+    "type": "string_content",
+    "named": true
+  },
+  {
+    "type": "string_escape",
+    "named": true
+  },
+  {
+    "type": "symbol",
+    "named": true
+  },
+  {
+    "type": "type_intrinsic",
+    "named": true
+  },
+  {
+    "type": "version",
+    "named": true
+  },
+  {
+    "type": "{",
+    "named": false
+  },
+  {
+    "type": "}",
+    "named": false
+  }
+]

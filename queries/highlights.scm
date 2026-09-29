@@ -1,64 +1,34 @@
 
-(comment) @comment
-
 [
   (byte)
   (integer)
   (version)
-] @constant.numeric.integer
+] @number
 
 (string) @string
 
-(string_escape) @constant.character.escape
+(comment) @comment
 
-(part_modifier) @keyword
-
-(part_keyword) @keyword.control
-
-; (part_keyword ".method") @keyword.function
-
-; (part_keyword (".locals" "init")) @keyword.storage.type
-
-(type_intrinsic) @type.builtin
+[
+  (ref_class)
+  (id_class)
+] @class
 
 (id_namespace) @namespace
 
-(id_class
-  (id
-    (symbol) @type))
+(part_keyword) @keyword
 
-; (id_member) @variable.other.member
+[
+  (part_modifier)
+  (type_intrinsic)
+] @macro
 
-(id_method
-  [
-    (id) @function
-    (part_keyword) @constructor
-  ])
+(id_method) @method
 
-(id_parameter) @variable.parameter
+(id_parameter) @parameter
+
+;; (ref_member) @property
 
 (id_label) @label
 
 (part_instruction) @function
-
-[
-  "("
-  ")"
-  "["
-  "]"
-  "{"
-  "}"
-]  @punctuation.bracket
-
-[
-  ";"
-  "."
-  ","
-] @punctuation.delimiter
-
-[
-  "="
-  ":"
-  "::"
-  "..."
-] @operator
