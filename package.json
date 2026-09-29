@@ -1,6 +1,6 @@
 {
   "name": "@seanalunni/tree-sitter-cil",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": ".NET's common intermediate language parser",
   "author": "AFatNiBBa",
   "license": "MIT",
@@ -22,6 +22,7 @@
     "url": "git+https://github.com/AFatNiBBa/tree-sitter-cil.git"
   },
   "files": [
+    "queries/*",
     "*.wasm"
   ],
   "keywords": [
