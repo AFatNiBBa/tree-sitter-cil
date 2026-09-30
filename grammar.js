@@ -31,6 +31,8 @@ export default grammar({
 
     symbol: $ => choice($.word, $.quoted),
 
+    modifier: $ => $.word,
+
     //#endregion
 
     //#region COMMON
@@ -146,22 +148,7 @@ export default grammar({
 
     def_class: $ => seq(
       alias(".class", $.keyword),
-      alias(
-        repeat(choice(
-          "abstract",
-          "ansi",
-          "assembly",
-          "auto",
-          "beforefieldinit",
-          "interface",
-          "nested",
-          "private",
-          "public",
-          "sealed",
-          "sequential"
-        )),
-        $.modifier
-      ),
+      repeat($.modifier),
       field("name", $.id_class),
       optional(seq(alias("extends", $.modifier), field("base", $.ref_class))),
       "{",
@@ -181,41 +168,18 @@ export default grammar({
 
     def_field: $ => seq(
       alias(".field", $.keyword),
-      alias(
-        repeat(choice(
-          "private",
-          "public"
-        )),
-        $.modifier
-      ),
+      repeat($.modifier),
       field("return", $.type),
       field("name", $.id_member)
     ),
 
     def_method: $ => seq(
       alias(".method", $.keyword),
-      alias(
-        repeat(choice(
-          "hidebysig",
-          "instance",
-          "private",
-          "public",
-          "rtspecialname",
-          "specialname",
-          "static"
-        )),
-        $.modifier
-      ),
+      repeat($.modifier),
       field("return", $.type),
       field("name", $.id_method),
       $.args,
-      alias(
-        repeat(choice(
-          "cil",
-          "managed"
-        )),
-        $.modifier
-      ),
+      repeat($.modifier),
       "{",
       alias(
         repeat(choice(

@@ -689,61 +689,11 @@
           "value": "keyword"
         },
         {
-          "type": "ALIAS",
+          "type": "REPEAT",
           "content": {
-            "type": "REPEAT",
-            "content": {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "STRING",
-                  "value": "abstract"
-                },
-                {
-                  "type": "STRING",
-                  "value": "ansi"
-                },
-                {
-                  "type": "STRING",
-                  "value": "assembly"
-                },
-                {
-                  "type": "STRING",
-                  "value": "auto"
-                },
-                {
-                  "type": "STRING",
-                  "value": "beforefieldinit"
-                },
-                {
-                  "type": "STRING",
-                  "value": "interface"
-                },
-                {
-                  "type": "STRING",
-                  "value": "nested"
-                },
-                {
-                  "type": "STRING",
-                  "value": "private"
-                },
-                {
-                  "type": "STRING",
-                  "value": "public"
-                },
-                {
-                  "type": "STRING",
-                  "value": "sealed"
-                },
-                {
-                  "type": "STRING",
-                  "value": "sequential"
-                }
-              ]
-            }
-          },
-          "named": true,
-          "value": "modifier"
+            "type": "SYMBOL",
+            "name": "modifier"
+          }
         },
         {
           "type": "FIELD",
@@ -843,25 +793,11 @@
           "value": "keyword"
         },
         {
-          "type": "ALIAS",
+          "type": "REPEAT",
           "content": {
-            "type": "REPEAT",
-            "content": {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "STRING",
-                  "value": "private"
-                },
-                {
-                  "type": "STRING",
-                  "value": "public"
-                }
-              ]
-            }
-          },
-          "named": true,
-          "value": "modifier"
+            "type": "SYMBOL",
+            "name": "modifier"
+          }
         },
         {
           "type": "FIELD",
@@ -894,45 +830,11 @@
           "value": "keyword"
         },
         {
-          "type": "ALIAS",
+          "type": "REPEAT",
           "content": {
-            "type": "REPEAT",
-            "content": {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "STRING",
-                  "value": "hidebysig"
-                },
-                {
-                  "type": "STRING",
-                  "value": "instance"
-                },
-                {
-                  "type": "STRING",
-                  "value": "private"
-                },
-                {
-                  "type": "STRING",
-                  "value": "public"
-                },
-                {
-                  "type": "STRING",
-                  "value": "rtspecialname"
-                },
-                {
-                  "type": "STRING",
-                  "value": "specialname"
-                },
-                {
-                  "type": "STRING",
-                  "value": "static"
-                }
-              ]
-            }
-          },
-          "named": true,
-          "value": "modifier"
+            "type": "SYMBOL",
+            "name": "modifier"
+          }
         },
         {
           "type": "FIELD",
@@ -955,25 +857,11 @@
           "name": "args"
         },
         {
-          "type": "ALIAS",
+          "type": "REPEAT",
           "content": {
-            "type": "REPEAT",
-            "content": {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "STRING",
-                  "value": "cil"
-                },
-                {
-                  "type": "STRING",
-                  "value": "managed"
-                }
-              ]
-            }
-          },
-          "named": true,
-          "value": "modifier"
+            "type": "SYMBOL",
+            "name": "modifier"
+          }
         },
         {
           "type": "STRING",

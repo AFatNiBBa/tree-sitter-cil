@@ -455,7 +455,17 @@
   {
     "type": "modifier",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "word",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "nesting",
@@ -869,45 +879,13 @@
     "named": false
   },
   {
-    "type": "abstract",
-    "named": false
-  },
-  {
-    "type": "ansi",
-    "named": false
-  },
-  {
-    "type": "assembly",
-    "named": false
-  },
-  {
-    "type": "auto",
-    "named": false
-  },
-  {
-    "type": "beforefieldinit",
-    "named": false
-  },
-  {
     "type": "byte",
     "named": true
-  },
-  {
-    "type": "cil",
-    "named": false
   },
   {
     "type": "comment",
     "named": true,
     "extra": true
-  },
-  {
-    "type": "hidebysig",
-    "named": false
-  },
-  {
-    "type": "instance",
-    "named": false
   },
   {
     "type": "instruction",
@@ -918,10 +896,6 @@
     "named": true
   },
   {
-    "type": "interface",
-    "named": false
-  },
-  {
     "type": "intrinsic",
     "named": true
   },
@@ -930,44 +904,8 @@
     "named": true
   },
   {
-    "type": "managed",
-    "named": false
-  },
-  {
-    "type": "nested",
-    "named": false
-  },
-  {
-    "type": "private",
-    "named": false
-  },
-  {
-    "type": "public",
-    "named": false
-  },
-  {
     "type": "quoted",
     "named": true
-  },
-  {
-    "type": "rtspecialname",
-    "named": false
-  },
-  {
-    "type": "sealed",
-    "named": false
-  },
-  {
-    "type": "sequential",
-    "named": false
-  },
-  {
-    "type": "specialname",
-    "named": false
-  },
-  {
-    "type": "static",
-    "named": false
   },
   {
     "type": "string_content",
