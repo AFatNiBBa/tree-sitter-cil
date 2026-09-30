@@ -40,13 +40,13 @@ export default grammar({
 
     attribute: $ => seq(
       alias(".custom", $.keyword),
-      field("ctor", $.ref_method),
+      $.ref_method,
       "=",
-      field("data", $.blob)
+      $.blob
     ),
 
     statement: $ => seq(
-      repeat(seq(field("label", $.id_label), ":")),
+      repeat(seq($.id_label, ":")),
       choice(
         seq(alias("call", $.instruction), $.ref_method),
         seq(alias("ldc.i4.s", $.instruction), $.integer),
@@ -77,7 +77,7 @@ export default grammar({
 
     args: $ => seq("(", optional(join(",", $.args_item)), ")"),
 
-    args_item: $ => seq(field("type", $.type), optional(field("name", $.id_parameter))),
+    args_item: $ => seq($.type, optional($.id_parameter)),
 
     //#endregion
 
@@ -119,78 +119,66 @@ export default grammar({
 
     //#region DEF
 
-    def_module: $ => alias(
-      repeat1(choice(
-        $.attribute,
-        $.option_module,
-        $.def_assembly,
-        $.def_class,
-        $.def_method,
-        ";"
-      )),
-      $.body
-    ),
+    def_module: $ => repeat1(choice(
+      $.attribute,
+      $.option_module,
+      $.def_assembly,
+      $.def_class,
+      $.def_method,
+      ";"
+    )),
 
     def_assembly: $ => seq(
       alias(".assembly", $.keyword),
       alias(optional("extern"), $.modifier),
-      field("name", $.id_assembly),
+      $.id_assembly,
       "{",
-      alias(
-        repeat(choice(
-          $.attribute,
-          $.option_assembly,
-          ";"
-        )),
-        $.body
-      ),
+      repeat(choice(
+        $.attribute,
+        $.option_assembly,
+        ";"
+      )),
       "}"
     ),
 
     def_class: $ => seq(
       alias(".class", $.keyword),
       repeat($.modifier),
-      field("name", $.id_class),
-      optional(seq(alias("extends", $.modifier), field("base", $.ref_class))),
+      $.id_class,
+      optional(seq(alias("extends", $.modifier), $.ref_class)),
       "{",
-      alias(
-        repeat(choice(
-          $.attribute,
-          $.option_type,
-          $.def_class,
-          $.def_field,
-          $.def_method,
-          ";"
-        )),
-        $.body
-      ),
+      repeat(choice(
+        $.attribute,
+        $.option_type,
+        $.def_class,
+        $.def_field,
+        $.def_method,
+        ";"
+      )),
       "}"
     ),
 
     def_field: $ => seq(
       alias(".field", $.keyword),
       repeat($.modifier),
-      field("return", $.type),
-      field("name", $.id_member)
+      $.type,
+      $.id_member
     ),
 
     def_method: $ => seq(
       alias(".method", $.keyword),
       repeat($.modifier),
-      field("return", $.type),
-      field("name", $.id_method),
+      $.type,
+      $.id_method,
       $.args,
       repeat($.modifier),
       "{",
-      alias(
-        repeat(choice(
-          $.attribute,
-          $.option_method,
-          $.statement,
-          ";"
-        )),
-        $.body
-      ),
+      repeat(choice(
+        $.attribute,
+        $.option_method,
+        $.statement,
+        ";"
+      )),
       "}"
     ),
 
@@ -198,25 +186,17 @@ export default grammar({
 
     //#region REF
 
-    ref_assembly: $ => seq("[", field("name", $.id_assembly), "]"),
+    ref_assembly: $ => seq("[", $.id_assembly, "]"),
 
-    ref_class: $ => seq(optional(field("assembly", $.ref_assembly)), field("name", $.id_class)),
+    ref_class: $ => seq(optional($.ref_assembly), $.id_class),
 
-    ref_member: $ => seq(
-      field("return", $.type),
-      field("parent", $.ref_class),
-      "::",
-      field("name", $.id_member)
-    ),
+    ref_member: $ => seq($.type, $.ref_class, "::", $.id_member),
 
     ref_method: $ => seq(
       alias(optional("instance"), $.modifier),
-      field("return", $.type),
-      optional(seq(
-        field("parent", $.ref_class),
-        "::"
-      )),
-      field("name", $.id_method),
+      $.type,
+      optional(seq($.ref_class, "::")),
+      $.id_method,
       $.args
     ),
 

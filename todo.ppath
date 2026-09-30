@@ -38,7 +38,4 @@ ci stanno le stringhe costanti col + > "
     + " = @annoDestRif2)"
 "
 
-{
-    "ldfld int32 B/BD::Count.f"
-    riguarda tutti gli "alias()" e "field()"
-}
+"ldfld int32 B/BD::Count.f"
