@@ -809,6 +809,10 @@
       "required": false,
       "types": [
         {
+          "type": "integer",
+          "named": true
+        },
+        {
           "type": "type_indexer_range",
           "named": true
         }

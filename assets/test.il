@@ -123,7 +123,7 @@
     {
       // Code size       8 (0x8)
       .maxstack  8
-      .locals init (int32[6...,,...,0...9])
+      .locals init (int32[6...,,...,0...9,4])
       br 'IL_ 0001'
       IL_0000:  ldarg.0
       'IL_ 0001':  call       instance void 'AProgramΣ'::.ctor(int32 f)

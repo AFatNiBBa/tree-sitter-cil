@@ -4,7 +4,7 @@
 /// <reference types="tree-sitter-cli/dsl" />
 
 /** A single hexadecimal digit, case-insensitive, with optional underscores */
-const REGEX_HEX_DIGIT = /[a-f\d_]/i;
+const REGEX_HEX_DIGIT = /[a-f\d]/i;
 
 /** A decimal sequence of digits */
 const REGEX_NUMBER = /\d+/;
@@ -16,6 +16,7 @@ const REGEX_NUMBER = /\d+/;
  */
 const join = (sep, rule) => seq(rule, repeat(seq(sep, rule)));
 
+// Grammar for .NET's Common Intermediate Language
 export default grammar({
   name: "cil",
   extras: $ => [ /\s+/, $.comment ],
@@ -110,7 +111,7 @@ export default grammar({
 
     type_custom: $ => seq(alias(choice("class", "valuetype"), $.modifier), $.ref_class),
 
-    type_indexer: $ => seq("[", optional(join(",", optional($.type_indexer_range))), "]"),
+    type_indexer: $ => seq("[", optional(join(",", optional(choice($.integer, $.type_indexer_range)))), "]"),
 
     type_indexer_range: $ => seq(optional($.integer), "...", optional($.integer)),
 

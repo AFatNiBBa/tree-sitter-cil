@@ -39,8 +39,6 @@ ci stanno le stringhe costanti col + > "
 "
 
 {
-    "type_indexer" accetta anche numeri sceveri oltre ai range?
-    verifica tutte le cose se possono avere nesting
-    verifica underscore su tutte le tipologie di numeri
+    "ldfld int32 B/BD::Count.f"
     riguarda tutti gli "alias()" e "field()"
 }
