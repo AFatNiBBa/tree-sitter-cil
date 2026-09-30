@@ -5,7 +5,14 @@
   (version)
 ] @number
 
-(string) @string
+(string
+  [
+    (string_escape) @string.escape
+    [
+      "\""
+      (string_content)
+    ] @string
+  ])
 
 (comment) @comment
 
