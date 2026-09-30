@@ -34,6 +34,49 @@
         }
       ]
     },
+    "nesting": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "symbol"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "nesting"
+            },
+            {
+              "type": "STRING",
+              "value": "."
+            },
+            {
+              "type": "SYMBOL",
+              "name": "symbol"
+            }
+          ]
+        }
+      ]
+    },
+    "symbol": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "word"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "quoted"
+        }
+      ]
+    },
+    "modifier": {
+      "type": "SYMBOL",
+      "name": "word"
+    },
     "attribute": {
       "type": "SEQ",
       "members": [
@@ -44,7 +87,7 @@
             "value": ".custom"
           },
           "named": true,
-          "value": "part_keyword"
+          "value": "keyword"
         },
         {
           "type": "FIELD",
@@ -68,7 +111,7 @@
         }
       ]
     },
-    "instruction": {
+    "statement": {
       "type": "SEQ",
       "members": [
         {
@@ -104,7 +147,7 @@
                     "value": "call"
                   },
                   "named": true,
-                  "value": "part_instruction"
+                  "value": "instruction"
                 },
                 {
                   "type": "SYMBOL",
@@ -122,7 +165,7 @@
                     "value": "ldc.i4.s"
                   },
                   "named": true,
-                  "value": "part_instruction"
+                  "value": "instruction"
                 },
                 {
                   "type": "SYMBOL",
@@ -140,7 +183,7 @@
                     "value": "br"
                   },
                   "named": true,
-                  "value": "part_instruction"
+                  "value": "instruction"
                 },
                 {
                   "type": "SYMBOL",
@@ -158,7 +201,7 @@
                     "value": "ldstr"
                   },
                   "named": true,
-                  "value": "part_instruction"
+                  "value": "instruction"
                 },
                 {
                   "type": "SYMBOL",
@@ -218,7 +261,7 @@
                 ]
               },
               "named": true,
-              "value": "part_instruction"
+              "value": "instruction"
             }
           ]
         }
@@ -299,31 +342,9 @@
         }
       ]
     },
-    "id_namespace": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "symbol"
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "id_namespace"
-            },
-            {
-              "type": "STRING",
-              "value": "."
-            },
-            {
-              "type": "SYMBOL",
-              "name": "symbol"
-            }
-          ]
-        }
-      ]
+    "id_assembly": {
+      "type": "SYMBOL",
+      "name": "id"
     },
     "id_class": {
       "type": "SYMBOL",
@@ -356,7 +377,7 @@
             ]
           },
           "named": true,
-          "value": "part_keyword"
+          "value": "keyword"
         }
       ]
     },
@@ -379,7 +400,7 @@
               "members": [
                 {
                   "type": "SYMBOL",
-                  "name": "id_namespace"
+                  "name": "nesting"
                 },
                 {
                   "type": "STRING",
@@ -403,7 +424,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "type_intrinsic"
+          "name": "intrinsic"
         },
         {
           "type": "SYMBOL",
@@ -424,10 +445,6 @@
         }
       ]
     },
-    "type_intrinsic": {
-      "type": "PATTERN",
-      "value": "void|refany|bool|bytearray|char|float|float32|float64|int|int16|int32|int64|object|int8|wchar|string|typedref"
-    },
     "type_custom": {
       "type": "SEQ",
       "members": [
@@ -447,7 +464,7 @@
             ]
           },
           "named": true,
-          "value": "part_modifier"
+          "value": "modifier"
         },
         {
           "type": "SYMBOL",
@@ -518,34 +535,33 @@
       ]
     },
     "type_indexer_range": {
-      "type": "CHOICE",
+      "type": "SEQ",
       "members": [
         {
-          "type": "STRING",
-          "value": "..."
-        },
-        {
-          "type": "SEQ",
+          "type": "CHOICE",
           "members": [
             {
               "type": "SYMBOL",
               "name": "integer"
             },
             {
-              "type": "STRING",
-              "value": "..."
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "..."
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "integer"
             },
             {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "integer"
-                },
-                {
-                  "type": "BLANK"
-                }
-              ]
+              "type": "BLANK"
             }
           ]
         }
@@ -586,7 +602,7 @@
         }
       },
       "named": true,
-      "value": "part_body"
+      "value": "body"
     },
     "def_assembly": {
       "type": "SEQ",
@@ -598,7 +614,7 @@
             "value": ".assembly"
           },
           "named": true,
-          "value": "part_keyword"
+          "value": "keyword"
         },
         {
           "type": "ALIAS",
@@ -615,14 +631,14 @@
             ]
           },
           "named": true,
-          "value": "part_modifier"
+          "value": "modifier"
         },
         {
           "type": "FIELD",
           "name": "name",
           "content": {
             "type": "SYMBOL",
-            "name": "id_namespace"
+            "name": "id_assembly"
           }
         },
         {
@@ -652,7 +668,7 @@
             }
           },
           "named": true,
-          "value": "part_body"
+          "value": "body"
         },
         {
           "type": "STRING",
@@ -670,7 +686,7 @@
             "value": ".class"
           },
           "named": true,
-          "value": "part_keyword"
+          "value": "keyword"
         },
         {
           "type": "ALIAS",
@@ -727,7 +743,7 @@
             }
           },
           "named": true,
-          "value": "part_modifier"
+          "value": "modifier"
         },
         {
           "type": "FIELD",
@@ -750,7 +766,7 @@
                     "value": "extends"
                   },
                   "named": true,
-                  "value": "part_modifier"
+                  "value": "modifier"
                 },
                 {
                   "type": "FIELD",
@@ -792,6 +808,10 @@
                 },
                 {
                   "type": "SYMBOL",
+                  "name": "def_field"
+                },
+                {
+                  "type": "SYMBOL",
                   "name": "def_method"
                 },
                 {
@@ -802,11 +822,62 @@
             }
           },
           "named": true,
-          "value": "part_body"
+          "value": "body"
         },
         {
           "type": "STRING",
           "value": "}"
+        }
+      ]
+    },
+    "def_field": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "STRING",
+            "value": ".field"
+          },
+          "named": true,
+          "value": "keyword"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "REPEAT",
+            "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "private"
+                },
+                {
+                  "type": "STRING",
+                  "value": "public"
+                }
+              ]
+            }
+          },
+          "named": true,
+          "value": "modifier"
+        },
+        {
+          "type": "FIELD",
+          "name": "return",
+          "content": {
+            "type": "SYMBOL",
+            "name": "type"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "id_member"
+          }
         }
       ]
     },
@@ -820,7 +891,7 @@
             "value": ".method"
           },
           "named": true,
-          "value": "part_keyword"
+          "value": "keyword"
         },
         {
           "type": "ALIAS",
@@ -861,7 +932,7 @@
             }
           },
           "named": true,
-          "value": "part_modifier"
+          "value": "modifier"
         },
         {
           "type": "FIELD",
@@ -902,7 +973,7 @@
             }
           },
           "named": true,
-          "value": "part_modifier"
+          "value": "modifier"
         },
         {
           "type": "STRING",
@@ -925,7 +996,7 @@
                 },
                 {
                   "type": "SYMBOL",
-                  "name": "instruction"
+                  "name": "statement"
                 },
                 {
                   "type": "STRING",
@@ -935,7 +1006,7 @@
             }
           },
           "named": true,
-          "value": "part_body"
+          "value": "body"
         },
         {
           "type": "STRING",
@@ -955,7 +1026,7 @@
           "name": "name",
           "content": {
             "type": "SYMBOL",
-            "name": "id_namespace"
+            "name": "id_assembly"
           }
         },
         {
@@ -1044,7 +1115,7 @@
             ]
           },
           "named": true,
-          "value": "part_modifier"
+          "value": "modifier"
         },
         {
           "type": "FIELD",
@@ -1115,7 +1186,7 @@
                 ]
               },
               "named": true,
-              "value": "part_keyword"
+              "value": "keyword"
             },
             {
               "type": "SYMBOL",
@@ -1133,7 +1204,7 @@
                 "value": ".imagebase"
               },
               "named": true,
-              "value": "part_keyword"
+              "value": "keyword"
             },
             {
               "type": "SYMBOL",
@@ -1151,7 +1222,7 @@
                 "value": ".stackreserve"
               },
               "named": true,
-              "value": "part_keyword"
+              "value": "keyword"
             },
             {
               "type": "SYMBOL",
@@ -1169,7 +1240,7 @@
                 "value": ".subsystem"
               },
               "named": true,
-              "value": "part_keyword"
+              "value": "keyword"
             },
             {
               "type": "SYMBOL",
@@ -1187,7 +1258,7 @@
                 "value": ".corflags"
               },
               "named": true,
-              "value": "part_keyword"
+              "value": "keyword"
             },
             {
               "type": "SYMBOL",
@@ -1205,7 +1276,7 @@
                 "value": ".module"
               },
               "named": true,
-              "value": "part_keyword"
+              "value": "keyword"
             },
             {
               "type": "ALIAS",
@@ -1222,11 +1293,11 @@
                 ]
               },
               "named": true,
-              "value": "part_modifier"
+              "value": "modifier"
             },
             {
               "type": "SYMBOL",
-              "name": "id_namespace"
+              "name": "id_assembly"
             }
           ]
         }
@@ -1254,7 +1325,7 @@
                 ]
               },
               "named": true,
-              "value": "part_keyword"
+              "value": "keyword"
             },
             {
               "type": "SYMBOL",
@@ -1272,7 +1343,7 @@
                 "value": ".publickeytoken"
               },
               "named": true,
-              "value": "part_keyword"
+              "value": "keyword"
             },
             {
               "type": "STRING",
@@ -1294,7 +1365,7 @@
                 "value": ".ver"
               },
               "named": true,
-              "value": "part_keyword"
+              "value": "keyword"
             },
             {
               "type": "SYMBOL",
@@ -1317,7 +1388,7 @@
                 "value": ".pack"
               },
               "named": true,
-              "value": "part_keyword"
+              "value": "keyword"
             },
             {
               "type": "SYMBOL",
@@ -1335,7 +1406,7 @@
                 "value": ".size"
               },
               "named": true,
-              "value": "part_keyword"
+              "value": "keyword"
             },
             {
               "type": "SYMBOL",
@@ -1367,7 +1438,7 @@
                 ]
               },
               "named": true,
-              "value": "part_keyword"
+              "value": "keyword"
             },
             {
               "type": "SYMBOL",
@@ -1385,7 +1456,7 @@
                 "value": ".maxstack"
               },
               "named": true,
-              "value": "part_keyword"
+              "value": "keyword"
             },
             {
               "type": "SYMBOL",
@@ -1400,7 +1471,7 @@
             "value": ".entrypoint"
           },
           "named": true,
-          "value": "part_keyword"
+          "value": "keyword"
         }
       ]
     },
@@ -1533,35 +1604,40 @@
         ]
       }
     },
-    "symbol": {
+    "intrinsic": {
       "type": "TOKEN",
       "content": {
-        "type": "CHOICE",
+        "type": "PATTERN",
+        "value": "void|refany|bool|bytearray|char|float|float32|float64|int|int16|int32|int64|object|int8|wchar|string|typedref"
+      }
+    },
+    "word": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[a-z_][a-z0-9_]*",
+        "flags": "i"
+      }
+    },
+    "quoted": {
+      "type": "TOKEN",
+      "content": {
+        "type": "SEQ",
         "members": [
           {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "STRING",
-                "value": "'"
-              },
-              {
-                "type": "REPEAT",
-                "content": {
-                  "type": "PATTERN",
-                  "value": "[^']|\\\\."
-                }
-              },
-              {
-                "type": "STRING",
-                "value": "'"
-              }
-            ]
+            "type": "STRING",
+            "value": "'"
           },
           {
-            "type": "PATTERN",
-            "value": "[a-z_][a-z0-9_]*",
-            "flags": "i"
+            "type": "REPEAT",
+            "content": {
+              "type": "PATTERN",
+              "value": "[^']|\\\\."
+            }
+          },
+          {
+            "type": "STRING",
+            "value": "'"
           }
         ]
       }

@@ -116,6 +116,8 @@
   .class auto ansi nested public beforefieldinit BD
          extends 'AProgramΣ'
   {
+    .field public int32 Count
+
     .method public hidebysig specialname rtspecialname 
             instance void  .ctor() cil managed
     {

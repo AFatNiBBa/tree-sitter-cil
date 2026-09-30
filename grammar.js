@@ -1,10 +1,13 @@
 
-//@ts-check
+// @ts-check
 
 /// <reference types="tree-sitter-cli/dsl" />
 
 /** A single hexadecimal digit, case-insensitive, with optional underscores */
-const HEX_DIGIT = /[a-f\d_]/i;
+const REGEX_HEX_DIGIT = /[a-f\d_]/i;
+
+/** A decimal sequence of digits */
+const REGEX_NUMBER = /\d+/;
 
 /**
  * Utility function that allows to define a repeating rule with a separator between each element
@@ -20,22 +23,32 @@ export default grammar({
   rules: {
     file: $ => optional($.def_module),
 
+    //#region UTIL
+
     blob: $ => seq("(", repeat($.byte), ")"),
 
+    nesting: $ => choice($.symbol, seq($.nesting, ".", $.symbol)),
+
+    symbol: $ => choice($.word, $.quoted),
+
+    //#endregion
+
+    //#region COMMON
+
     attribute: $ => seq(
-      alias(".custom", $.part_keyword),
+      alias(".custom", $.keyword),
       field("ctor", $.ref_method),
       "=",
       field("data", $.blob)
     ),
 
-    instruction: $ => seq(
+    statement: $ => seq(
       repeat(seq(field("label", $.id_label), ":")),
       choice(
-        seq(alias("call", $.part_instruction), $.ref_method),
-        seq(alias("ldc.i4.s", $.part_instruction), $.integer),
-        seq(alias("br", $.part_instruction), $.id_label),
-        seq(alias("ldstr", $.part_instruction), $.string),
+        seq(alias("call", $.instruction), $.ref_method),
+        seq(alias("ldc.i4.s", $.instruction), $.integer),
+        seq(alias("br", $.instruction), $.id_label),
+        seq(alias("ldstr", $.instruction), $.string),
         alias(
           choice(
             "ldarg.0",
@@ -50,10 +63,12 @@ export default grammar({
             "nop",
             "pop"
           ),
-          $.part_instruction
+          $.instruction
         )
       )
     ),
+
+    //#endregion
 
     //#region ARGS
 
@@ -64,14 +79,14 @@ export default grammar({
     //#endregion
 
     //#region IDENTIFIER
- 
-    id_namespace: $ => choice($.symbol, seq($.id_namespace, ".", $.symbol)),
 
+    id_assembly: $ => $.id,
+ 
     id_class: $ => $.id,
 
     id_member: $ => $.id,
 
-    id_method: $ => choice($.id, alias(choice(".ctor", ".cctor"), $.part_keyword)),
+    id_method: $ => choice($.id, alias(choice(".ctor", ".cctor"), $.keyword)),
 
     id_parameter: $ => $.symbol,
 
@@ -79,7 +94,7 @@ export default grammar({
 
     id: $ => seq(
       optional(seq(
-        $.id_namespace,
+        $.nesting,
         "."
       )),
       $.symbol
@@ -89,18 +104,13 @@ export default grammar({
 
     //#region TYPE
 
-    type: $ => choice($.type_intrinsic, $.type_custom, seq($.type, $.type_indexer)),
+    type: $ => choice($.intrinsic, $.type_custom, seq($.type, $.type_indexer)),
 
-    type_intrinsic: () => /void|refany|bool|bytearray|char|float|float32|float64|int|int16|int32|int64|object|int8|wchar|string|typedref/,
-
-    type_custom: $ => seq(alias(choice("class", "valuetype"), $.part_modifier), $.ref_class),
+    type_custom: $ => seq(alias(choice("class", "valuetype"), $.modifier), $.ref_class),
 
     type_indexer: $ => seq("[", optional(join(",", optional($.type_indexer_range))), "]"),
 
-    type_indexer_range: $ => choice(
-      "...", // You can't put the upper bound alone, but you can put the dots without bounds
-      seq($.integer, "...", optional($.integer))
-    ),
+    type_indexer_range: $ => seq(optional($.integer), "...", optional($.integer)),
 
     //#endregion
 
@@ -115,13 +125,13 @@ export default grammar({
         $.def_method,
         ";"
       )),
-      $.part_body
+      $.body
     ),
 
     def_assembly: $ => seq(
-      alias(".assembly", $.part_keyword),
-      alias(optional("extern"), $.part_modifier),
-      field("name", $.id_namespace),
+      alias(".assembly", $.keyword),
+      alias(optional("extern"), $.modifier),
+      field("name", $.id_assembly),
       "{",
       alias(
         repeat(choice(
@@ -129,13 +139,13 @@ export default grammar({
           $.option_assembly,
           ";"
         )),
-        $.part_body
+        $.body
       ),
       "}"
     ),
 
     def_class: $ => seq(
-      alias(".class", $.part_keyword),
+      alias(".class", $.keyword),
       alias(
         repeat(choice(
           "abstract",
@@ -150,26 +160,40 @@ export default grammar({
           "sealed",
           "sequential"
         )),
-        $.part_modifier
+        $.modifier
       ),
       field("name", $.id_class),
-      optional(seq(alias("extends", $.part_modifier), field("base", $.ref_class))),
+      optional(seq(alias("extends", $.modifier), field("base", $.ref_class))),
       "{",
       alias(
         repeat(choice(
           $.attribute,
           $.option_type,
           $.def_class,
+          $.def_field,
           $.def_method,
           ";"
         )),
-        $.part_body
+        $.body
       ),
       "}"
     ),
 
+    def_field: $ => seq(
+      alias(".field", $.keyword),
+      alias(
+        repeat(choice(
+          "private",
+          "public"
+        )),
+        $.modifier
+      ),
+      field("return", $.type),
+      field("name", $.id_member)
+    ),
+
     def_method: $ => seq(
-      alias(".method", $.part_keyword),
+      alias(".method", $.keyword),
       alias(
         repeat(choice(
           "hidebysig",
@@ -180,7 +204,7 @@ export default grammar({
           "specialname",
           "static"
         )),
-        $.part_modifier
+        $.modifier
       ),
       field("return", $.type),
       field("name", $.id_method),
@@ -190,17 +214,17 @@ export default grammar({
           "cil",
           "managed"
         )),
-        $.part_modifier
+        $.modifier
       ),
       "{",
       alias(
         repeat(choice(
           $.attribute,
           $.option_method,
-          $.instruction,
+          $.statement,
           ";"
         )),
-        $.part_body
+        $.body
       ),
       "}"
     ),
@@ -209,7 +233,7 @@ export default grammar({
 
     //#region REF
 
-    ref_assembly: $ => seq("[", field("name", $.id_namespace), "]"),
+    ref_assembly: $ => seq("[", field("name", $.id_assembly), "]"),
 
     ref_class: $ => seq(optional(field("assembly", $.ref_assembly)), field("name", $.id_class)),
 
@@ -221,7 +245,7 @@ export default grammar({
     ),
 
     ref_method: $ => seq(
-      alias(optional("instance"), $.part_modifier),
+      alias(optional("instance"), $.modifier),
       field("return", $.type),
       optional(seq(
         field("parent", $.ref_class),
@@ -236,33 +260,33 @@ export default grammar({
     //#region OPTION
 
     option_module: $ => choice(
-      seq(alias(seq(".file", "alignment"), $.part_keyword), $.integer),
-      seq(alias(".imagebase", $.part_keyword), $.integer),
-      seq(alias(".stackreserve", $.part_keyword), $.integer),
-      seq(alias(".subsystem", $.part_keyword), $.integer),
-      seq(alias(".corflags", $.part_keyword), $.integer),
+      seq(alias(seq(".file", "alignment"), $.keyword), $.integer),
+      seq(alias(".imagebase", $.keyword), $.integer),
+      seq(alias(".stackreserve", $.keyword), $.integer),
+      seq(alias(".subsystem", $.keyword), $.integer),
+      seq(alias(".corflags", $.keyword), $.integer),
       seq(
-        alias(".module", $.part_keyword),
-        alias(optional("extern"), $.part_modifier),
-        $.id_namespace
+        alias(".module", $.keyword),
+        alias(optional("extern"), $.modifier),
+        $.id_assembly
       ),
     ),
 
     option_assembly: $ => choice(
-      seq(alias(seq(".hash", "algorithm"), $.part_keyword), $.integer),
-      seq(alias(".publickeytoken", $.part_keyword), "=", $.blob),
-      seq(alias(".ver", $.part_keyword), $.version)
+      seq(alias(seq(".hash", "algorithm"), $.keyword), $.integer),
+      seq(alias(".publickeytoken", $.keyword), "=", $.blob),
+      seq(alias(".ver", $.keyword), $.version)
     ),
 
     option_type: $ => choice(
-      seq(alias(".pack", $.part_keyword), $.integer),
-      seq(alias(".size", $.part_keyword), $.integer)
+      seq(alias(".pack", $.keyword), $.integer),
+      seq(alias(".size", $.keyword), $.integer),
     ),
 
     option_method: $ => choice(
-      seq(alias(seq(".locals", "init"), $.part_keyword), $.args),
-      seq(alias(".maxstack", $.part_keyword), $.integer),
-      alias(".entrypoint", $.part_keyword)
+      seq(alias(seq(".locals", "init"), $.keyword), $.args),
+      seq(alias(".maxstack", $.keyword), $.integer),
+      alias(".entrypoint", $.keyword)
     ),
 
     //#endregion
@@ -283,16 +307,17 @@ export default grammar({
 
     //#region TOKEN
 
-    byte: () => token(seq(HEX_DIGIT, HEX_DIGIT)),
+    byte: () => token(seq(REGEX_HEX_DIGIT, REGEX_HEX_DIGIT)),
 
-    integer: () => token(choice(/\d+/, seq("0x", repeat1(HEX_DIGIT)))),
+    integer: () => token(choice(REGEX_NUMBER, seq("0x", repeat1(REGEX_HEX_DIGIT)))),
 
-    version: () => token(seq(/\d+/, ":", /\d+/, ":", /\d+/, ":", /\d+/)),
+    version: () => token(seq(REGEX_NUMBER, ":", REGEX_NUMBER, ":", REGEX_NUMBER, ":", REGEX_NUMBER)),
 
-    symbol: () => token(choice(
-      seq("'", repeat(/[^']|\\./), "'"),
-      /[a-z_][a-z0-9_]*/i
-    )),
+    intrinsic: () => token(/void|refany|bool|bytearray|char|float|float32|float64|int|int16|int32|int64|object|int8|wchar|string|typedref/),
+
+    word: () => token(/[a-z_][a-z0-9_]*/i),
+
+    quoted: () => token(seq("'", repeat(/[^']|\\./), "'")),
 
     comment: () => token(choice(
       seq("//", /.*/),

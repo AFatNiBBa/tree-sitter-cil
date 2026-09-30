@@ -70,7 +70,7 @@
       "required": true,
       "types": [
         {
-          "type": "part_keyword",
+          "type": "keyword",
           "named": true
         }
       ]
@@ -92,6 +92,57 @@
     }
   },
   {
+    "type": "body",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "attribute",
+          "named": true
+        },
+        {
+          "type": "def_assembly",
+          "named": true
+        },
+        {
+          "type": "def_class",
+          "named": true
+        },
+        {
+          "type": "def_field",
+          "named": true
+        },
+        {
+          "type": "def_method",
+          "named": true
+        },
+        {
+          "type": "option_assembly",
+          "named": true
+        },
+        {
+          "type": "option_method",
+          "named": true
+        },
+        {
+          "type": "option_module",
+          "named": true
+        },
+        {
+          "type": "option_type",
+          "named": true
+        },
+        {
+          "type": "statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "def_assembly",
     "named": true,
     "fields": {
@@ -100,7 +151,7 @@
         "required": true,
         "types": [
           {
-            "type": "id_namespace",
+            "type": "id_assembly",
             "named": true
           }
         ]
@@ -111,15 +162,15 @@
       "required": true,
       "types": [
         {
-          "type": "part_body",
+          "type": "body",
           "named": true
         },
         {
-          "type": "part_keyword",
+          "type": "keyword",
           "named": true
         },
         {
-          "type": "part_modifier",
+          "type": "modifier",
           "named": true
         }
       ]
@@ -155,15 +206,55 @@
       "required": true,
       "types": [
         {
-          "type": "part_body",
+          "type": "body",
           "named": true
         },
         {
-          "type": "part_keyword",
+          "type": "keyword",
           "named": true
         },
         {
-          "type": "part_modifier",
+          "type": "modifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "def_field",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "id_member",
+            "named": true
+          }
+        ]
+      },
+      "return": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "type",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "keyword",
+          "named": true
+        },
+        {
+          "type": "modifier",
           "named": true
         }
       ]
@@ -203,15 +294,15 @@
           "named": true
         },
         {
-          "type": "part_body",
+          "type": "body",
           "named": true
         },
         {
-          "type": "part_keyword",
+          "type": "keyword",
           "named": true
         },
         {
-          "type": "part_modifier",
+          "type": "modifier",
           "named": true
         }
       ]
@@ -226,7 +317,7 @@
       "required": true,
       "types": [
         {
-          "type": "part_body",
+          "type": "body",
           "named": true
         }
       ]
@@ -257,11 +348,26 @@
       "required": true,
       "types": [
         {
-          "type": "id_namespace",
+          "type": "nesting",
           "named": true
         },
         {
           "type": "symbol",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "id_assembly",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "id",
           "named": true
         }
       ]
@@ -298,6 +404,21 @@
     }
   },
   {
+    "type": "id_member",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "id",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "id_method",
     "named": true,
     "fields": {},
@@ -310,26 +431,7 @@
           "named": true
         },
         {
-          "type": "part_keyword",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "id_namespace",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "id_namespace",
-          "named": true
-        },
-        {
-          "type": "symbol",
+          "type": "keyword",
           "named": true
         }
       ]
@@ -351,42 +453,24 @@
     }
   },
   {
-    "type": "instruction",
+    "type": "modifier",
     "named": true,
-    "fields": {
-      "label": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "id_label",
-            "named": true
-          }
-        ]
-      }
-    },
+    "fields": {}
+  },
+  {
+    "type": "nesting",
+    "named": true,
+    "fields": {},
     "children": {
       "multiple": true,
       "required": true,
       "types": [
         {
-          "type": "id_label",
+          "type": "nesting",
           "named": true
         },
         {
-          "type": "integer",
-          "named": true
-        },
-        {
-          "type": "part_instruction",
-          "named": true
-        },
-        {
-          "type": "ref_method",
-          "named": true
-        },
-        {
-          "type": "string",
+          "type": "symbol",
           "named": true
         }
       ]
@@ -409,7 +493,7 @@
           "named": true
         },
         {
-          "type": "part_keyword",
+          "type": "keyword",
           "named": true
         },
         {
@@ -436,7 +520,7 @@
           "named": true
         },
         {
-          "type": "part_keyword",
+          "type": "keyword",
           "named": true
         }
       ]
@@ -451,7 +535,7 @@
       "required": true,
       "types": [
         {
-          "type": "id_namespace",
+          "type": "id_assembly",
           "named": true
         },
         {
@@ -459,11 +543,11 @@
           "named": true
         },
         {
-          "type": "part_keyword",
+          "type": "keyword",
           "named": true
         },
         {
-          "type": "part_modifier",
+          "type": "modifier",
           "named": true
         }
       ]
@@ -482,63 +566,11 @@
           "named": true
         },
         {
-          "type": "part_keyword",
+          "type": "keyword",
           "named": true
         }
       ]
     }
-  },
-  {
-    "type": "part_body",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "attribute",
-          "named": true
-        },
-        {
-          "type": "def_assembly",
-          "named": true
-        },
-        {
-          "type": "def_class",
-          "named": true
-        },
-        {
-          "type": "def_method",
-          "named": true
-        },
-        {
-          "type": "instruction",
-          "named": true
-        },
-        {
-          "type": "option_assembly",
-          "named": true
-        },
-        {
-          "type": "option_method",
-          "named": true
-        },
-        {
-          "type": "option_module",
-          "named": true
-        },
-        {
-          "type": "option_type",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "part_modifier",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "ref_assembly",
@@ -549,7 +581,7 @@
         "required": true,
         "types": [
           {
-            "type": "id_namespace",
+            "type": "id_assembly",
             "named": true
           }
         ]
@@ -626,7 +658,49 @@
           "named": true
         },
         {
-          "type": "part_modifier",
+          "type": "modifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "statement",
+    "named": true,
+    "fields": {
+      "label": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "id_label",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "id_label",
+          "named": true
+        },
+        {
+          "type": "instruction",
+          "named": true
+        },
+        {
+          "type": "integer",
+          "named": true
+        },
+        {
+          "type": "ref_method",
+          "named": true
+        },
+        {
+          "type": "string",
           "named": true
         }
       ]
@@ -652,6 +726,25 @@
     }
   },
   {
+    "type": "symbol",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "quoted",
+          "named": true
+        },
+        {
+          "type": "word",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "type",
     "named": true,
     "fields": {},
@@ -659,6 +752,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "intrinsic",
+          "named": true
+        },
         {
           "type": "type",
           "named": true
@@ -669,10 +766,6 @@
         },
         {
           "type": "type_indexer",
-          "named": true
-        },
-        {
-          "type": "type_intrinsic",
           "named": true
         }
       ]
@@ -687,7 +780,7 @@
       "required": true,
       "types": [
         {
-          "type": "part_modifier",
+          "type": "modifier",
           "named": true
         },
         {
@@ -817,12 +910,24 @@
     "named": false
   },
   {
+    "type": "instruction",
+    "named": true
+  },
+  {
     "type": "integer",
     "named": true
   },
   {
     "type": "interface",
     "named": false
+  },
+  {
+    "type": "intrinsic",
+    "named": true
+  },
+  {
+    "type": "keyword",
+    "named": true
   },
   {
     "type": "managed",
@@ -833,20 +938,16 @@
     "named": false
   },
   {
-    "type": "part_instruction",
-    "named": true
-  },
-  {
-    "type": "part_keyword",
-    "named": true
-  },
-  {
     "type": "private",
     "named": false
   },
   {
     "type": "public",
     "named": false
+  },
+  {
+    "type": "quoted",
+    "named": true
   },
   {
     "type": "rtspecialname",
@@ -877,15 +978,11 @@
     "named": true
   },
   {
-    "type": "symbol",
-    "named": true
-  },
-  {
-    "type": "type_intrinsic",
-    "named": true
-  },
-  {
     "type": "version",
+    "named": true
+  },
+  {
+    "type": "word",
     "named": true
   },
   {

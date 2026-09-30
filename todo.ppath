@@ -37,3 +37,9 @@ ci stanno le stringhe costanti col + > "
     + "ale NOT IN (SELECT CodiceFiscale FROM Anagrafica_Percipienti WHERE Anno"
     + " = @annoDestRif2)"
 "
+
+{
+    verifica tutte le cose se possono avere nesting
+    verifica underscore su tutte le tipologie di numeri
+    riguarda tutti gli "alias()" e "field()"
+}
