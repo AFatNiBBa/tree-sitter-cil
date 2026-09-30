@@ -58,6 +58,19 @@
              char V_1)
     IL_0000:  ldc.i4.s   97
     ldstr "c\ni\n\nao"
+    ldstr "INSERT INTO Anagrafica_Percipienti (Anno, Id, CodC"
+        + "omuneRes, CodFiscEstero, CodiceFiscale, CodiceRegioneRes, CodStatoEster"
+        + "o, Cognome, ComuneNascita, ComuneRes, DataNascita, IndirizzoEstero, Ind"
+        + "irizzoRes, LocResEstera, Nome, ProvinciaNascita, ProvinciaRes, Sesso, N"
+        + "onResidentiSchumacker, LuogoAttinenza, Frontalieri)\r\nSELECT @annoDestRi"
+        + "f1, Id + @max, CodComuneRes, CodFiscEstero, CodiceFiscale, CodiceRegion"
+        + "eRes, CodStatoEstero, Cognome, ComuneNascita, ComuneRes, DataNascita, I"
+        + "ndirizzoEstero, IndirizzoRes, LocResEstera, Nome, ProvinciaNascita, Pro"
+        + "vinciaRes, Sesso, NonResidentiSchumacker, LuogoAttinenza, Frontalieri\r\n"
+        + "FROM Anagrafica_Percipienti\r\nWHERE\r\n  Anno = @annoSrc AND\r\n  CodiceFisc"
+        + "ale NOT IN (SELECT CodiceFiscale FROM Anagrafica_Percipienti WHERE Anno"
+        + " = @annoDestRif2)"
+    pop
     pop
     IL_0002:  stloc.0
     IL_0003:  ldloc.0 IL_0004:  ldc.i4.1  add

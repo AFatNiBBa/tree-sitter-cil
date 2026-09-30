@@ -611,6 +611,21 @@
     "fields": {},
     "children": {
       "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "string_single",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "string_single",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
       "required": false,
       "types": [
         {
@@ -733,6 +748,10 @@
   },
   {
     "type": ")",
+    "named": false
+  },
+  {
+    "type": "+",
     "named": false
   },
   {

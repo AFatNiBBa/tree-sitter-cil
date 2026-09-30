@@ -5,7 +5,7 @@
   (version)
 ] @number
 
-(string
+(string_single
   [
     (string_escape) @string.escape
     [

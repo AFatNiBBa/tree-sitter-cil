@@ -238,11 +238,13 @@ export default grammar({
 
     //#region STRING
 
+    string: $ => join("+", $.string_single),
+
     string_content: () => token.immediate(/[^"\\\n]+/),
 
     string_escape: () => token.immediate(/\\./),
 
-    string: $ => seq(
+    string_single: $ => seq(
       '"',
       repeat(choice($.string_content, $.string_escape)), // I don't wrap everything in a single token because I want to be able to highlight these two differently
       token.immediate('"')
