@@ -57,7 +57,20 @@
     .locals init (char V_0,
              char V_1)
     IL_0000:  ldc.i4.s   97
-    ldstr "ci\nao"
+    ldstr "c\ni\n\nao"
+    ldstr "INSERT INTO Anagrafica_Percipienti (Anno, Id, CodC"
+        + "omuneRes, CodFiscEstero, CodiceFiscale, CodiceRegioneRes, CodStatoEster"
+        + "o, Cognome, ComuneNascita, ComuneRes, DataNascita, IndirizzoEstero, Ind"
+        + "irizzoRes, LocResEstera, Nome, ProvinciaNascita, ProvinciaRes, Sesso, N"
+        + "onResidentiSchumacker, LuogoAttinenza, Frontalieri)\r\nSELECT @annoDestRi"
+        + "f1, Id + @max, CodComuneRes, CodFiscEstero, CodiceFiscale, CodiceRegion"
+        + "eRes, CodStatoEstero, Cognome, ComuneNascita, ComuneRes, DataNascita, I"
+        + "ndirizzoEstero, IndirizzoRes, LocResEstera, Nome, ProvinciaNascita, Pro"
+        + "vinciaRes, Sesso, NonResidentiSchumacker, LuogoAttinenza, Frontalieri\r\n"
+        + "FROM Anagrafica_Percipienti\r\nWHERE\r\n  Anno = @annoSrc AND\r\n  CodiceFisc"
+        + "ale NOT IN (SELECT CodiceFiscale FROM Anagrafica_Percipienti WHERE Anno"
+        + " = @annoDestRif2)"
+    pop
     pop
     IL_0002:  stloc.0
     IL_0003:  ldloc.0 IL_0004:  ldc.i4.1  add
@@ -113,15 +126,20 @@
     .size 1
   } // end of class BCa
 
-  .class auto ansi nested public beforefieldinit BD
+  .class auto ansi nested public beforefieldinit B.fD
          extends 'AProgramΣ'
   {
+    .field public int32 Count.f
+
     .method public hidebysig specialname rtspecialname 
             instance void  .ctor() cil managed
     {
       // Code size       8 (0x8)
       .maxstack  8
-      .locals init (int32[6...,,...,0...9])
+      .locals init (int32[6...,,...,0...9,4])
+      ldarg.0
+      ldfld int32 B/B.fD::Count.f
+      pop
       br 'IL_ 0001'
       IL_0000:  ldarg.0
       'IL_ 0001':  call       instance void 'AProgramΣ'::.ctor(int32 f)
@@ -138,7 +156,7 @@
 {
 } // end of class I
 
-.method void Something() cil managed
+.method static void Something() cil managed
 {
   ret
 } 
