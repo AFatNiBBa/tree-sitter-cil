@@ -32,7 +32,8 @@
   (intrinsic)
 ] @macro
 
-(id_method) @method
+(id_method
+  (id) @method)
 
 (id_parameter) @parameter
 

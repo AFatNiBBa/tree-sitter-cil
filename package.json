@@ -1,6 +1,6 @@
 {
   "name": "@seanalunni/tree-sitter-cil",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": ".NET's common intermediate language parser",
   "author": "AFatNiBBa",
   "license": "MIT",
