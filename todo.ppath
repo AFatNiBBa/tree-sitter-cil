@@ -24,5 +24,3 @@ query > capisci il funzionamento > {
 } >> ripassa tutta la grammatica
 
 "class" e "valuetype" sono opzionali >> guarda quando usare "type" &co e quando usare "ref_class"
-
-fixa test
