@@ -49,6 +49,7 @@ export default grammar({
       repeat(seq($.id_label, ":")),
       choice(
         seq(alias("call", $.instruction), $.ref_method),
+        seq(alias("ldfld", $.instruction), $.ref_member),
         seq(alias("ldc.i4.s", $.instruction), $.integer),
         seq(alias("br", $.instruction), $.id_label),
         seq(alias("ldstr", $.instruction), $.string),
@@ -188,7 +189,7 @@ export default grammar({
 
     ref_assembly: $ => seq("[", $.id_assembly, "]"),
 
-    ref_class: $ => seq(optional($.ref_assembly), $.id_class),
+    ref_class: $ => seq(optional($.ref_assembly), join("/", $.id_class)),
 
     ref_member: $ => seq($.type, $.ref_class, "::", $.id_member),
 

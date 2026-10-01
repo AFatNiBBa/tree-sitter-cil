@@ -23,6 +23,6 @@ query > capisci il funzionamento > {
     se faccio "repeat(field($1, alias(seq(field($2, $3), field($4, $5)), $6)))" mi fa "{ $1: { $2: $3, $4: $5 }[] }"?
 } >> ripassa tutta la grammatica
 
-"ldfld int32 B/BD::Count.f"
+"class" e "valuetype" sono opzionali >> guarda quando usare "type" &co e quando usare "ref_class"
 
 fixa test

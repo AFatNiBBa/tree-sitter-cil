@@ -150,6 +150,24 @@
                   "type": "ALIAS",
                   "content": {
                     "type": "STRING",
+                    "value": "ldfld"
+                  },
+                  "named": true,
+                  "value": "instruction"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "ref_member"
+                }
+              ]
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "STRING",
                     "value": "ldc.i4.s"
                   },
                   "named": true,
@@ -885,8 +903,29 @@
           ]
         },
         {
-          "type": "SYMBOL",
-          "name": "id_class"
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "id_class"
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": "/"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "id_class"
+                  }
+                ]
+              }
+            }
+          ]
         }
       ]
     },

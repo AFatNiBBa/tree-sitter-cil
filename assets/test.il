@@ -126,10 +126,10 @@
     .size 1
   } // end of class BCa
 
-  .class auto ansi nested public beforefieldinit BD
+  .class auto ansi nested public beforefieldinit B.fD
          extends 'AProgramΣ'
   {
-    .field public int32 Count
+    .field public int32 Count.f
 
     .method public hidebysig specialname rtspecialname 
             instance void  .ctor() cil managed
@@ -137,6 +137,9 @@
       // Code size       8 (0x8)
       .maxstack  8
       .locals init (int32[6...,,...,0...9,4])
+      ldarg.0
+      ldfld int32 B/B.fD::Count.f
+      pop
       br 'IL_ 0001'
       IL_0000:  ldarg.0
       'IL_ 0001':  call       instance void 'AProgramΣ'::.ctor(int32 f)
@@ -153,7 +156,7 @@
 {
 } // end of class I
 
-.method void Something() cil managed
+.method static void Something() cil managed
 {
   ret
 } 

@@ -544,6 +544,29 @@
     }
   },
   {
+    "type": "ref_member",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "id_member",
+          "named": true
+        },
+        {
+          "type": "ref_class",
+          "named": true
+        },
+        {
+          "type": "type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "ref_method",
     "named": true,
     "fields": {},
@@ -592,6 +615,10 @@
         },
         {
           "type": "integer",
+          "named": true
+        },
+        {
+          "type": "ref_member",
           "named": true
         },
         {
@@ -764,6 +791,10 @@
   },
   {
     "type": "...",
+    "named": false
+  },
+  {
+    "type": "/",
     "named": false
   },
   {
