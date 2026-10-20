@@ -2,6 +2,7 @@
 [
   (byte)
   (integer)
+  (float)
   (version)
 ] @number
 
@@ -40,5 +41,11 @@
 (id_member) @property
 
 (id_label) @label
+
+[
+  (type_parameter)
+  (generics_item
+    (id_generic))
+] @typeParameter
 
 (instruction) @function

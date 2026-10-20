@@ -34,6 +34,17 @@ export default grammar({
 
     modifier: $ => $.word,
 
+    bytearray: $ => seq(alias("bytearray", $.intrinsic), $.blob),
+
+    constant: $ => choice(
+      $.string,
+      $.bytearray,
+      alias("nullref", $.keyword),
+      seq($.intrinsic, "(", choice($.integer, $.float, alias(choice("true", "false"), $.keyword)), ")")
+    ),
+
+    marshal: $ => seq(alias("marshal", $.keyword), "(", repeat(choice($.intrinsic, $.modifier, $.type_indexer)), ")"),
+
     //#endregion
 
     //#region COMMON
@@ -41,8 +52,7 @@ export default grammar({
     attribute: $ => seq(
       alias(".custom", $.keyword),
       $.ref_method,
-      "=",
-      $.blob
+      optional(seq("=", $.blob))
     ),
 
     statement: $ => seq(
@@ -51,6 +61,7 @@ export default grammar({
         seq(alias(choice("call", "callvirt", "newobj", "jmp", "ldftn", "ldvirtftn"), $.instruction), $.ref_method),
         seq(alias(choice("ldfld", "ldflda", "stfld", "ldsfld", "ldsflda", "stsfld"), $.instruction), $.ref_member),
         seq(alias(choice("ldc.i4", "ldc.i4.s", "ldc.i8", "unaligned.", "no."), $.instruction), $.integer),
+        seq(alias(choice("ldc.r4", "ldc.r8"), $.instruction), choice($.float, $.integer, $.blob)),
         seq(
           alias(
             choice(
@@ -85,7 +96,16 @@ export default grammar({
           ),
           choice($.type, $.ref_class) // The type token can omit "class" and "valuetype"
         ),
-        seq(alias("ldstr", $.instruction), $.string),
+        seq(
+          alias("ldtoken", $.instruction),
+          choice(
+            $.type,
+            $.ref_class,
+            seq(alias("method", $.keyword), $.ref_method),
+            seq(alias("field", $.keyword), $.ref_member)
+          )
+        ),
+        seq(alias("ldstr", $.instruction), choice($.string, $.bytearray)),
         alias(
           choice(
             "nop", "break", "ret", "dup", "pop", "throw", "rethrow", "endfinally", "endfault", "endfilter", "arglist", "localloc",
@@ -117,7 +137,20 @@ export default grammar({
 
     args: $ => seq("(", optional(join(",", $.args_item)), ")"),
 
-    args_item: $ => seq($.type, optional($.id_parameter)),
+    args_item: $ => seq(
+      repeat(seq("[", choice(alias(choice("in", "out", "opt"), $.modifier), $.integer), "]")), // Parameter attributes and local indexes
+      $.type,
+      optional($.marshal),
+      optional($.id_parameter)
+    ),
+
+    generics: $ => seq("<", join(",", $.generics_item), ">"),
+
+    generics_item: $ => seq(
+      repeat(choice(alias(choice("class", "valuetype", ".ctor"), $.modifier), "+", "-")),
+      optional(seq("(", join(",", choice($.type, $.ref_class)), ")")),
+      $.id_generic
+    ),
 
     //#endregion
 
@@ -135,6 +168,8 @@ export default grammar({
 
     id_label: $ => $.symbol,
 
+    id_generic: $ => $.symbol,
+
     id: $ => seq(
       optional(seq(
         $.nesting,
@@ -147,9 +182,22 @@ export default grammar({
 
     //#region TYPE
 
-    type: $ => choice($.intrinsic, $.type_custom, seq($.type, $.type_indexer)),
+    type: $ => choice(
+      $.intrinsic,
+      $.type_custom,
+      $.type_parameter,
+      seq($.type, $.type_indexer),
+      seq($.type, choice("&", "*"))
+    ),
 
-    type_custom: $ => seq(alias(choice("class", "valuetype"), $.modifier), $.ref_class),
+    type_custom: $ => seq(alias(choice("class", "valuetype"), $.modifier), $.ref_class, optional($.type_args)),
+
+    type_args: $ => seq("<", join(",", $.type), ">"),
+
+    type_parameter: $ => choice(
+      token(seq(choice("!", "!!"), REGEX_NUMBER)),
+      seq(choice("!", "!!"), $.id_generic)
+    ),
 
     type_indexer: $ => seq("[", optional(join(",", optional(choice($.integer, $.type_indexer_range)))), "]"),
 
@@ -163,6 +211,7 @@ export default grammar({
       $.attribute,
       $.option_module,
       $.def_assembly,
+      $.def_resource,
       $.def_class,
       $.def_method,
       ";"
@@ -181,11 +230,25 @@ export default grammar({
       "}"
     ),
 
+    def_resource: $ => seq(
+      alias(".mresource", $.keyword),
+      repeat($.modifier),
+      $.id_assembly,
+      "{",
+      repeat(choice(
+        $.attribute,
+        ";"
+      )),
+      "}"
+    ),
+
     def_class: $ => seq(
       alias(".class", $.keyword),
       repeat($.modifier),
       $.id_class,
-      optional(seq(alias("extends", $.modifier), $.ref_class)),
+      optional($.generics),
+      optional(seq(alias("extends", $.modifier), choice($.ref_class, $.type))),
+      optional(seq(alias("implements", $.modifier), join(",", choice($.ref_class, $.type)))),
       "{",
       repeat(choice(
         $.attribute,
@@ -193,6 +256,7 @@ export default grammar({
         $.def_class,
         $.def_field,
         $.def_method,
+        $.def_property,
         ";"
       )),
       "}"
@@ -202,14 +266,18 @@ export default grammar({
       alias(".field", $.keyword),
       repeat($.modifier),
       $.type,
-      $.id_member
+      optional($.marshal),
+      $.id_member,
+      optional(seq("=", $.constant))
     ),
 
     def_method: $ => seq(
       alias(".method", $.keyword),
       repeat($.modifier),
       $.type,
+      optional($.marshal),
       $.id_method,
+      optional($.generics),
       $.args,
       repeat($.modifier),
       "{",
@@ -217,9 +285,51 @@ export default grammar({
         $.attribute,
         $.option_method,
         $.statement,
+        $.block_try,
         ";"
       )),
       "}"
+    ),
+
+    def_property: $ => seq(
+      alias(".property", $.keyword),
+      repeat($.modifier),
+      $.type,
+      $.id_member,
+      $.args,
+      optional(seq("=", $.constant)),
+      "{",
+      repeat(choice(
+        $.attribute,
+        $.option_property,
+        ";"
+      )),
+      "}"
+    ),
+
+    //#endregion
+
+    //#region BLOCK
+
+    block: $ => seq(
+      "{",
+      repeat(choice(
+        $.statement,
+        $.block_try,
+        ";"
+      )),
+      "}"
+    ),
+
+    block_try: $ => seq(alias(".try", $.keyword), $.block, repeat1($.block_handler)),
+
+    block_handler: $ => seq(
+      choice(
+        seq(alias("catch", $.keyword), choice($.ref_class, $.type)),
+        seq(alias("filter", $.keyword), $.block),
+        alias(choice("finally", "fault"), $.keyword)
+      ),
+      $.block
     ),
 
     //#endregion
@@ -230,13 +340,14 @@ export default grammar({
 
     ref_class: $ => seq(optional($.ref_assembly), join("/", $.id_class)),
 
-    ref_member: $ => seq($.type, $.ref_class, "::", $.id_member),
+    ref_member: $ => seq($.type, choice($.ref_class, $.type), "::", $.id_member),
 
     ref_method: $ => seq(
       alias(optional("instance"), $.modifier),
       $.type,
-      optional(seq($.ref_class, "::")),
+      optional(seq(choice($.ref_class, $.type), "::")),
       $.id_method,
+      optional($.type_args),
       $.args
     ),
 
@@ -267,13 +378,19 @@ export default grammar({
     option_type: $ => choice(
       seq(alias(".pack", $.keyword), $.integer),
       seq(alias(".size", $.keyword), $.integer),
+      seq(alias(seq(".interfaceimpl", "type"), $.keyword), choice($.ref_class, $.type))
     ),
 
     option_method: $ => choice(
       seq(alias(choice(".locals", seq(".locals", "init")), $.keyword), $.args),
       seq(alias(choice(".maxstack", ".emitbyte"), $.keyword), $.integer),
+      seq(alias(".param", $.keyword), "[", $.integer, "]", optional(seq("=", $.constant))),
+      seq(alias(".override", $.keyword), choice($.ref_class, $.type), "::", $.id_method),
+      seq(alias(seq(".override", "method"), $.keyword), $.ref_method),
       alias(".entrypoint", $.keyword)
     ),
+
+    option_property: $ => seq(alias(choice(".get", ".set", ".other"), $.keyword), $.ref_method),
 
     //#endregion
 
@@ -281,7 +398,7 @@ export default grammar({
 
     string: $ => join("+", $.string_single),
 
-    string_content: () => token.immediate(/[^"\\\n]+/),
+    string_content: () => token.immediate(prec(1, /[^"\\\n]+/)), // The precedence prevents a "//" inside of the string from being lexed as a comment
 
     string_escape: () => token.immediate(/\\./),
 
@@ -297,15 +414,21 @@ export default grammar({
 
     byte: () => token(seq(REGEX_HEX_DIGIT, REGEX_HEX_DIGIT)),
 
-    integer: () => token(choice(REGEX_NUMBER, seq("0x", repeat1(REGEX_HEX_DIGIT)))),
+    integer: () => token(seq(optional("-"), choice(REGEX_NUMBER, seq("0x", repeat1(REGEX_HEX_DIGIT))))),
+
+    float: () => token(seq(optional("-"), REGEX_NUMBER, ".", optional(REGEX_NUMBER), optional(seq(/e/i, optional(/[+-]/), REGEX_NUMBER)))),
 
     version: () => token(seq(REGEX_NUMBER, ":", REGEX_NUMBER, ":", REGEX_NUMBER, ":", REGEX_NUMBER)),
 
-    intrinsic: () => token(/void|refany|bool|bytearray|char|float|float32|float64|int|int16|int32|int64|object|int8|wchar|string|typedref/),
+    intrinsic: () => token(choice(
+      /void|refany|bool|char|float|float32|float64|int|int8|int16|int32|int64|uint8|uint16|uint32|uint64|object|wchar|string|typedref/,
+      /native\s+(unsigned\s+)?int/,
+      /unsigned\s+int(8|16|32|64)/
+    )),
 
-    word: () => token(/[a-z_][a-z0-9_]*/i),
+    word: () => token(/[a-z_$@`?][a-z0-9_$@`?]*/i),
 
-    quoted: () => token(seq("'", repeat(/[^']|\\./), "'")),
+    quoted: () => token(seq("'", repeat(/[^'\\]|\\./), "'")),
 
     comment: () => token(choice(
       seq("//", /.*/),
