@@ -18,34 +18,35 @@ Hello World
 ---
 
 (file
-  (def_module
-    (def_assembly
-      (keyword)
-      (id_assembly
-        (id
-          (symbol
-            (word))))
-      (option_assembly
+  (def_assembly
+    (keyword)
+    (id_assembly
+      (id
+        (symbol
+          (word))))
+    (body
+      (option_value
         (keyword)
-        (version)))
-    (def_method
-      (keyword)
-      (modifier
-        (word))
-      (modifier
-        (word))
-      (type
-        (intrinsic))
-      (id_method
-        (id
-          (symbol
-            (word))))
-      (args)
-      (modifier
-        (word))
-      (modifier
-        (word))
-      (option_method
+        (version))))
+  (def_method
+    (keyword)
+    (modifier
+      (word))
+    (modifier
+      (word))
+    (type
+      (intrinsic))
+    (id_method
+      (id
+        (symbol
+          (word))))
+    (args)
+    (modifier
+      (word))
+    (modifier
+      (word))
+    (body
+      (option_flag
         (keyword))
       (statement
         (instruction)
@@ -57,22 +58,24 @@ Hello World
         (ref_method
           (type
             (intrinsic))
-          (ref_class
-            (ref_assembly
-              (id_assembly
-                (id
-                  (nesting
+          (ref_scope
+            (type_spec
+              (ref_class
+                (ref_assembly
+                  (id_assembly
+                    (id
+                      (nesting
+                        (symbol
+                          (word)))
+                      (symbol
+                        (word)))))
+                (id_class
+                  (id
+                    (nesting
+                      (symbol
+                        (word)))
                     (symbol
-                      (word)))
-                  (symbol
-                    (word)))))
-            (id_class
-              (id
-                (nesting
-                  (symbol
-                    (word)))
-                (symbol
-                  (word)))))
+                      (word)))))))
           (id_method
             (id
               (symbol
@@ -105,25 +108,25 @@ Class Definition
 ---
 
 (file
-  (def_module
-    (def_class
-      (keyword)
-      (modifier
-        (word))
-      (modifier
-        (word))
-      (modifier
-        (word))
-      (modifier
-        (word))
-      (id_class
-        (id
-          (nesting
-            (symbol
-              (word)))
+  (def_class
+    (keyword)
+    (modifier
+      (word))
+    (modifier
+      (word))
+    (modifier
+      (word))
+    (modifier
+      (word))
+    (id_class
+      (id
+        (nesting
           (symbol
-            (word))))
-      (modifier)
+            (word)))
+        (symbol
+          (word))))
+    (modifier)
+    (type_spec
       (ref_class
         (ref_assembly
           (id_assembly
@@ -139,35 +142,39 @@ Class Definition
               (symbol
                 (word)))
             (symbol
-              (word)))))
+              (word))))))
+    (body
       (attribute
         (keyword)
         (ref_method
-          (modifier)
+          (modifier
+            (word))
           (type
             (intrinsic))
-          (ref_class
-            (ref_assembly
-              (id_assembly
-                (id
-                  (nesting
-                    (symbol
-                      (word)))
-                  (symbol
-                    (word)))))
-            (id_class
-              (id
-                (nesting
-                  (nesting
+          (ref_scope
+            (type_spec
+              (ref_class
+                (ref_assembly
+                  (id_assembly
+                    (id
+                      (nesting
+                        (symbol
+                          (word)))
+                      (symbol
+                        (word)))))
+                (id_class
+                  (id
                     (nesting
+                      (nesting
+                        (nesting
+                          (symbol
+                            (word)))
+                        (symbol
+                          (word)))
                       (symbol
                         (word)))
                     (symbol
-                      (word)))
-                  (symbol
-                    (word)))
-                (symbol
-                  (word)))))
+                      (word)))))))
           (id_method
             (keyword))
           (args
@@ -201,35 +208,39 @@ Class Definition
           (word))
         (modifier
           (word))
-        (statement
-          (instruction))
-        (statement
-          (instruction)
-          (ref_method
-            (modifier)
-            (type
-              (intrinsic))
-            (ref_class
-              (ref_assembly
-                (id_assembly
-                  (id
-                    (nesting
-                      (symbol
-                        (word)))
-                    (symbol
-                      (word)))))
-              (id_class
-                (id
-                  (nesting
-                    (symbol
-                      (word)))
-                  (symbol
-                    (word)))))
-            (id_method
-              (keyword))
-            (args)))
-        (statement
-          (instruction))))))
+        (body
+          (statement
+            (instruction))
+          (statement
+            (instruction)
+            (ref_method
+              (modifier
+                (word))
+              (type
+                (intrinsic))
+              (ref_scope
+                (type_spec
+                  (ref_class
+                    (ref_assembly
+                      (id_assembly
+                        (id
+                          (nesting
+                            (symbol
+                              (word)))
+                          (symbol
+                            (word)))))
+                    (id_class
+                      (id
+                        (nesting
+                          (symbol
+                            (word)))
+                        (symbol
+                          (word)))))))
+              (id_method
+                (keyword))
+              (args)))
+          (statement
+            (instruction)))))))
 
 ==================
 Method Locals and Instructions
@@ -248,33 +259,33 @@ Method Locals and Instructions
 ---
 
 (file
-  (def_module
-    (def_method
-      (keyword)
-      (modifier
-        (word))
-      (modifier
-        (word))
-      (modifier
-        (word))
-      (type
-        (intrinsic))
-      (id_method
-        (id
+  (def_method
+    (keyword)
+    (modifier
+      (word))
+    (modifier
+      (word))
+    (modifier
+      (word))
+    (type
+      (intrinsic))
+    (id_method
+      (id
+        (symbol
+          (word))))
+    (args
+      (args_item
+        (type
+          (intrinsic))
+        (id_parameter
           (symbol
-            (word))))
-      (args
-        (args_item
-          (type
-            (intrinsic))
-          (id_parameter
-            (symbol
-              (word)))))
-      (modifier
-        (word))
-      (modifier
-        (word))
-      (option_method
+            (word)))))
+    (modifier
+      (word))
+    (modifier
+      (word))
+    (body
+      (option_locals
         (keyword)
         (keyword)
         (args
@@ -290,7 +301,7 @@ Method Locals and Instructions
             (id_parameter
               (symbol
                 (word))))))
-      (option_method
+      (option_value
         (keyword)
         (integer))
       (statement
@@ -345,64 +356,66 @@ Check:
 ---
 
 (file
-  (def_module
-    (def_assembly
-      (keyword)
-      (modifier
-        (word))
-      (id_assembly
-        (id
-          (nesting
-            (symbol
-              (word)))
+  (def_assembly
+    (keyword)
+    (modifier
+      (word))
+    (id_assembly
+      (id
+        (nesting
           (symbol
-            (word))))
-      (option_assembly
+            (word)))
+        (symbol
+          (word))))
+    (body
+      (option_value
         (keyword)
         (blob
           (byte)
           (byte)
           (byte)
           (byte)))
-      (option_assembly
+      (option_value
         (keyword)
         (blob
           (byte)
           (byte)))
-      (option_assembly
+      (option_value
         (keyword)
         (string
           (string_single
-            (string_content)))))
-    (def_method
-      (keyword)
-      (modifier
-        (word))
-      (modifier
-        (word))
-      (type
-        (intrinsic))
-      (id_method
-        (id
-          (symbol
-            (word))))
-      (args
-        (args_item
+            (string_content))))))
+  (def_method
+    (keyword)
+    (modifier
+      (word))
+    (modifier
+      (word))
+    (type
+      (intrinsic))
+    (id_method
+      (id
+        (symbol
+          (word))))
+    (args
+      (args_item
+        (type
           (type
-            (type
-              (intrinsic))
-            (type_indexer))
-          (id_parameter
-            (symbol
-              (word)))))
-      (modifier
-        (word))
-      (modifier
-        (word))
-      (option_method
+            (intrinsic))
+          (type_suffix
+            (type_indexer)))
+        (id_parameter
+          (symbol
+            (word)))))
+    (modifier
+      (word))
+    (modifier
+      (word))
+    (body
+      (option_value
         (keyword)
         (integer))
-      (option_method
+      (option_locals
         (keyword)
         (args
           (args_item
@@ -446,67 +459,7 @@ Check:
         (instruction))
       (statement
         (instruction)
-        (ref_class
-          (ref_assembly
-            (id_assembly
-              (id
-                (nesting
-                  (symbol
-                    (word)))
-                (symbol
-                  (word)))))
-          (id_class
-            (id
-              (nesting
-                (symbol
-                  (word)))
-              (symbol
-                (word))))))
-      (statement
-        (instruction)
-        (type
-          (type_custom
-            (modifier)
-            (ref_class
-              (ref_assembly
-                (id_assembly
-                  (id
-                    (nesting
-                      (symbol
-                        (word)))
-                    (symbol
-                      (word)))))
-              (id_class
-                (id
-                  (nesting
-                    (symbol
-                      (word)))
-                  (symbol
-                    (word))))))))
-      (statement
-        (instruction)
-        (ref_class
-          (ref_assembly
-            (id_assembly
-              (id
-                (nesting
-                  (symbol
-                    (word)))
-                (symbol
-                  (word)))))
-          (id_class
-            (id
-              (nesting
-                (symbol
-                  (word)))
-              (symbol
-                (word))))))
-      (statement
-        (instruction)
-        (ref_method
-          (modifier)
-          (type
-            (intrinsic))
+        (type_spec
           (ref_class
             (ref_assembly
               (id_assembly
@@ -522,7 +475,73 @@ Check:
                   (symbol
                     (word)))
                 (symbol
-                  (word)))))
+                  (word)))))))
+      (statement
+        (instruction)
+        (type_spec
+          (type
+            (type_custom
+              (modifier)
+              (ref_class
+                (ref_assembly
+                  (id_assembly
+                    (id
+                      (nesting
+                        (symbol
+                          (word)))
+                      (symbol
+                        (word)))))
+                (id_class
+                  (id
+                    (nesting
+                      (symbol
+                        (word)))
+                    (symbol
+                      (word)))))))))
+      (statement
+        (instruction)
+        (type_spec
+          (ref_class
+            (ref_assembly
+              (id_assembly
+                (id
+                  (nesting
+                    (symbol
+                      (word)))
+                  (symbol
+                    (word)))))
+            (id_class
+              (id
+                (nesting
+                  (symbol
+                    (word)))
+                (symbol
+                  (word)))))))
+      (statement
+        (instruction)
+        (ref_method
+          (modifier
+            (word))
+          (type
+            (intrinsic))
+          (ref_scope
+            (type_spec
+              (ref_class
+                (ref_assembly
+                  (id_assembly
+                    (id
+                      (nesting
+                        (symbol
+                          (word)))
+                      (symbol
+                        (word)))))
+                (id_class
+                  (id
+                    (nesting
+                      (symbol
+                        (word)))
+                    (symbol
+                      (word)))))))
           (id_method
             (id
               (symbol
@@ -531,14 +550,17 @@ Check:
       (statement
         (instruction)
         (ref_method
-          (modifier)
+          (modifier
+            (word))
           (type
             (intrinsic))
-          (ref_class
-            (id_class
-              (id
-                (symbol
-                  (word)))))
+          (ref_scope
+            (type_spec
+              (ref_class
+                (id_class
+                  (id
+                    (symbol
+                      (word)))))))
           (id_method
             (keyword))
           (args)))
@@ -547,11 +569,13 @@ Check:
         (ref_member
           (type
             (intrinsic))
-          (ref_class
-            (id_class
-              (id
-                (symbol
-                  (word)))))
+          (ref_scope
+            (type_spec
+              (ref_class
+                (id_class
+                  (id
+                    (symbol
+                      (word)))))))
           (id_member
             (id
               (symbol
@@ -583,7 +607,8 @@ Check:
               (type
                 (type
                   (intrinsic))
-                (type_indexer))))))
+                (type_suffix
+                  (type_indexer)))))))
       (statement
         (instruction)))))
 
@@ -637,37 +662,38 @@ Generics, Properties and Exception Handling
 ---
 
 (file
-  (def_module
-    (def_resource
-      (keyword)
-      (modifier
-        (word))
-      (id_assembly
-        (id
+  (def_resource
+    (keyword)
+    (modifier
+      (word))
+    (id_assembly
+      (id
+        (nesting
           (nesting
-            (nesting
-              (symbol
-                (word)))
             (symbol
               (word)))
           (symbol
-            (word)))))
-    (def_class
-      (keyword)
-      (modifier
-        (word))
-      (modifier
-        (word))
-      (modifier
-        (word))
-      (modifier
-        (word))
-      (id_class
-        (id
-          (symbol
-            (word))))
-      (generics
-        (generics_item
+            (word)))
+        (symbol
+          (word))))
+    (body))
+  (def_class
+    (keyword)
+    (modifier
+      (word))
+    (modifier
+      (word))
+    (modifier
+      (word))
+    (modifier
+      (word))
+    (id_class
+      (id
+        (symbol
+          (word))))
+    (generics
+      (generics_item
+        (type_spec
           (type
             (type_custom
               (modifier)
@@ -683,11 +709,12 @@ Generics, Properties and Exception Handling
                       (symbol
                         (word)))
                     (symbol
-                      (word)))))))
-          (id_generic
-            (symbol
-              (word)))))
-      (modifier)
+                      (word))))))))
+        (id_generic
+          (symbol
+            (word)))))
+    (modifier)
+    (type_spec
       (type
         (type_custom
           (modifier)
@@ -701,8 +728,9 @@ Generics, Properties and Exception Handling
               (type_parameter
                 (id_generic
                   (symbol
-                    (word))))))))
-      (modifier)
+                    (word)))))))))
+    (modifier)
+    (type_spec
       (ref_class
         (ref_assembly
           (id_assembly
@@ -715,7 +743,8 @@ Generics, Properties and Exception Handling
               (symbol
                 (word)))
             (symbol
-              (word)))))
+              (word))))))
+    (type_spec
       (type
         (type_custom
           (modifier)
@@ -734,7 +763,8 @@ Generics, Properties and Exception Handling
                   (word)))))
           (type_args
             (type
-              (type_parameter)))))
+              (type_parameter))))))
+    (body
       (def_field
         (keyword)
         (modifier
@@ -749,7 +779,7 @@ Generics, Properties and Exception Handling
           (id
             (symbol
               (word))))
-        (constant
+        (literal
           (string
             (string_single
               (string_content)))))
@@ -767,8 +797,8 @@ Generics, Properties and Exception Handling
           (id
             (symbol
               (word))))
-        (constant
-          (bytearray
+        (literal
+          (literal_bytes
             (intrinsic)
             (blob
               (byte)
@@ -795,9 +825,10 @@ Generics, Properties and Exception Handling
           (id
             (symbol
               (word))))
-        (constant
-          (intrinsic)
-          (integer)))
+        (literal
+          (literal_typed
+            (intrinsic)
+            (integer))))
       (def_method
         (keyword)
         (modifier
@@ -810,8 +841,9 @@ Generics, Properties and Exception Handling
           (intrinsic))
         (marshal
           (keyword)
-          (modifier
-            (word)))
+          (loose
+            (modifier
+              (word))))
         (id_method
           (id
             (symbol
@@ -823,13 +855,15 @@ Generics, Properties and Exception Handling
                 (word)))))
         (args
           (args_item
-            (modifier)
+            (modifier
+              (word))
             (type
               (type
                 (type_parameter
                   (id_generic
                     (symbol
-                      (word))))))
+                      (word)))))
+              (type_suffix))
             (id_parameter
               (symbol
                 (quoted)))))
@@ -837,40 +871,16 @@ Generics, Properties and Exception Handling
           (word))
         (modifier
           (word))
-        (option_param
-          (keyword)
-          (integer)
-          (constant
-            (keyword)))
-        (option_method
-          (keyword)
-          (ref_class
-            (ref_assembly
-              (id_assembly
-                (id
-                  (symbol
-                    (word)))))
-            (id_class
-              (id
-                (nesting
-                  (symbol
-                    (word)))
-                (symbol
-                  (word)))))
-          (id_method
-            (id
-              (symbol
-                (word)))))
-        (option_method
-          (keyword)
-          (keyword)
-          (ref_method
-            (modifier)
-            (type
-              (intrinsic))
-            (type
-              (type_custom
-                (modifier)
+        (body
+          (option_param
+            (keyword)
+            (integer)
+            (literal
+              (keyword)))
+          (option_override
+            (keyword)
+            (ref_scope
+              (type_spec
                 (ref_class
                   (ref_assembly
                     (id_assembly
@@ -883,145 +893,150 @@ Generics, Properties and Exception Handling
                         (symbol
                           (word)))
                       (symbol
-                        (word)))))
-                (type_args
-                  (type
-                    (type_parameter)))))
+                        (word)))))))
             (id_method
               (id
                 (symbol
-                  (word))))
-            (args
-              (args_item
-                (type
-                  (type_parameter))))))
-        (option_method
-          (keyword)
-          (integer))
-        (option_method
-          (keyword)
-          (keyword)
-          (args
-            (args_item
-              (integer)
+                  (word)))))
+          (option_override
+            (keyword)
+            (keyword)
+            (ref_method
+              (modifier
+                (word))
               (type
                 (intrinsic))
-              (id_parameter
-                (symbol
-                  (word))))))
-        (block_try
-          (keyword)
-          (block
-            (statement
-              (id_label
-                (symbol
-                  (word)))
-              (instruction)
-              (float))
-            (statement
-              (id_label
-                (symbol
-                  (word)))
-              (instruction)
-              (integer))
-            (statement
-              (id_label
-                (symbol
-                  (word)))
-              (instruction)
-              (ref_class
-                (ref_assembly
-                  (id_assembly
-                    (id
-                      (symbol
-                        (word)))))
-                (id_class
-                  (id
-                    (nesting
-                      (symbol
-                        (word)))
-                    (symbol
-                      (word))))))
-            (statement
-              (id_label
-                (symbol
-                  (word)))
-              (instruction)
-              (string
-                (string_single
-                  (string_content))))
-            (statement
-              (id_label
-                (symbol
-                  (word)))
-              (instruction)
-              (ref_method
-                (type
-                  (type_parameter))
-                (ref_class
-                  (ref_assembly
-                    (id_assembly
-                      (id
-                        (symbol
-                          (word)))))
-                  (id_class
-                    (id
-                      (nesting
-                        (nesting
-                          (symbol
-                            (word)))
-                        (symbol
-                          (word)))
-                      (symbol
-                        (word)))))
-                (id_method
-                  (id
-                    (symbol
-                      (word))))
-                (type_args
+              (ref_scope
+                (type_spec
                   (type
                     (type_custom
                       (modifier)
                       (ref_class
+                        (ref_assembly
+                          (id_assembly
+                            (id
+                              (symbol
+                                (word)))))
                         (id_class
                           (id
+                            (nesting
+                              (symbol
+                                (word)))
                             (symbol
-                              (word))))))))
-                (args
-                  (args_item
-                    (type
-                      (type
-                        (type_parameter)))))))
-            (statement
-              (id_label
-                (symbol
-                  (word)))
-              (instruction)
-              (id_label
-                (symbol
-                  (word)))))
-          (comment)
-          (block_handler
-            (keyword)
-            (ref_class
-              (ref_assembly
-                (id_assembly
-                  (id
-                    (symbol
-                      (word)))))
-              (id_class
+                              (word)))))
+                      (type_args
+                        (type
+                          (type_parameter)))))))
+              (id_method
                 (id
-                  (nesting
-                    (symbol
-                      (word)))
                   (symbol
-                    (word)))))
-            (block
+                    (word))))
+              (args
+                (args_item
+                  (type
+                    (type_parameter))))))
+          (option_value
+            (keyword)
+            (integer))
+          (option_locals
+            (keyword)
+            (keyword)
+            (args
+              (args_item
+                (integer)
+                (type
+                  (intrinsic))
+                (id_parameter
+                  (symbol
+                    (word))))))
+          (block_try
+            (keyword)
+            (body
               (statement
                 (id_label
                   (symbol
                     (word)))
-                (instruction))
+                (instruction)
+                (float))
+              (statement
+                (id_label
+                  (symbol
+                    (word)))
+                (instruction)
+                (integer))
+              (statement
+                (id_label
+                  (symbol
+                    (word)))
+                (instruction)
+                (ref_token
+                  (type_spec
+                    (ref_class
+                      (ref_assembly
+                        (id_assembly
+                          (id
+                            (symbol
+                              (word)))))
+                      (id_class
+                        (id
+                          (nesting
+                            (symbol
+                              (word)))
+                          (symbol
+                            (word))))))))
+              (statement
+                (id_label
+                  (symbol
+                    (word)))
+                (instruction)
+                (string
+                  (string_single
+                    (string_content))))
+              (statement
+                (id_label
+                  (symbol
+                    (word)))
+                (instruction)
+                (ref_method
+                  (type
+                    (type_parameter))
+                  (ref_scope
+                    (type_spec
+                      (ref_class
+                        (ref_assembly
+                          (id_assembly
+                            (id
+                              (symbol
+                                (word)))))
+                        (id_class
+                          (id
+                            (nesting
+                              (nesting
+                                (symbol
+                                  (word)))
+                              (symbol
+                                (word)))
+                            (symbol
+                              (word)))))))
+                  (id_method
+                    (id
+                      (symbol
+                        (word))))
+                  (type_args
+                    (type
+                      (type_custom
+                        (modifier)
+                        (ref_class
+                          (id_class
+                            (id
+                              (symbol
+                                (word))))))))
+                  (args
+                    (args_item
+                      (type
+                        (type
+                          (type_parameter))
+                        (type_suffix))))))
               (statement
                 (id_label
                   (symbol
@@ -1029,13 +1044,44 @@ Generics, Properties and Exception Handling
                 (instruction)
                 (id_label
                   (symbol
-                    (word)))))))
-        (comment)
-        (statement
-          (id_label
-            (symbol
-              (word)))
-          (instruction)))
+                    (word)))))
+            (comment)
+            (block_handler
+              (keyword)
+              (type_spec
+                (ref_class
+                  (ref_assembly
+                    (id_assembly
+                      (id
+                        (symbol
+                          (word)))))
+                  (id_class
+                    (id
+                      (nesting
+                        (symbol
+                          (word)))
+                      (symbol
+                        (word))))))
+              (body
+                (statement
+                  (id_label
+                    (symbol
+                      (word)))
+                  (instruction))
+                (statement
+                  (id_label
+                    (symbol
+                      (word)))
+                  (instruction)
+                  (id_label
+                    (symbol
+                      (word)))))))
+          (comment)
+          (statement
+            (id_label
+              (symbol
+                (word)))
+            (instruction))))
       (def_property
         (keyword)
         (modifier
@@ -1050,50 +1096,57 @@ Generics, Properties and Exception Handling
             (symbol
               (word))))
         (args)
-        (option_property
-          (keyword)
-          (ref_method
-            (modifier)
-            (type
-              (type_parameter))
-            (type
-              (type_custom
-                (modifier)
-                (ref_class
-                  (id_class
-                    (id
-                      (symbol
-                        (word)))))
-                (type_args
+        (body
+          (option_accessor
+            (keyword)
+            (ref_method
+              (modifier
+                (word))
+              (type
+                (type_parameter))
+              (ref_scope
+                (type_spec
                   (type
-                    (type_parameter
-                      (id_generic
-                        (symbol
-                          (word))))))))
-            (id_method
-              (id
-                (symbol
-                  (word))))
-            (args)))
-        (option_property
-          (keyword)
-          (ref_method
-            (modifier)
-            (type
-              (intrinsic))
-            (ref_class
-              (id_class
+                    (type_custom
+                      (modifier)
+                      (ref_class
+                        (id_class
+                          (id
+                            (symbol
+                              (word)))))
+                      (type_args
+                        (type
+                          (type_parameter
+                            (id_generic
+                              (symbol
+                                (word))))))))))
+              (id_method
                 (id
                   (symbol
-                    (word)))))
-            (id_method
-              (id
-                (symbol
-                  (word))))
-            (args
-              (args_item
-                (type
-                  (type_parameter))))))))))
+                    (word))))
+              (args)))
+          (option_accessor
+            (keyword)
+            (ref_method
+              (modifier
+                (word))
+              (type
+                (intrinsic))
+              (ref_scope
+                (type_spec
+                  (ref_class
+                    (id_class
+                      (id
+                        (symbol
+                          (word)))))))
+              (id_method
+                (id
+                  (symbol
+                    (word))))
+              (args
+                (args_item
+                  (type
+                    (type_parameter)))))))))))
 
 ==================
 Manifest, Security, Data and Source Directives
@@ -1191,23 +1244,23 @@ Manifest, Security, Data and Source Directives
 ---
 
 (file
-  (def_module
-    (def_assembly
-      (keyword)
-      (modifier
-        (word))
-      (modifier
-        (word))
-      (id_assembly
-        (id
-          (symbol
-            (word))))
-      (modifier)
-      (id_assembly
-        (id
-          (symbol
-            (word))))
-      (option_assembly
+  (def_assembly
+    (keyword)
+    (modifier
+      (word))
+    (modifier
+      (word))
+    (id_assembly
+      (id
+        (symbol
+          (word))))
+    (modifier)
+    (id_assembly
+      (id
+        (symbol
+          (word))))
+    (body
+      (option_value
         (keyword)
         (blob
           (byte)
@@ -1218,132 +1271,84 @@ Manifest, Security, Data and Source Directives
           (byte)
           (byte)
           (byte)))
-      (option_assembly
+      (option_value
         (keyword)
         (blob
           (byte)
           (byte)))
-      (option_assembly
+      (option_value
         (keyword)
-        (version)))
-    (def_assembly
-      (keyword)
-      (id_assembly
-        (id
-          (symbol
-            (word))))
+        (version))))
+  (def_assembly
+    (keyword)
+    (id_assembly
+      (id
+        (symbol
+          (word))))
+    (body
       (option_security
         (keyword)
         (modifier
           (word))
-        (ref_class
-          (ref_assembly
-            (id_assembly
-              (id
-                (symbol
-                  (word)))))
-          (id_class
-            (id
-              (nesting
-                (nesting
-                  (nesting
-                    (symbol
-                      (word)))
-                  (symbol
-                    (word)))
-                (symbol
-                  (word)))
-              (symbol
-                (word)))))
-        (named_arg
-          (modifier)
-          (type
-            (intrinsic))
-          (id_member
-            (id
-              (symbol
-                (quoted))))
-          (constant
-            (intrinsic)
-            (keyword)))
-        (named_arg
-          (modifier)
-          (modifier)
-          (type
-            (type_custom
-              (modifier)
-              (ref_class
-                (id_class
+        (security_attribute
+          (type_spec
+            (ref_class
+              (ref_assembly
+                (id_assembly
                   (id
                     (symbol
-                      (quoted)))))))
-          (id_member
-            (id
-              (symbol
-                (quoted))))
-          (constant
-            (intrinsic)
-            (integer))))
+                      (word)))))
+              (id_class
+                (id
+                  (nesting
+                    (nesting
+                      (nesting
+                        (symbol
+                          (word)))
+                      (symbol
+                        (word)))
+                    (symbol
+                      (word)))
+                  (symbol
+                    (word))))))
+          (security_arg
+            (modifier)
+            (type_spec
+              (type
+                (intrinsic)))
+            (id_member
+              (id
+                (symbol
+                  (quoted))))
+            (literal
+              (literal_typed
+                (intrinsic)
+                (literal_bool))))
+          (security_arg
+            (modifier)
+            (modifier)
+            (type_spec
+              (type
+                (type_custom
+                  (modifier)
+                  (ref_class
+                    (id_class
+                      (id
+                        (symbol
+                          (quoted))))))))
+            (id_member
+              (id
+                (symbol
+                  (quoted))))
+            (literal
+              (literal_typed
+                (intrinsic)
+                (integer))))))
       (option_security
         (keyword)
         (modifier
           (word))
-        (ref_class
-          (ref_assembly
-            (id_assembly
-              (id
-                (symbol
-                  (word)))))
-          (id_class
-            (id
-              (nesting
-                (nesting
-                  (nesting
-                    (symbol
-                      (word)))
-                  (symbol
-                    (word)))
-                (symbol
-                  (word)))
-              (symbol
-                (word)))))
-        (named_value
-          (string
-            (string_single
-              (string_content)))
-          (intrinsic)
-          (integer))
-        (named_value
-          (string
-            (string_single
-              (string_content)))
-          (keyword)))
-      (option_assembly
-        (keyword)
-        (blob
-          (byte)
-          (byte)
-          (byte)
-          (byte)))
-      (attribute
-        (keyword)
-        (ref_class
-          (ref_assembly
-            (id_assembly
-              (id
-                (symbol
-                  (word)))))
-          (id_class
-            (id
-              (nesting
-                (symbol
-                  (word)))
-              (symbol
-                (word)))))
-        (ref_method
-          (modifier)
-          (type
-            (intrinsic))
+        (type_spec
           (ref_class
             (ref_assembly
               (id_assembly
@@ -1353,10 +1358,72 @@ Manifest, Security, Data and Source Directives
             (id_class
               (id
                 (nesting
+                  (nesting
+                    (nesting
+                      (symbol
+                        (word)))
+                    (symbol
+                      (word)))
                   (symbol
                     (word)))
                 (symbol
-                  (word)))))
+                  (word))))))
+        (security_value
+          (string
+            (string_single
+              (string_content)))
+          (literal_typed
+            (intrinsic)
+            (integer)))
+        (security_value
+          (string
+            (string_single
+              (string_content)))
+          (literal_bool)))
+      (option_value
+        (keyword)
+        (blob
+          (byte)
+          (byte)
+          (byte)
+          (byte)))
+      (attribute
+        (keyword)
+        (ref_token
+          (type_spec
+            (ref_class
+              (ref_assembly
+                (id_assembly
+                  (id
+                    (symbol
+                      (word)))))
+              (id_class
+                (id
+                  (nesting
+                    (symbol
+                      (word)))
+                  (symbol
+                    (word)))))))
+        (ref_method
+          (modifier
+            (word))
+          (type
+            (intrinsic))
+          (ref_scope
+            (type_spec
+              (ref_class
+                (ref_assembly
+                  (id_assembly
+                    (id
+                      (symbol
+                        (word)))))
+                (id_class
+                  (id
+                    (nesting
+                      (symbol
+                        (word)))
+                    (symbol
+                      (word)))))))
           (id_method
             (keyword))
           (args
@@ -1365,97 +1432,102 @@ Manifest, Security, Data and Source Directives
                 (intrinsic)))))
         (string
           (string_single
-            (string_content)))))
-    (option_module
-      (keyword))
-    (option_module
-      (keyword)
-      (modifier)
-      (id_assembly
-        (id
-          (nesting
-            (symbol
-              (word)))
+            (string_content))))))
+  (option_module
+    (keyword))
+  (option_module
+    (keyword)
+    (modifier)
+    (id_assembly
+      (id
+        (nesting
           (symbol
-            (word)))))
-    (option_module
-      (keyword)
-      (modifier
-        (word))
-      (id_assembly
-        (id
-          (nesting
-            (symbol
-              (word)))
+            (word)))
+        (symbol
+          (word)))))
+  (option_module
+    (keyword)
+    (modifier
+      (word))
+    (id_assembly
+      (id
+        (nesting
           (symbol
-            (word))))
-      (keyword)
-      (blob
-        (byte)
-        (byte))
-      (keyword))
-    (option_module
-      (keyword)
-      (keyword)
-      (integer))
-    (option_module
-      (keyword)
-      (integer))
-    (option_module
-      (keyword)
-      (blob
-        (byte)
-        (byte)
-        (byte)
-        (byte)))
-    (option_module
-      (keyword)
-      (integer)
-      (intrinsic)
-      (modifier
-        (word))
-      (modifier)
-      (id_label
+            (word)))
+        (symbol
+          (word)))))
+  (option_value
+    (keyword)
+    (blob
+      (byte)
+      (byte)))
+  (option_flag
+    (keyword))
+  (option_value
+    (keyword)
+    (keyword)
+    (integer))
+  (option_value
+    (keyword)
+    (integer))
+  (option_value
+    (keyword)
+    (blob
+      (byte)
+      (byte)
+      (byte)
+      (byte)))
+  (option_vtfixup
+    (keyword)
+    (integer)
+    (intrinsic)
+    (modifier
+      (word))
+    (modifier)
+    (id_label
+      (symbol
+        (word))))
+  (option_source
+    (keyword)
+    (quoted)
+    (quoted))
+  (def_export
+    (keyword)
+    (keyword)
+    (modifier
+      (word))
+    (id_class
+      (id
+        (nesting
+          (symbol
+            (word)))
         (symbol
           (word))))
-    (option_source
-      (keyword)
-      (quoted)
-      (quoted))
-    (def_export
-      (keyword)
-      (keyword)
-      (modifier
-        (word))
-      (id_class
-        (id
-          (nesting
-            (symbol
-              (word)))
-          (symbol
-            (word))))
-      (option_manifest
+    (body
+      (def_assembly
         (keyword)
-        (keyword)
+        (modifier
+          (word))
         (id_assembly
           (id
             (symbol
-              (word))))))
-    (def_resource
-      (keyword)
-      (modifier
-        (word))
-      (id_assembly
-        (id
+              (word)))))))
+  (def_resource
+    (keyword)
+    (modifier
+      (word))
+    (id_assembly
+      (id
+        (nesting
           (nesting
-            (nesting
-              (symbol
-                (word)))
             (symbol
               (word)))
           (symbol
-            (word))))
-      (option_manifest
+            (word)))
+        (symbol
+          (word))))
+    (body
+      (option_module
         (keyword)
         (id_assembly
           (id
@@ -1465,69 +1537,73 @@ Manifest, Security, Data and Source Directives
             (symbol
               (word))))
         (modifier)
-        (integer)))
-    (def_data
-      (keyword)
-      (id_label
-        (symbol
-          (word)))
-      (data_item
-        (bytearray
-          (intrinsic)
-          (blob
-            (byte)
-            (byte)
-            (byte)))))
-    (def_data
-      (keyword)
-      (modifier)
-      (id_label
-        (symbol
-          (word)))
-      (data_item
+        (integer))))
+  (def_data
+    (keyword)
+    (id_label
+      (symbol
+        (word)))
+    (literal_data
+      (literal_bytes
         (intrinsic)
-        (integer)
+        (blob
+          (byte)
+          (byte)
+          (byte)))))
+  (def_data
+    (keyword)
+    (modifier
+      (word))
+    (id_label
+      (symbol
+        (word)))
+    (literal_data
+      (literal_typed
+        (intrinsic)
         (integer))
-      (data_item
+      (integer))
+    (literal_data
+      (literal_typed
         (intrinsic)
-        (float))
-      (data_item
-        (intrinsic)
-        (string
-          (string_single
-            (string_content))))
-      (data_item
-        (id_label
-          (symbol
-            (word))))
-      (data_item
-        (intrinsic)
-        (integer)))
-    (def_field
-      (keyword)
-      (modifier
-        (word))
-      (modifier
-        (word))
-      (type
-        (intrinsic))
-      (id_member
-        (id
-          (symbol
-            (word))))
-      (modifier)
+        (float)))
+    (literal_data
+      (intrinsic)
+      (string
+        (string_single
+          (string_content))))
+    (literal_data
       (id_label
         (symbol
           (word))))
-    (def_namespace
-      (keyword)
-      (id_namespace
-        (id
-          (nesting
-            (symbol
-              (word)))
+    (literal_data
+      (intrinsic)
+      (integer)))
+  (def_field
+    (keyword)
+    (modifier
+      (word))
+    (modifier
+      (word))
+    (type
+      (intrinsic))
+    (id_member
+      (id
+        (symbol
+          (word))))
+    (modifier)
+    (id_label
+      (symbol
+        (word))))
+  (def_namespace
+    (keyword)
+    (id_namespace
+      (id
+        (nesting
           (symbol
-            (word))))
+            (word)))
+        (symbol
+          (word))))
+    (body
       (def_class
         (keyword)
         (modifier
@@ -1543,32 +1619,224 @@ Manifest, Security, Data and Source Directives
             (symbol
               (word))))
         (modifier)
-        (ref_class
-          (ref_assembly
-            (id_assembly
+        (type_spec
+          (ref_class
+            (ref_assembly
+              (id_assembly
+                (id
+                  (symbol
+                    (word)))))
+            (id_class
+              (id
+                (nesting
+                  (symbol
+                    (word)))
+                (symbol
+                  (word))))))
+        (body
+          (option_param
+            (keyword)
+            (keyword)
+            (id_generic
+              (symbol
+                (word))))
+          (option_param
+            (keyword)
+            (keyword)
+            (integer)
+            (type_spec
+              (type
+                (type_custom
+                  (modifier)
+                  (ref_class
+                    (ref_assembly
+                      (id_assembly
+                        (id
+                          (symbol
+                            (word)))))
+                    (id_class
+                      (id
+                        (nesting
+                          (symbol
+                            (word)))
+                        (symbol
+                          (word)))))))))
+          (option_override
+            (keyword)
+            (ref_scope
+              (type_spec
+                (ref_class
+                  (ref_assembly
+                    (id_assembly
+                      (id
+                        (symbol
+                          (word)))))
+                  (id_class
+                    (id
+                      (nesting
+                        (symbol
+                          (word)))
+                      (symbol
+                        (word)))))))
+            (id_method
+              (id
+                (symbol
+                  (word))))
+            (modifier)
+            (ref_method
+              (modifier
+                (word))
+              (type
+                (intrinsic))
+              (ref_scope
+                (type_spec
+                  (ref_class
+                    (id_class
+                      (id
+                        (nesting
+                          (nesting
+                            (symbol
+                              (word)))
+                          (symbol
+                            (word)))
+                        (symbol
+                          (word)))))))
+              (id_method
+                (id
+                  (symbol
+                    (word))))
+              (args)))
+          (option_override
+            (keyword)
+            (keyword)
+            (ref_method
+              (modifier
+                (word))
+              (type
+                (intrinsic))
+              (ref_scope
+                (type_spec
+                  (ref_class
+                    (ref_assembly
+                      (id_assembly
+                        (id
+                          (symbol
+                            (word)))))
+                    (id_class
+                      (id
+                        (nesting
+                          (symbol
+                            (word)))
+                        (symbol
+                          (word)))))))
+              (id_method
+                (id
+                  (symbol
+                    (word))))
+              (integer)
+              (args
+                (args_item
+                  (type
+                    (type_parameter)))))
+            (modifier)
+            (keyword)
+            (ref_method
+              (modifier
+                (word))
+              (type
+                (intrinsic))
+              (ref_scope
+                (type_spec
+                  (ref_class
+                    (id_class
+                      (id
+                        (nesting
+                          (nesting
+                            (symbol
+                              (word)))
+                          (symbol
+                            (word)))
+                        (symbol
+                          (word)))))))
+              (id_method
+                (id
+                  (symbol
+                    (word))))
+              (integer)
+              (args
+                (args_item
+                  (type
+                    (type_parameter))))))
+          (def_field
+            (keyword)
+            (integer)
+            (modifier
+              (word))
+            (marshal
+              (keyword)
+              (loose
+                (modifier
+                  (word))))
+            (type
+              (intrinsic))
+            (id_member
               (id
                 (symbol
                   (word)))))
-          (id_class
-            (id
-              (nesting
+          (def_field
+            (keyword)
+            (modifier
+              (word))
+            (type
+              (type_method
+                (keyword)
+                (type
+                  (intrinsic))
+                (args
+                  (args_item
+                    (type
+                      (intrinsic))))))
+            (id_member
+              (id
                 (symbol
-                  (word)))
-              (symbol
-                (word)))))
-        (option_param
-          (keyword)
-          (keyword)
-          (id_generic
-            (symbol
-              (word))))
-        (option_param
-          (keyword)
-          (keyword)
-          (integer)
-          (type
-            (type_custom
-              (modifier)
+                  (word)))))
+          (def_field
+            (keyword)
+            (modifier
+              (word))
+            (type
+              (type
+                (intrinsic))
+              (type_suffix
+                (modifier)
+                (type_spec
+                  (ref_class
+                    (ref_assembly
+                      (id_assembly
+                        (id
+                          (symbol
+                            (word)))))
+                    (id_class
+                      (id
+                        (nesting
+                          (nesting
+                            (nesting
+                              (symbol
+                                (word)))
+                            (symbol
+                              (word)))
+                          (symbol
+                            (word)))
+                        (symbol
+                          (word))))))))
+            (id_member
+              (id
+                (symbol
+                  (word)))))
+          (def_event
+            (keyword)
+            (modifier)
+            (type_spec
               (ref_class
                 (ref_assembly
                   (id_assembly
@@ -1581,553 +1849,406 @@ Manifest, Security, Data and Source Directives
                       (symbol
                         (word)))
                     (symbol
-                      (word))))))))
-        (option_type
-          (keyword)
-          (ref_class
-            (ref_assembly
-              (id_assembly
-                (id
-                  (symbol
-                    (word)))))
-            (id_class
-              (id
-                (nesting
-                  (symbol
-                    (word)))
-                (symbol
-                  (word)))))
-          (id_method
-            (id
-              (symbol
-                (word))))
-          (modifier)
-          (ref_method
-            (modifier)
-            (type
-              (intrinsic))
-            (ref_class
-              (id_class
-                (id
-                  (nesting
-                    (nesting
-                      (symbol
-                        (word)))
-                    (symbol
-                      (word)))
-                  (symbol
-                    (word)))))
-            (id_method
+                      (word))))))
+            (id_member
               (id
                 (symbol
                   (word))))
-            (args)))
-        (option_type
-          (keyword)
-          (keyword)
-          (ref_method
-            (modifier)
-            (type
-              (intrinsic))
-            (ref_class
-              (ref_assembly
-                (id_assembly
-                  (id
-                    (symbol
-                      (word)))))
-              (id_class
-                (id
-                  (nesting
-                    (symbol
-                      (word)))
-                  (symbol
-                    (word)))))
-            (id_method
-              (id
-                (symbol
-                  (word))))
-            (integer)
-            (args
-              (args_item
-                (type
-                  (type_parameter)))))
-          (modifier)
-          (keyword)
-          (ref_method
-            (modifier)
-            (type
-              (intrinsic))
-            (ref_class
-              (id_class
-                (id
-                  (nesting
-                    (nesting
-                      (symbol
-                        (word)))
-                    (symbol
-                      (word)))
-                  (symbol
-                    (word)))))
-            (id_method
-              (id
-                (symbol
-                  (word))))
-            (integer)
-            (args
-              (args_item
-                (type
-                  (type_parameter))))))
-        (def_field
-          (keyword)
-          (integer)
-          (modifier
-            (word))
-          (marshal
-            (keyword)
-            (modifier
-              (word)))
-          (type
-            (intrinsic))
-          (id_member
-            (id
-              (symbol
-                (word)))))
-        (def_field
-          (keyword)
-          (modifier
-            (word))
-          (type
-            (type_method
-              (keyword)
-              (type
-                (intrinsic))
-              (args
-                (args_item
+            (body
+              (option_accessor
+                (keyword)
+                (ref_method
+                  (modifier
+                    (word))
                   (type
-                    (intrinsic))))))
-          (id_member
-            (id
-              (symbol
-                (word)))))
-        (def_field
-          (keyword)
-          (modifier
-            (word))
-          (type
-            (type
-              (intrinsic))
-            (modifier)
-            (ref_class
-              (ref_assembly
-                (id_assembly
-                  (id
-                    (symbol
-                      (word)))))
-              (id_class
-                (id
-                  (nesting
-                    (nesting
-                      (nesting
-                        (symbol
-                          (word)))
-                      (symbol
-                        (word)))
-                    (symbol
-                      (word)))
-                  (symbol
-                    (word))))))
-          (id_member
-            (id
-              (symbol
-                (word)))))
-        (def_event
-          (keyword)
-          (modifier)
-          (ref_class
-            (ref_assembly
-              (id_assembly
-                (id
-                  (symbol
-                    (word)))))
-            (id_class
-              (id
-                (nesting
-                  (symbol
-                    (word)))
-                (symbol
-                  (word)))))
-          (id_member
-            (id
-              (symbol
-                (word))))
-          (option_event
-            (keyword)
-            (ref_method
-              (modifier)
-              (type
-                (intrinsic))
-              (ref_class
-                (id_class
-                  (id
-                    (nesting
-                      (nesting
-                        (symbol
-                          (word)))
-                      (symbol
-                        (word)))
-                    (symbol
-                      (word)))))
-              (id_method
-                (id
-                  (symbol
-                    (word))))
-              (args
-                (args_item
-                  (type
-                    (type_custom
-                      (modifier)
+                    (intrinsic))
+                  (ref_scope
+                    (type_spec
                       (ref_class
-                        (ref_assembly
-                          (id_assembly
-                            (id
-                              (symbol
-                                (word)))))
                         (id_class
                           (id
                             (nesting
+                              (nesting
+                                (symbol
+                                  (word)))
                               (symbol
                                 (word)))
                             (symbol
-                              (word)))))))))))
-          (option_event
-            (keyword)
-            (ref_method
-              (modifier)
-              (type
-                (intrinsic))
-              (ref_class
-                (id_class
-                  (id
-                    (nesting
-                      (nesting
-                        (symbol
-                          (word)))
+                              (word)))))))
+                  (id_method
+                    (id
                       (symbol
-                        (word)))
-                    (symbol
-                      (word)))))
-              (id_method
-                (id
-                  (symbol
-                    (word))))
-              (args
-                (args_item
+                        (word))))
+                  (args
+                    (args_item
+                      (type
+                        (type_custom
+                          (modifier)
+                          (ref_class
+                            (ref_assembly
+                              (id_assembly
+                                (id
+                                  (symbol
+                                    (word)))))
+                            (id_class
+                              (id
+                                (nesting
+                                  (symbol
+                                    (word)))
+                                (symbol
+                                  (word)))))))))))
+              (option_accessor
+                (keyword)
+                (ref_method
+                  (modifier
+                    (word))
                   (type
-                    (type_custom
-                      (modifier)
+                    (intrinsic))
+                  (ref_scope
+                    (type_spec
                       (ref_class
-                        (ref_assembly
-                          (id_assembly
-                            (id
-                              (symbol
-                                (word)))))
                         (id_class
                           (id
                             (nesting
+                              (nesting
+                                (symbol
+                                  (word)))
                               (symbol
                                 (word)))
                             (symbol
-                              (word)))))))))))
-          (option_event
-            (keyword)
-            (ref_method
-              (modifier)
-              (type
-                (intrinsic))
-              (ref_class
-                (id_class
-                  (id
-                    (nesting
-                      (nesting
-                        (symbol
-                          (word)))
+                              (word)))))))
+                  (id_method
+                    (id
                       (symbol
-                        (word)))
-                    (symbol
-                      (word)))))
-              (id_method
-                (id
-                  (symbol
-                    (word))))
-              (args))))
-        (def_method
-          (keyword)
-          (modifier
-            (word))
-          (modifier
-            (word))
-          (pinvokeimpl
+                        (word))))
+                  (args
+                    (args_item
+                      (type
+                        (type_custom
+                          (modifier)
+                          (ref_class
+                            (ref_assembly
+                              (id_assembly
+                                (id
+                                  (symbol
+                                    (word)))))
+                            (id_class
+                              (id
+                                (nesting
+                                  (symbol
+                                    (word)))
+                                (symbol
+                                  (word)))))))))))
+              (option_accessor
+                (keyword)
+                (ref_method
+                  (modifier
+                    (word))
+                  (type
+                    (intrinsic))
+                  (ref_scope
+                    (type_spec
+                      (ref_class
+                        (id_class
+                          (id
+                            (nesting
+                              (nesting
+                                (symbol
+                                  (word)))
+                              (symbol
+                                (word)))
+                            (symbol
+                              (word)))))))
+                  (id_method
+                    (id
+                      (symbol
+                        (word))))
+                  (args)))))
+          (def_method
             (keyword)
-            (string
-              (string_single
-                (string_content)))
-            (modifier)
-            (string
-              (string_single
-                (string_content)))
             (modifier
               (word))
             (modifier
-              (word)))
-          (type
-            (intrinsic))
-          (id_method
-            (id
-              (symbol
-                (word))))
-          (args
-            (args_item
-              (type
-                (intrinsic))
-              (id_parameter
-                (symbol
-                  (word))))
-            (args_item
-              (type
-                (intrinsic))
-              (marshal
-                (keyword)
+              (word))
+            (pinvokeimpl
+              (keyword)
+              (loose
+                (string
+                  (string_single
+                    (string_content)))
                 (modifier
-                  (word)))
-              (id_parameter
-                (symbol
+                  (word))
+                (string
+                  (string_single
+                    (string_content)))
+                (modifier
+                  (word))
+                (modifier
                   (word))))
-            (args_item
-              (type
-                (type_custom
-                  (modifier)
-                  (modifier)
-                  (ref_class
-                    (id_class
-                      (id
-                        (symbol
-                          (word)))))))
-              (id_parameter
-                (symbol
-                  (word))))
-            (args_item
-              (type
-                (type
-                  (intrinsic)))
-              (id_parameter
-                (symbol
-                  (word)))))
-          (modifier
-            (word))
-          (modifier
-            (word))
-          (modifier
-            (word)))
-        (def_method
-          (keyword)
-          (modifier
-            (word))
-          (modifier
-            (word))
-          (modifier
-            (word))
-          (modifier
-            (word))
-          (type
-            (intrinsic))
-          (id_method
-            (id
-              (symbol
-                (word))))
-          (args
-            (args_item
-              (type
-                (intrinsic))
-              (id_parameter
-                (symbol
-                  (word)))))
-          (modifier
-            (word))
-          (modifier
-            (word))
-          (option_method
-            (keyword))
-          (option_method
-            (keyword)
-            (integer)
-            (modifier)
+            (type
+              (intrinsic))
             (id_method
               (id
                 (symbol
-                  (word)))))
-          (option_method
-            (keyword)
-            (integer)
-            (integer))
-          (option_method
-            (keyword)
-            (keyword)
+                  (word))))
             (args
               (args_item
                 (type
-                  (type
-                    (intrinsic))
-                  (modifier))
+                  (intrinsic))
                 (id_parameter
                   (symbol
                     (word))))
               (args_item
                 (type
                   (intrinsic))
+                (marshal
+                  (keyword)
+                  (loose
+                    (modifier
+                      (word))))
                 (id_parameter
                   (symbol
-                    (word))))))
-          (option_source
+                    (word))))
+              (args_item
+                (type
+                  (type_custom
+                    (modifier)
+                    (modifier)
+                    (ref_class
+                      (id_class
+                        (id
+                          (symbol
+                            (word)))))))
+                (id_parameter
+                  (symbol
+                    (word))))
+              (args_item
+                (type
+                  (type
+                    (intrinsic))
+                  (type_suffix))
+                (id_parameter
+                  (symbol
+                    (word)))))
+            (modifier
+              (word))
+            (modifier
+              (word))
+            (modifier
+              (word))
+            (body))
+          (def_method
             (keyword)
-            (integer)
-            (integer)
-            (integer)
-            (integer)
-            (quoted))
-          (option_source
-            (keyword)
-            (integer)
-            (string
-              (string_single
-                (string_content))))
-          (block_try
-            (keyword)
-            (id_label
-              (symbol
-                (word)))
-            (modifier)
-            (id_label
-              (symbol
-                (word)))
-            (block_handler
-              (keyword)
-              (ref_class
-                (ref_assembly
-                  (id_assembly
-                    (id
-                      (symbol
-                        (word)))))
-                (id_class
+            (modifier
+              (word))
+            (modifier
+              (word))
+            (modifier
+              (word))
+            (modifier
+              (word))
+            (type
+              (intrinsic))
+            (id_method
+              (id
+                (symbol
+                  (word))))
+            (args
+              (args_item
+                (type
+                  (intrinsic))
+                (id_parameter
+                  (symbol
+                    (word)))))
+            (modifier
+              (word))
+            (modifier
+              (word))
+            (body
+              (option_flag
+                (keyword))
+              (option_export
+                (keyword)
+                (integer)
+                (modifier)
+                (id_method
                   (id
-                    (nesting
-                      (symbol
-                        (word)))
                     (symbol
                       (word)))))
-              (modifier)
-              (id_label
-                (symbol
-                  (word)))
-              (modifier)
-              (id_label
-                (symbol
-                  (word)))))
-          (block_try
-            (keyword)
-            (block
-              (block
-                (statement
+              (option_value
+                (keyword)
+                (integer)
+                (integer))
+              (option_locals
+                (keyword)
+                (keyword)
+                (args
+                  (args_item
+                    (type
+                      (type
+                        (intrinsic))
+                      (type_suffix
+                        (modifier)))
+                    (id_parameter
+                      (symbol
+                        (word))))
+                  (args_item
+                    (type
+                      (intrinsic))
+                    (id_parameter
+                      (symbol
+                        (word))))))
+              (option_source
+                (keyword)
+                (integer)
+                (integer)
+                (integer)
+                (integer)
+                (quoted))
+              (option_source
+                (keyword)
+                (integer)
+                (string
+                  (string_single
+                    (string_content))))
+              (block_try
+                (keyword)
+                (block_range
                   (id_label
                     (symbol
                       (word)))
-                  (instruction)
                   (modifier)
+                  (id_label
+                    (symbol
+                      (word))))
+                (block_handler
+                  (keyword)
+                  (type_spec
+                    (ref_class
+                      (ref_assembly
+                        (id_assembly
+                          (id
+                            (symbol
+                              (word)))))
+                      (id_class
+                        (id
+                          (nesting
+                            (symbol
+                              (word)))
+                          (symbol
+                            (word))))))
                   (modifier)
+                  (block_range
+                    (id_label
+                      (symbol
+                        (word)))
+                    (modifier)
+                    (id_label
+                      (symbol
+                        (word))))))
+              (block_try
+                (keyword)
+                (body
+                  (body
+                    (statement
+                      (id_label
+                        (symbol
+                          (word)))
+                      (instruction)
+                      (modifier
+                        (word))
+                      (modifier
+                        (word))
+                      (type
+                        (intrinsic))
+                      (args
+                        (args_item
+                          (type
+                            (intrinsic)))))
+                    (statement
+                      (id_label
+                        (symbol
+                          (word)))
+                      (instruction)
+                      (literal_typed
+                        (intrinsic)
+                        (integer)))
+                    (statement
+                      (id_label
+                        (symbol
+                          (word)))
+                      (instruction)
+                      (type_spec
+                        (type
+                          (type_parameter))))
+                    (statement
+                      (id_label
+                        (symbol
+                          (word)))
+                      (instruction)
+                      (integer))
+                    (statement
+                      (id_label
+                        (symbol
+                          (word)))
+                      (instruction)
+                      (id_label
+                        (symbol
+                          (word)))
+                      (integer))))
+                (block_handler
+                  (keyword)
+                  (body
+                    (statement
+                      (id_label
+                        (symbol
+                          (word)))
+                      (instruction)))
+                  (body
+                    (statement
+                      (id_label
+                        (symbol
+                          (word)))
+                      (instruction)
+                      (id_label
+                        (symbol
+                          (word)))))))
+              (statement
+                (id_label
+                  (symbol
+                    (word)))
+                (instruction)
+                (ref_method
+                  (modifier
+                    (word))
                   (type
                     (intrinsic))
+                  (ref_scope
+                    (type_spec
+                      (ref_class
+                        (id_class
+                          (id
+                            (nesting
+                              (nesting
+                                (symbol
+                                  (word)))
+                              (symbol
+                                (word)))
+                            (symbol
+                              (word)))))))
+                  (id_method
+                    (id
+                      (symbol
+                        (word))))
                   (args
                     (args_item
                       (type
-                        (intrinsic)))))
-                (statement
-                  (id_label
-                    (symbol
-                      (word)))
-                  (instruction)
-                  (intrinsic)
-                  (integer))
-                (statement
-                  (id_label
-                    (symbol
-                      (word)))
-                  (instruction)
-                  (type
-                    (type_parameter)))
-                (statement
-                  (id_label
-                    (symbol
-                      (word)))
-                  (instruction)
-                  (integer))
-                (statement
-                  (id_label
-                    (symbol
-                      (word)))
-                  (instruction)
-                  (id_label
-                    (symbol
-                      (word)))
-                  (integer))))
-            (block_handler
-              (keyword)
-              (block
-                (statement
-                  (id_label
-                    (symbol
-                      (word)))
-                  (instruction)))
-              (block
-                (statement
-                  (id_label
-                    (symbol
-                      (word)))
-                  (instruction)
-                  (id_label
-                    (symbol
-                      (word)))))))
-          (statement
-            (id_label
-              (symbol
-                (word)))
-            (instruction)
-            (ref_method
-              (modifier)
-              (type
-                (intrinsic))
-              (ref_class
-                (id_class
-                  (id
-                    (nesting
-                      (nesting
-                        (symbol
-                          (word)))
-                      (symbol
-                        (word)))
-                    (symbol
-                      (word)))))
-              (id_method
-                (id
+                        (intrinsic)))
+                    (args_item
+                      (type
+                        (intrinsic))))))
+              (statement
+                (id_label
                   (symbol
-                    (word))))
-              (args
-                (args_item
-                  (type
-                    (intrinsic)))
-                (args_item
-                  (type
-                    (intrinsic))))))
-          (statement
-            (id_label
-              (symbol
-                (word)))
-            (instruction)))))))
+                    (word)))
+                (instruction)))))))))
