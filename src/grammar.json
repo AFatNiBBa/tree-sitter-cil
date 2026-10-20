@@ -131,8 +131,33 @@
                 {
                   "type": "ALIAS",
                   "content": {
-                    "type": "STRING",
-                    "value": "call"
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "STRING",
+                        "value": "call"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "callvirt"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "newobj"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "jmp"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "ldftn"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "ldvirtftn"
+                      }
+                    ]
                   },
                   "named": true,
                   "value": "instruction"
@@ -149,8 +174,33 @@
                 {
                   "type": "ALIAS",
                   "content": {
-                    "type": "STRING",
-                    "value": "ldfld"
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "STRING",
+                        "value": "ldfld"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "ldflda"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "stfld"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "ldsfld"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "ldsflda"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "stsfld"
+                      }
+                    ]
                   },
                   "named": true,
                   "value": "instruction"
@@ -167,8 +217,29 @@
                 {
                   "type": "ALIAS",
                   "content": {
-                    "type": "STRING",
-                    "value": "ldc.i4.s"
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "STRING",
+                        "value": "ldc.i4"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "ldc.i4.s"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "ldc.i8"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "unaligned."
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "no."
+                      }
+                    ]
                   },
                   "named": true,
                   "value": "instruction"
@@ -185,8 +256,221 @@
                 {
                   "type": "ALIAS",
                   "content": {
-                    "type": "STRING",
-                    "value": "br"
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "STRING",
+                        "value": "ldarg"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "ldarg.s"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "ldarga"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "ldarga.s"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "starg"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "starg.s"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "ldloc"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "ldloc.s"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "ldloca"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "ldloca.s"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "stloc"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "stloc.s"
+                      }
+                    ]
+                  },
+                  "named": true,
+                  "value": "instruction"
+                },
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "integer"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "id_parameter"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "STRING",
+                        "value": "br"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "br.s"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "brfalse"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "brfalse.s"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "brnull"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "brnull.s"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "brzero"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "brzero.s"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "brtrue"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "brtrue.s"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "brinst"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "brinst.s"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "beq"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "beq.s"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "bne.un"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "bne.un.s"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "bge"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "bge.s"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "bge.un"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "bge.un.s"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "bgt"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "bgt.s"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "bgt.un"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "bgt.un.s"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "ble"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "ble.s"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "ble.un"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "ble.un.s"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "blt"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "blt.s"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "blt.un"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "blt.un.s"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "leave"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "leave.s"
+                      }
+                    ]
                   },
                   "named": true,
                   "value": "instruction"
@@ -194,6 +478,157 @@
                 {
                   "type": "SYMBOL",
                   "name": "id_label"
+                }
+              ]
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "STRING",
+                    "value": "switch"
+                  },
+                  "named": true,
+                  "value": "instruction"
+                },
+                {
+                  "type": "STRING",
+                  "value": "("
+                },
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SEQ",
+                      "members": [
+                        {
+                          "type": "SYMBOL",
+                          "name": "id_label"
+                        },
+                        {
+                          "type": "REPEAT",
+                          "content": {
+                            "type": "SEQ",
+                            "members": [
+                              {
+                                "type": "STRING",
+                                "value": ","
+                              },
+                              {
+                                "type": "SYMBOL",
+                                "name": "id_label"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "BLANK"
+                    }
+                  ]
+                },
+                {
+                  "type": "STRING",
+                  "value": ")"
+                }
+              ]
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "STRING",
+                        "value": "box"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "unbox"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "unbox.any"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "castclass"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "isinst"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "newarr"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "initobj"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "ldobj"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "stobj"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "cpobj"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "sizeof"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "mkrefany"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "refanyval"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "ldelem"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "ldelema"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "stelem"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "constrained."
+                      }
+                    ]
+                  },
+                  "named": true,
+                  "value": "instruction"
+                },
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "type"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "ref_class"
+                    }
+                  ]
                 }
               ]
             },
@@ -222,15 +657,67 @@
                 "members": [
                   {
                     "type": "STRING",
+                    "value": "nop"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "break"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ret"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "dup"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "pop"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "throw"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "rethrow"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "endfinally"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "endfault"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "endfilter"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "arglist"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "localloc"
+                  },
+                  {
+                    "type": "STRING",
                     "value": "ldarg.0"
                   },
                   {
                     "type": "STRING",
-                    "value": "stloc.0"
+                    "value": "ldarg.1"
                   },
                   {
                     "type": "STRING",
-                    "value": "stloc.1"
+                    "value": "ldarg.2"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldarg.3"
                   },
                   {
                     "type": "STRING",
@@ -242,7 +729,75 @@
                   },
                   {
                     "type": "STRING",
+                    "value": "ldloc.2"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldloc.3"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "stloc.0"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "stloc.1"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "stloc.2"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "stloc.3"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldnull"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldc.i4.m1"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldc.i4.M1"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldc.i4.0"
+                  },
+                  {
+                    "type": "STRING",
                     "value": "ldc.i4.1"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldc.i4.2"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldc.i4.3"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldc.i4.4"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldc.i4.5"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldc.i4.6"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldc.i4.7"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldc.i4.8"
                   },
                   {
                     "type": "STRING",
@@ -250,19 +805,427 @@
                   },
                   {
                     "type": "STRING",
+                    "value": "add.ovf"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "add.ovf.un"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "sub"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "sub.ovf"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "sub.ovf.un"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "mul"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "mul.ovf"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "mul.ovf.un"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "div"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "div.un"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "rem"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "rem.un"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "neg"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "and"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "or"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "xor"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "not"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "shl"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "shr"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "shr.un"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ceq"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "cgt"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "cgt.un"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "clt"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "clt.un"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ckfinite"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "conv.i"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "conv.i1"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "conv.i2"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "conv.i4"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "conv.i8"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "conv.u"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "conv.u1"
+                  },
+                  {
+                    "type": "STRING",
                     "value": "conv.u2"
                   },
                   {
                     "type": "STRING",
-                    "value": "ret"
+                    "value": "conv.u4"
                   },
                   {
                     "type": "STRING",
-                    "value": "nop"
+                    "value": "conv.u8"
                   },
                   {
                     "type": "STRING",
-                    "value": "pop"
+                    "value": "conv.r4"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "conv.r8"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "conv.r.un"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "conv.ovf.i"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "conv.ovf.i1"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "conv.ovf.i2"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "conv.ovf.i4"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "conv.ovf.i8"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "conv.ovf.u"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "conv.ovf.u1"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "conv.ovf.u2"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "conv.ovf.u4"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "conv.ovf.u8"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "conv.ovf.i.un"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "conv.ovf.i1.un"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "conv.ovf.i2.un"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "conv.ovf.i4.un"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "conv.ovf.i8.un"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "conv.ovf.u.un"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "conv.ovf.u1.un"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "conv.ovf.u2.un"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "conv.ovf.u4.un"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "conv.ovf.u8.un"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldind.i"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldind.i1"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldind.i2"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldind.i4"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldind.i8"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldind.u1"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldind.u2"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldind.u4"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldind.u8"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldind.r4"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldind.r8"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldind.ref"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "stind.i"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "stind.i1"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "stind.i2"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "stind.i4"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "stind.i8"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "stind.r4"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "stind.r8"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "stind.ref"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldelem.i"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldelem.i1"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldelem.i2"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldelem.i4"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldelem.i8"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldelem.u1"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldelem.u2"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldelem.u4"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldelem.u8"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldelem.r4"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldelem.r8"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldelem.ref"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "stelem.i"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "stelem.i1"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "stelem.i2"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "stelem.i4"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "stelem.i8"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "stelem.r4"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "stelem.r8"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "stelem.ref"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "ldlen"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "cpblk"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "initblk"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "refanytype"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "tail."
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "volatile."
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "readonly."
                   }
                 ]
               },
@@ -1180,8 +2143,21 @@
             {
               "type": "ALIAS",
               "content": {
-                "type": "STRING",
-                "value": ".publickeytoken"
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": ".hash"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": ".publickey"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": ".publickeytoken"
+                  }
+                ]
               },
               "named": true,
               "value": "keyword"
@@ -1193,6 +2169,33 @@
             {
               "type": "SYMBOL",
               "name": "blob"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": ".culture"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": ".locale"
+                  }
+                ]
+              },
+              "named": true,
+              "value": "keyword"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "string"
             }
           ]
         },
@@ -1266,15 +2269,24 @@
             {
               "type": "ALIAS",
               "content": {
-                "type": "SEQ",
+                "type": "CHOICE",
                 "members": [
                   {
                     "type": "STRING",
                     "value": ".locals"
                   },
                   {
-                    "type": "STRING",
-                    "value": "init"
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "STRING",
+                        "value": ".locals"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "init"
+                      }
+                    ]
                   }
                 ]
               },
@@ -1293,8 +2305,17 @@
             {
               "type": "ALIAS",
               "content": {
-                "type": "STRING",
-                "value": ".maxstack"
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": ".maxstack"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": ".emitbyte"
+                  }
+                ]
               },
               "named": true,
               "value": "keyword"

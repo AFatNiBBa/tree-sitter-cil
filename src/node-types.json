@@ -434,6 +434,10 @@
           "named": true
         },
         {
+          "type": "string",
+          "named": true
+        },
+        {
           "type": "version",
           "named": true
         }
@@ -610,11 +614,19 @@
           "named": true
         },
         {
+          "type": "id_parameter",
+          "named": true
+        },
+        {
           "type": "instruction",
           "named": true
         },
         {
           "type": "integer",
+          "named": true
+        },
+        {
+          "type": "ref_class",
           "named": true
         },
         {
@@ -627,6 +639,10 @@
         },
         {
           "type": "string",
+          "named": true
+        },
+        {
+          "type": "type",
           "named": true
         }
       ]

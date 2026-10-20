@@ -305,3 +305,283 @@ Method Locals and Instructions
             (word))))
       (statement
         (instruction)))))
+
+==================
+Instruction Operands
+==================
+
+.assembly extern System.Runtime
+{
+  .publickey = (00 24 00 00)
+  .hash = (AB CD)
+  .culture "it-IT"
+}
+
+.method public static int32 Sum(int32[] values) cil managed
+{
+  .maxstack 2
+  .locals (int32 total, int32 i)
+  ldc.i4.0
+  stloc.s total
+  ldc.i4 0x10
+  br.s Check
+Loop:
+  ldarg.0
+  ldloc i
+  ldelem.i4
+  box [System.Runtime]System.Int32
+  isinst class [System.Runtime]System.IComparable
+  newarr [System.Runtime]System.Object
+  callvirt instance string [System.Runtime]System.Object::ToString()
+  newobj instance void Foo::.ctor()
+  stsfld int32 Foo::count
+  switch (Loop, Check)
+Check:
+  tail.
+  call int32 Sum(int32[])
+  ret
+}
+
+---
+
+(file
+  (def_module
+    (def_assembly
+      (keyword)
+      (modifier)
+      (id_assembly
+        (id
+          (nesting
+            (symbol
+              (word)))
+          (symbol
+            (word))))
+      (option_assembly
+        (keyword)
+        (blob
+          (byte)
+          (byte)
+          (byte)
+          (byte)))
+      (option_assembly
+        (keyword)
+        (blob
+          (byte)
+          (byte)))
+      (option_assembly
+        (keyword)
+        (string
+          (string_single
+            (string_content)))))
+    (def_method
+      (keyword)
+      (modifier
+        (word))
+      (modifier
+        (word))
+      (type
+        (intrinsic))
+      (id_method
+        (id
+          (symbol
+            (word))))
+      (args
+        (args_item
+          (type
+            (type
+              (intrinsic))
+            (type_indexer))
+          (id_parameter
+            (symbol
+              (word)))))
+      (modifier
+        (word))
+      (modifier
+        (word))
+      (option_method
+        (keyword)
+        (integer))
+      (option_method
+        (keyword)
+        (args
+          (args_item
+            (type
+              (intrinsic))
+            (id_parameter
+              (symbol
+                (word))))
+          (args_item
+            (type
+              (intrinsic))
+            (id_parameter
+              (symbol
+                (word))))))
+      (statement
+        (instruction))
+      (statement
+        (instruction)
+        (id_parameter
+          (symbol
+            (word))))
+      (statement
+        (instruction)
+        (integer))
+      (statement
+        (instruction)
+        (id_label
+          (symbol
+            (word))))
+      (statement
+        (id_label
+          (symbol
+            (word)))
+        (instruction))
+      (statement
+        (instruction)
+        (id_parameter
+          (symbol
+            (word))))
+      (statement
+        (instruction))
+      (statement
+        (instruction)
+        (ref_class
+          (ref_assembly
+            (id_assembly
+              (id
+                (nesting
+                  (symbol
+                    (word)))
+                (symbol
+                  (word)))))
+          (id_class
+            (id
+              (nesting
+                (symbol
+                  (word)))
+              (symbol
+                (word))))))
+      (statement
+        (instruction)
+        (type
+          (type_custom
+            (modifier)
+            (ref_class
+              (ref_assembly
+                (id_assembly
+                  (id
+                    (nesting
+                      (symbol
+                        (word)))
+                    (symbol
+                      (word)))))
+              (id_class
+                (id
+                  (nesting
+                    (symbol
+                      (word)))
+                  (symbol
+                    (word))))))))
+      (statement
+        (instruction)
+        (ref_class
+          (ref_assembly
+            (id_assembly
+              (id
+                (nesting
+                  (symbol
+                    (word)))
+                (symbol
+                  (word)))))
+          (id_class
+            (id
+              (nesting
+                (symbol
+                  (word)))
+              (symbol
+                (word))))))
+      (statement
+        (instruction)
+        (ref_method
+          (modifier)
+          (type
+            (intrinsic))
+          (ref_class
+            (ref_assembly
+              (id_assembly
+                (id
+                  (nesting
+                    (symbol
+                      (word)))
+                  (symbol
+                    (word)))))
+            (id_class
+              (id
+                (nesting
+                  (symbol
+                    (word)))
+                (symbol
+                  (word)))))
+          (id_method
+            (id
+              (symbol
+                (word))))
+          (args)))
+      (statement
+        (instruction)
+        (ref_method
+          (modifier)
+          (type
+            (intrinsic))
+          (ref_class
+            (id_class
+              (id
+                (symbol
+                  (word)))))
+          (id_method
+            (keyword))
+          (args)))
+      (statement
+        (instruction)
+        (ref_member
+          (type
+            (intrinsic))
+          (ref_class
+            (id_class
+              (id
+                (symbol
+                  (word)))))
+          (id_member
+            (id
+              (symbol
+                (word))))))
+      (statement
+        (instruction)
+        (id_label
+          (symbol
+            (word)))
+        (id_label
+          (symbol
+            (word))))
+      (statement
+        (id_label
+          (symbol
+            (word)))
+        (instruction))
+      (statement
+        (instruction)
+        (ref_method
+          (type
+            (intrinsic))
+          (id_method
+            (id
+              (symbol
+                (word))))
+          (args
+            (args_item
+              (type
+                (type
+                  (intrinsic))
+                (type_indexer))))))
+      (statement
+        (instruction)))))
