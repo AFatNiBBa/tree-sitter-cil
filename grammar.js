@@ -16,6 +16,55 @@ const REGEX_NUMBER = /\d+/;
  */
 const join = (sep, rule) => seq(rule, repeat(seq(sep, rule)));
 
+/**
+ * Calling convention of a method signature
+ * @param {GrammarSymbols<string>} $ The grammar symbols
+ */
+const callConv = $ => repeat(alias(choice("instance", "explicit", "default", "vararg", "unmanaged", "cdecl", "stdcall", "thiscall", "fastcall"), $.modifier));
+
+/**
+ * Target of a branch, which can be either a label or an offset
+ * @param {GrammarSymbols<string>} $ The grammar symbols
+ */
+const target = $ => choice($.id_label, $.integer);
+
+/**
+ * Elements that can appear at the top level of a module or inside of a namespace
+ * @param {GrammarSymbols<string>} $ The grammar symbols
+ */
+const moduleDecls = $ => choice(
+  $.attribute,
+  $.option_module,
+  $.option_security,
+  $.option_source,
+  $.def_assembly,
+  $.def_resource,
+  $.def_export,
+  $.def_namespace,
+  $.def_class,
+  $.def_field,
+  $.def_method,
+  $.def_data,
+  ";"
+);
+
+/**
+ * Elements that can appear inside of the body of a method or of one of its blocks
+ * @param {GrammarSymbols<string>} $ The grammar symbols
+ */
+const methodDecls = $ => choice(
+  $.attribute,
+  $.option_method,
+  $.option_param,
+  $.option_security,
+  $.option_source,
+  $.statement,
+  $.block,
+  $.block_try,
+  $.def_data,
+  ";"
+);
+
 // Grammar for .NET's Common Intermediate Language
 export default grammar({
   name: "cil",
@@ -40,10 +89,23 @@ export default grammar({
       $.string,
       $.bytearray,
       alias("nullref", $.keyword),
-      seq($.intrinsic, "(", choice($.integer, $.float, alias(choice("true", "false"), $.keyword)), ")")
+      seq($.intrinsic, "(", choice($.integer, $.float, $.quoted, alias(choice("true", "false"), $.keyword)), ")")
     ),
 
-    marshal: $ => seq(alias("marshal", $.keyword), "(", repeat(choice($.intrinsic, $.modifier, $.type_indexer)), ")"),
+    marshal: $ => seq(
+      alias("marshal", $.keyword),
+      "(",
+      repeat(choice($.intrinsic, $.modifier, $.string, $.integer, "*", "&", "[", "]", "+", ",", seq("(", repeat(choice($.string, ",")), ")"))), // The native type is kept loose on purpose
+      ")"
+    ),
+
+    pinvokeimpl: $ => seq(
+      alias("pinvokeimpl", $.keyword),
+      "(",
+      optional(seq($.string, optional(seq(alias("as", $.modifier), $.string)))),
+      repeat($.modifier),
+      ")"
+    ),
 
     //#endregion
 
@@ -51,8 +113,19 @@ export default grammar({
 
     attribute: $ => seq(
       alias(".custom", $.keyword),
+      optional(seq(
+        "(",
+        choice(
+          $.ref_assembly,
+          $.ref_class,
+          $.type,
+          seq(alias("method", $.keyword), $.ref_method),
+          seq(alias("field", $.keyword), $.ref_member)
+        ),
+        ")"
+      )),
       $.ref_method,
-      optional(seq("=", $.blob))
+      optional(seq("=", choice($.blob, $.string)))
     ),
 
     statement: $ => seq(
@@ -61,7 +134,8 @@ export default grammar({
         seq(alias(choice("call", "callvirt", "newobj", "jmp", "ldftn", "ldvirtftn"), $.instruction), $.ref_method),
         seq(alias(choice("ldfld", "ldflda", "stfld", "ldsfld", "ldsflda", "stsfld"), $.instruction), $.ref_member),
         seq(alias(choice("ldc.i4", "ldc.i4.s", "ldc.i8", "unaligned.", "no."), $.instruction), $.integer),
-        seq(alias(choice("ldc.r4", "ldc.r8"), $.instruction), choice($.float, $.integer, $.blob)),
+        seq(alias(choice("ldc.r4", "ldc.r8"), $.instruction), choice($.float, $.integer, $.blob, seq($.intrinsic, "(", $.integer, ")"))),
+        seq(alias("calli", $.instruction), callConv($), $.type, $.args),
         seq(
           alias(
             choice(
@@ -83,14 +157,14 @@ export default grammar({
             ),
             $.instruction
           ),
-          $.id_label
+          target($)
         ),
-        seq(alias("switch", $.instruction), "(", optional(join(",", $.id_label)), ")"),
+        seq(alias("switch", $.instruction), "(", optional(join(",", target($))), ")"),
         seq(
           alias(
             choice(
               "box", "unbox", "unbox.any", "castclass", "isinst", "newarr", "initobj", "ldobj", "stobj", "cpobj",
-              "sizeof", "mkrefany", "refanyval", "ldelem", "ldelema", "stelem", "constrained."
+              "sizeof", "mkrefany", "refanyval", "ldelem", "ldelema", "stelem", "ldelem.any", "stelem.any", "constrained."
             ),
             $.instruction
           ),
@@ -131,11 +205,39 @@ export default grammar({
       )
     ),
 
+    data_item: $ => choice(
+      seq($.intrinsic, "*", "(", $.string, ")"),
+      seq("&", "(", $.id_label, ")"),
+      $.bytearray,
+      seq($.intrinsic, optional(seq("(", choice($.integer, $.float), ")")), optional(seq("[", $.integer, "]")))
+    ),
+
+    named_value: $ => seq(
+      $.string,
+      "=",
+      choice(
+        alias(choice("true", "false"), $.keyword),
+        $.integer,
+        $.string,
+        seq($.intrinsic, "(", $.integer, ")"),
+        seq($.ref_class, "(", optional(seq($.intrinsic, ":")), $.integer, ")")
+      )
+    ),
+
+    named_arg: $ => seq(
+      alias(choice("property", "field"), $.modifier),
+      optional(alias("enum", $.modifier)),
+      choice($.type, $.ref_class),
+      $.id_member,
+      "=",
+      $.constant
+    ),
+
     //#endregion
 
     //#region ARGS
 
-    args: $ => seq("(", optional(join(",", $.args_item)), ")"),
+    args: $ => seq("(", optional(join(",", choice($.args_item, "..."))), ")"),
 
     args_item: $ => seq(
       repeat(seq("[", choice(alias(choice("in", "out", "opt"), $.modifier), $.integer), "]")), // Parameter attributes and local indexes
@@ -157,7 +259,9 @@ export default grammar({
     //#region IDENTIFIER
 
     id_assembly: $ => $.id,
- 
+
+    id_namespace: $ => $.id,
+
     id_class: $ => $.id,
 
     id_member: $ => $.id,
@@ -186,13 +290,18 @@ export default grammar({
       $.intrinsic,
       $.type_custom,
       $.type_parameter,
+      $.type_method,
       seq($.type, $.type_indexer),
-      seq($.type, choice("&", "*"))
+      seq($.type, choice("&", "*")),
+      seq($.type, alias("pinned", $.modifier)),
+      seq($.type, alias(choice("modreq", "modopt"), $.modifier), "(", choice($.ref_class, $.type), ")")
     ),
 
-    type_custom: $ => seq(alias(choice("class", "valuetype"), $.modifier), $.ref_class, optional($.type_args)),
+    type_custom: $ => seq(alias(choice("class", "valuetype", seq("value", "class")), $.modifier), $.ref_class, optional($.type_args)),
 
     type_args: $ => seq("<", join(",", $.type), ">"),
+
+    type_method: $ => seq(alias("method", $.keyword), callConv($), $.type, "*", $.args),
 
     type_parameter: $ => choice(
       token(seq(choice("!", "!!"), REGEX_NUMBER)),
@@ -207,24 +316,27 @@ export default grammar({
 
     //#region DEF
 
-    def_module: $ => repeat1(choice(
-      $.attribute,
-      $.option_module,
-      $.def_assembly,
-      $.def_resource,
-      $.def_class,
-      $.def_method,
-      ";"
-    )),
+    def_module: $ => repeat1(moduleDecls($)),
+
+    def_namespace: $ => seq(
+      alias(".namespace", $.keyword),
+      $.id_namespace,
+      "{",
+      repeat(moduleDecls($)),
+      "}"
+    ),
 
     def_assembly: $ => seq(
       alias(".assembly", $.keyword),
-      alias(optional("extern"), $.modifier),
+      repeat($.modifier),
       $.id_assembly,
+      optional(seq(alias("as", $.modifier), $.id_assembly)),
       "{",
       repeat(choice(
         $.attribute,
         $.option_assembly,
+        $.option_security,
+        $.option_source,
         ";"
       )),
       "}"
@@ -237,6 +349,20 @@ export default grammar({
       "{",
       repeat(choice(
         $.attribute,
+        $.option_manifest,
+        ";"
+      )),
+      "}"
+    ),
+
+    def_export: $ => seq(
+      alias(choice(seq(".class", "extern"), ".export"), $.keyword),
+      repeat($.modifier),
+      $.id_class,
+      "{",
+      repeat(choice(
+        $.attribute,
+        $.option_manifest,
         ";"
       )),
       "}"
@@ -253,10 +379,16 @@ export default grammar({
       repeat(choice(
         $.attribute,
         $.option_type,
+        $.option_param,
+        $.option_security,
+        $.option_source,
         $.def_class,
+        $.def_export,
         $.def_field,
         $.def_method,
         $.def_property,
+        $.def_event,
+        $.def_data,
         ";"
       )),
       "}"
@@ -264,16 +396,17 @@ export default grammar({
 
     def_field: $ => seq(
       alias(".field", $.keyword),
-      repeat($.modifier),
+      optional(seq("[", $.integer, "]")),
+      repeat(choice($.modifier, $.marshal)),
       $.type,
-      optional($.marshal),
       $.id_member,
+      optional(seq(alias("at", $.modifier), $.id_label)),
       optional(seq("=", $.constant))
     ),
 
     def_method: $ => seq(
       alias(".method", $.keyword),
-      repeat($.modifier),
+      repeat(choice($.modifier, $.pinvokeimpl)),
       $.type,
       optional($.marshal),
       $.id_method,
@@ -281,13 +414,7 @@ export default grammar({
       $.args,
       repeat($.modifier),
       "{",
-      repeat(choice(
-        $.attribute,
-        $.option_method,
-        $.statement,
-        $.block_try,
-        ";"
-      )),
+      repeat(methodDecls($)),
       "}"
     ),
 
@@ -302,52 +429,74 @@ export default grammar({
       repeat(choice(
         $.attribute,
         $.option_property,
+        $.option_source,
         ";"
       )),
       "}"
+    ),
+
+    def_event: $ => seq(
+      alias(".event", $.keyword),
+      repeat(alias(choice("specialname", "rtspecialname"), $.modifier)),
+      optional(choice($.ref_class, $.type)),
+      $.id_member,
+      "{",
+      repeat(choice(
+        $.attribute,
+        $.option_event,
+        $.option_source,
+        ";"
+      )),
+      "}"
+    ),
+
+    def_data: $ => seq(
+      alias(".data", $.keyword),
+      optional(alias(choice("tls", "cil"), $.modifier)),
+      optional(seq($.id_label, "=")),
+      choice(
+        seq("{", optional(join(",", $.data_item)), "}"),
+        $.data_item
+      )
     ),
 
     //#endregion
 
     //#region BLOCK
 
-    block: $ => seq(
-      "{",
-      repeat(choice(
-        $.statement,
-        $.block_try,
-        ";"
-      )),
-      "}"
-    ),
+    block: $ => seq("{", repeat(methodDecls($)), "}"),
 
-    block_try: $ => seq(alias(".try", $.keyword), $.block, repeat1($.block_handler)),
+    block_try: $ => seq(
+      alias(".try", $.keyword),
+      choice($.block, seq(target($), alias("to", $.modifier), target($))),
+      repeat1($.block_handler)
+    ),
 
     block_handler: $ => seq(
       choice(
         seq(alias("catch", $.keyword), choice($.ref_class, $.type)),
-        seq(alias("filter", $.keyword), $.block),
+        seq(alias("filter", $.keyword), choice($.block, target($))),
         alias(choice("finally", "fault"), $.keyword)
       ),
-      $.block
+      choice($.block, seq(alias("handler", $.modifier), target($), alias("to", $.modifier), target($)))
     ),
 
     //#endregion
 
     //#region REF
 
-    ref_assembly: $ => seq("[", $.id_assembly, "]"),
+    ref_assembly: $ => seq("[", optional(alias(".module", $.keyword)), $.id_assembly, "]"),
 
     ref_class: $ => seq(optional($.ref_assembly), join("/", $.id_class)),
 
     ref_member: $ => seq($.type, choice($.ref_class, $.type), "::", $.id_member),
 
     ref_method: $ => seq(
-      alias(optional("instance"), $.modifier),
+      callConv($),
       $.type,
       optional(seq(choice($.ref_class, $.type), "::")),
       $.id_method,
-      optional($.type_args),
+      optional(choice($.type_args, seq("<", "[", $.integer, "]", ">"))), // Either the generic arguments or the generic arity
       $.args
     ),
 
@@ -361,42 +510,107 @@ export default grammar({
       seq(alias(".stackreserve", $.keyword), $.integer),
       seq(alias(".subsystem", $.keyword), $.integer),
       seq(alias(".corflags", $.keyword), $.integer),
+      seq(alias(".vtable", $.keyword), "=", $.blob),
+      seq(alias(".vtfixup", $.keyword), "[", $.integer, "]", repeat(choice($.intrinsic, $.modifier)), alias("at", $.modifier), $.id_label),
+      seq(
+        alias(".file", $.keyword),
+        repeat($.modifier),
+        $.id_assembly,
+        optional(seq(alias(".hash", $.keyword), "=", $.blob)),
+        optional(alias(".entrypoint", $.keyword))
+      ),
       seq(
         alias(".module", $.keyword),
         alias(optional("extern"), $.modifier),
-        $.id_assembly
+        optional($.id_assembly)
       ),
     ),
 
     option_assembly: $ => choice(
       seq(alias(seq(".hash", "algorithm"), $.keyword), $.integer),
-      seq(alias(choice(".hash", ".publickey", ".publickeytoken"), $.keyword), "=", $.blob),
+      seq(alias(choice(".hash", ".publickey", ".publickeytoken", ".locale"), $.keyword), "=", $.blob),
       seq(alias(choice(".culture", ".locale"), $.keyword), $.string),
       seq(alias(".ver", $.keyword), $.version)
+    ),
+
+    option_manifest: $ => choice(
+      seq(alias(".file", $.keyword), $.id_assembly, optional(seq(alias("at", $.modifier), $.integer))),
+      seq(alias(seq(".assembly", "extern"), $.keyword), $.id_assembly),
+      seq(alias(seq(".class", "extern"), $.keyword), $.id_class),
+      seq(alias(".class", $.keyword), $.integer)
     ),
 
     option_type: $ => choice(
       seq(alias(".pack", $.keyword), $.integer),
       seq(alias(".size", $.keyword), $.integer),
-      seq(alias(seq(".interfaceimpl", "type"), $.keyword), choice($.ref_class, $.type))
+      seq(alias(seq(".interfaceimpl", "type"), $.keyword), choice($.ref_class, $.type)),
+      seq(
+        choice(
+          seq(alias(".override", $.keyword), choice($.ref_class, $.type), "::", $.id_method),
+          seq(alias(seq(".override", "method"), $.keyword), $.ref_method)
+        ),
+        alias("with", $.modifier),
+        alias(optional("method"), $.keyword),
+        $.ref_method
+      )
     ),
 
     option_method: $ => choice(
       seq(alias(choice(".locals", seq(".locals", "init")), $.keyword), $.args),
       seq(alias(choice(".maxstack", ".emitbyte"), $.keyword), $.integer),
-      seq(alias(".param", $.keyword), "[", $.integer, "]", optional(seq("=", $.constant))),
       seq(alias(".override", $.keyword), choice($.ref_class, $.type), "::", $.id_method),
       seq(alias(seq(".override", "method"), $.keyword), $.ref_method),
-      alias(".entrypoint", $.keyword)
+      seq(alias(".export", $.keyword), "[", $.integer, "]", optional(seq(alias("as", $.modifier), $.id_method))),
+      seq(alias(".vtentry", $.keyword), $.integer, ":", $.integer),
+      alias(choice(".entrypoint", ".zeroinit"), $.keyword)
+    ),
+
+    option_param: $ => choice(
+      seq(alias(".param", $.keyword), "[", $.integer, "]", optional(seq("=", $.constant))),
+      seq(alias(seq(".param", "type"), $.keyword), choice(seq("[", $.integer, "]"), $.id_generic)),
+      seq(alias(seq(".param", "constraint"), $.keyword), choice(seq("[", $.integer, "]"), $.id_generic), ",", choice($.ref_class, $.type))
     ),
 
     option_property: $ => seq(alias(choice(".get", ".set", ".other"), $.keyword), $.ref_method),
+
+    option_event: $ => seq(alias(choice(".addon", ".removeon", ".fire", ".other"), $.keyword), $.ref_method),
+
+    option_security: $ => choice(
+      seq(
+        alias(".permission", $.keyword),
+        $.modifier,
+        choice($.ref_class, $.type),
+        optional(seq("(", optional(join(",", $.named_value)), ")"))
+      ),
+      seq(
+        alias(".permissionset", $.keyword),
+        $.modifier,
+        "=",
+        choice(
+          $.blob,
+          $.bytearray,
+          seq("{", optional(join(",", seq(choice($.ref_class, $.type), "=", "{", repeat($.named_arg), "}"))), "}")
+        )
+      )
+    ),
+
+    option_source: $ => choice(
+      prec.right(seq( // A quoted file name after the position belongs to the directive, even if it could also be the label of the next statement
+        alias(".line", $.keyword),
+        $.integer,
+        optional(seq(",", $.integer)),
+        optional(seq(":", $.integer, optional(seq(",", $.integer)))),
+        optional($.quoted)
+      )),
+      seq(alias("#line", $.keyword), $.integer, $.string),
+      seq(alias(".language", $.keyword), join(",", $.quoted))
+    ),
 
     //#endregion
 
     //#region STRING
 
-    string: $ => join("+", $.string_single),
+    string: $ => prec.right(join("+", $.string_single)),
 
     string_content: () => token.immediate(prec(1, /[^"\\\n]+/)), // The precedence prevents a "//" inside of the string from being lexed as a comment
 
@@ -422,7 +636,7 @@ export default grammar({
 
     intrinsic: () => token(choice(
       /void|refany|bool|char|float|float32|float64|int|int8|int16|int32|int64|uint8|uint16|uint32|uint64|object|wchar|string|typedref/,
-      /native\s+(unsigned\s+)?int/,
+      /native\s+(unsigned\s+)?int|native\s+float/,
       /unsigned\s+int(8|16|32|64)/
     )),
 
