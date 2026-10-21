@@ -1064,7 +1064,7 @@
           "named": true
         },
         {
-          "type": "string",
+          "type": "string_single",
           "named": true
         }
       ]

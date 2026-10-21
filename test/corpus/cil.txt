@@ -1973,14 +1973,12 @@ Manifest, Security, Data and Source Directives
             (pinvokeimpl
               (keyword)
               (loose
-                (string
-                  (string_single
-                    (string_content)))
+                (string_single
+                  (string_content))
                 (modifier
                   (word))
-                (string
-                  (string_single
-                    (string_content)))
+                (string_single
+                  (string_content))
                 (modifier
                   (word))
                 (modifier

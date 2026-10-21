@@ -51,7 +51,7 @@
               },
               {
                 "type": "SYMBOL",
-                "name": "string"
+                "name": "string_single"
               },
               {
                 "type": "SYMBOL",
@@ -4392,33 +4392,29 @@
       ]
     },
     "string": {
-      "type": "PREC_RIGHT",
-      "value": 0,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "SYMBOL",
-            "name": "string_single"
-          },
-          {
-            "type": "REPEAT",
-            "content": {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "STRING",
-                  "value": "+"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "string_single"
-                }
-              ]
-            }
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "string_single"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "+"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "string_single"
+              }
+            ]
           }
-        ]
-      }
+        }
+      ]
     },
     "string_content": {
       "type": "IMMEDIATE_TOKEN",

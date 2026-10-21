@@ -59,7 +59,7 @@ export default grammar({
 
     blob: $ => seq("(", repeat($.byte), ")"),
 
-    loose: $ => seq("(", repeat(choice($.intrinsic, $.modifier, $.string, $.integer, $.loose, "*", "&", "[", "]", "+", ",")), ")"), // Content of "marshal()" and "pinvokeimpl()", kept loose on purpose
+    loose: $ => seq("(", repeat(choice($.intrinsic, $.modifier, $.string_single, $.integer, $.loose, "*", "&", "[", "]", "+", ",")), ")"), // Content of "marshal()" and "pinvokeimpl()", kept loose on purpose
 
     nesting: $ => choice($.symbol, seq($.nesting, ".", $.symbol)),
 
@@ -479,7 +479,7 @@ export default grammar({
 
     //#region STRING
 
-    string: $ => prec.right(join("+", $.string_single)),
+    string: $ => join("+", $.string_single),
 
     string_content: () => token.immediate(prec(1, /[^"\\\n]+/)), // The precedence prevents a "//" inside of the string from being lexed as a comment
 
