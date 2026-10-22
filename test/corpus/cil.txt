@@ -27,7 +27,10 @@ Hello World
     (body
       (option_value
         (keyword)
-        (version))))
+        (integer)
+        (integer)
+        (integer)
+        (integer))))
   (def_method
     (keyword)
     (modifier
@@ -1289,7 +1292,10 @@ Manifest, Security, Data and Source Directives
           (byte)))
       (option_value
         (keyword)
-        (version))))
+        (integer)
+        (integer)
+        (integer)
+        (integer))))
   (def_assembly
     (keyword)
     (id_assembly
@@ -1322,7 +1328,7 @@ Manifest, Security, Data and Source Directives
                       (word)))
                   (symbol
                     (word))))))
-          (security_arg
+          (literal_named
             (modifier)
             (type_spec
               (type
@@ -1331,11 +1337,12 @@ Manifest, Security, Data and Source Directives
               (id
                 (symbol
                   (quoted))))
-            (literal
-              (literal_typed
-                (intrinsic)
-                (literal_bool))))
-          (security_arg
+            (literal_custom
+              (type_spec
+                (type
+                  (intrinsic)))
+              (literal_bool)))
+          (literal_named
             (modifier)
             (modifier)
             (type_spec
@@ -1351,10 +1358,11 @@ Manifest, Security, Data and Source Directives
               (id
                 (symbol
                   (quoted))))
-            (literal
-              (literal_typed
-                (intrinsic)
-                (integer))))))
+            (literal_custom
+              (type_spec
+                (type
+                  (intrinsic)))
+              (integer)))))
       (option_security
         (keyword)
         (modifier
@@ -1383,8 +1391,10 @@ Manifest, Security, Data and Source Directives
           (string
             (string_single
               (string_content)))
-          (literal_typed
-            (intrinsic)
+          (literal_custom
+            (type_spec
+              (type
+                (intrinsic)))
             (integer)))
         (security_value
           (string
@@ -2441,3 +2451,316 @@ Labels and Raw Exception Handling
         (id_label
           (symbol
             (word)))))))
+
+==================
+Preprocessor, ILASM 2.0 and Verbose Attributes
+==================
+
+#include "common.il"
+#define CORLIB "mscorlib"
+#ifdef DEBUG
+#undef DEBUG
+#else
+#endif
+.mscorlib
+.assembly extern mscorlib { .ver 4 : 0 : 0 : 0 }
+.typedef [mscorlib]System.Object as Obj
+.typedef method instance void [mscorlib]System.Object::.ctor() as ObjCtor
+.typelist { [mscorlib]System.Object, Obj }
+.class public Foo extends Obj
+{
+  .custom instance void MyAttribute::.ctor(string, class [mscorlib]System.Type, int32[]) = {string('abc')
+                                                                                         type(class 'System.String, mscorlib')
+                                                                                         int32[2](1 2)
+                                                                                         object(string(nullref))
+                                                                                         field type 'Kind' = type(MyAttribute)}
+  .method public [out] int32 Run() cil managed
+  {
+    ldc.r8 1e10
+    ldc.i4 0X1F
+    call instance void .base::.ctor()
+    ret
+  }
+}
+
+---
+
+(file
+  (option_preprocessor
+    (keyword)
+    (string
+      (string_single
+        (string_content))))
+  (option_preprocessor
+    (keyword)
+    (modifier
+      (word))
+    (string
+      (string_single
+        (string_content))))
+  (option_preprocessor
+    (keyword)
+    (modifier
+      (word)))
+  (option_preprocessor
+    (keyword)
+    (modifier
+      (word)))
+  (option_preprocessor
+    (keyword))
+  (option_preprocessor
+    (keyword))
+  (option_flag
+    (keyword))
+  (def_assembly
+    (keyword)
+    (modifier
+      (word))
+    (id_assembly
+      (id
+        (symbol
+          (word))))
+    (body
+      (option_value
+        (keyword)
+        (integer)
+        (integer)
+        (integer)
+        (integer))))
+  (def_typedef
+    (keyword)
+    (ref_token
+      (type_spec
+        (ref_class
+          (ref_assembly
+            (id_assembly
+              (id
+                (symbol
+                  (word)))))
+          (id_class
+            (id
+              (nesting
+                (symbol
+                  (word)))
+              (symbol
+                (word)))))))
+    (modifier)
+    (id_class
+      (id
+        (symbol
+          (word)))))
+  (def_typedef
+    (keyword)
+    (ref_token
+      (keyword)
+      (ref_method
+        (modifier
+          (word))
+        (type
+          (intrinsic))
+        (ref_scope
+          (type_spec
+            (ref_class
+              (ref_assembly
+                (id_assembly
+                  (id
+                    (symbol
+                      (word)))))
+              (id_class
+                (id
+                  (nesting
+                    (symbol
+                      (word)))
+                  (symbol
+                    (word)))))))
+        (id_method
+          (keyword))
+        (args)))
+    (modifier)
+    (id_class
+      (id
+        (symbol
+          (word)))))
+  (option_typelist
+    (keyword)
+    (ref_class
+      (ref_assembly
+        (id_assembly
+          (id
+            (symbol
+              (word)))))
+      (id_class
+        (id
+          (nesting
+            (symbol
+              (word)))
+          (symbol
+            (word)))))
+    (ref_class
+      (id_class
+        (id
+          (symbol
+            (word))))))
+  (def_class
+    (keyword)
+    (modifier
+      (word))
+    (id_class
+      (id
+        (symbol
+          (word))))
+    (modifier)
+    (type_spec
+      (ref_class
+        (id_class
+          (id
+            (symbol
+              (word))))))
+    (body
+      (attribute
+        (keyword)
+        (ref_method
+          (modifier
+            (word))
+          (type
+            (intrinsic))
+          (ref_scope
+            (type_spec
+              (ref_class
+                (id_class
+                  (id
+                    (symbol
+                      (word)))))))
+          (id_method
+            (keyword))
+          (args
+            (args_item
+              (type
+                (intrinsic)))
+            (args_item
+              (type
+                (type_custom
+                  (modifier)
+                  (ref_class
+                    (ref_assembly
+                      (id_assembly
+                        (id
+                          (symbol
+                            (word)))))
+                    (id_class
+                      (id
+                        (nesting
+                          (symbol
+                            (word)))
+                        (symbol
+                          (word))))))))
+            (args_item
+              (type
+                (type
+                  (intrinsic))
+                (type_suffix
+                  (type_indexer))))))
+        (literal_custom
+          (type_spec
+            (type
+              (intrinsic)))
+          (quoted))
+        (literal_custom
+          (type_spec
+            (ref_class
+              (id_class
+                (id
+                  (symbol
+                    (word))))))
+          (type_spec
+            (type
+              (type_custom
+                (modifier)
+                (ref_class
+                  (id_class
+                    (id
+                      (symbol
+                        (quoted)))))))))
+        (literal_custom
+          (type_spec
+            (type
+              (type
+                (intrinsic))
+              (type_suffix
+                (type_indexer
+                  (integer)))))
+          (integer)
+          (integer))
+        (literal_custom
+          (type_spec
+            (type
+              (intrinsic)))
+          (literal_custom
+            (type_spec
+              (type
+                (intrinsic)))
+            (keyword)))
+        (literal_named
+          (modifier)
+          (type_spec
+            (ref_class
+              (id_class
+                (id
+                  (symbol
+                    (word))))))
+          (id_member
+            (id
+              (symbol
+                (quoted))))
+          (literal_custom
+            (type_spec
+              (ref_class
+                (id_class
+                  (id
+                    (symbol
+                      (word))))))
+            (type_spec
+              (ref_class
+                (id_class
+                  (id
+                    (symbol
+                      (word)))))))))
+      (def_method
+        (keyword)
+        (modifier
+          (word))
+        (modifier
+          (word))
+        (type
+          (intrinsic))
+        (id_method
+          (id
+            (symbol
+              (word))))
+        (args)
+        (modifier
+          (word))
+        (modifier
+          (word))
+        (body
+          (statement
+            (instruction)
+            (float))
+          (statement
+            (instruction)
+            (integer))
+          (statement
+            (instruction)
+            (ref_method
+              (modifier
+                (word))
+              (type
+                (intrinsic))
+              (ref_scope
+                (type_spec
+                  (keyword)))
+              (id_method
+                (keyword))
+              (args)))
+          (statement
+            (instruction)))))))

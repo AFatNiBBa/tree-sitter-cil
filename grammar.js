@@ -9,6 +9,9 @@ const REGEX_HEX_DIGIT = /[a-f\d]/i;
 /** A decimal sequence of digits */
 const REGEX_NUMBER = /\d+/;
 
+/** The exponent of a floating point number */
+const REGEX_EXPONENT = /e[+-]?\d+/i;
+
 /**
  * Utility function that allows to define a repeating rule with a separator between each element
  * @param {RuleOrLiteral} sep The rule to use as separator
@@ -48,11 +51,13 @@ export default grammar({
     _decl: $ => choice(
       ";",
       $.attribute, $.label, $.statement, $.body, $.block_try,
-      $.def_namespace, $.def_assembly, $.def_resource, $.def_export, $.def_class, $.def_field, $.def_method, $.def_property, $.def_event, $.def_data,
-      $.option_value, $.option_flag, $.option_module, $.option_vtfixup, $.option_export, $.option_interface, $.option_locals, $.option_param, $.option_override, $.option_accessor, $.option_security, $.option_source
+      $.def_namespace, $.def_assembly, $.def_resource, $.def_export, $.def_class, $.def_field, $.def_method, $.def_property, $.def_event, $.def_data, $.def_typedef,
+      $.option_value, $.option_flag, $.option_module, $.option_vtfixup, $.option_export, $.option_interface, $.option_locals, $.option_param, $.option_override, $.option_accessor, $.option_security, $.option_source, $.option_typelist, $.option_preprocessor
     ),
 
     _index: $ => seq("[", $.integer, "]"),
+
+    _param_attribute: $ => seq("[", choice($.modifier, $.integer), "]"), // Parameter attributes and local indexes
 
     _target: $ => choice($.id_label, $.integer), // Target of a branch
 
@@ -85,7 +90,7 @@ export default grammar({
       alias(".custom", $.keyword),
       optional(seq("(", choice($.ref_assembly, $.ref_token), ")")),
       $.ref_method,
-      optional(seq("=", choice($.blob, $.string)))
+      optional(seq("=", choice($.blob, $.string, seq("{", repeat(choice($.literal_custom, $.literal_named)), "}"))))
     ),
 
     //#endregion
@@ -99,6 +104,32 @@ export default grammar({
     literal_bytes: $ => seq(alias("bytearray", $.intrinsic), $.blob),
 
     literal_typed: $ => seq($.intrinsic, "(", choice($.integer, $.float, $.quoted, $.literal_bool), ")"),
+
+    literal_custom: $ => seq( // Value of a verbose custom attribute or of a security permission, like "int32[2](1 2)", "type(class X)" or "X(int32 : 5)"
+      $.type_spec,
+      "(",
+      optional(choice(
+        seq($.type_spec, optional(seq(":", $.integer))), // A single type, since more types separated by spaces would be ambiguous ("int32 [a]B")
+        repeat1(choice(
+          $.integer, $.float, $.literal_bool, $.literal_custom,
+          prec(1, $.quoted), // A quoted text is a string, not the name of a class
+          alias("nullref", $.keyword)
+        ))
+      )),
+      ")"
+    ),
+
+    literal_named: $ => seq(
+      alias(choice("property", "field"), $.modifier),
+      optional(alias("enum", $.modifier)),
+      $.type_spec,
+      $.id_member,
+      "=",
+      choice(
+        $.string, $.literal_bytes, $.literal_custom,
+        alias("nullref", $.keyword)
+      )
+    ),
 
     literal_data: $ => choice(
       seq($.intrinsic, "*", "(", $.string, ")"),
@@ -175,7 +206,7 @@ export default grammar({
     args: $ => list("(", choice($.args_item, "..."), ")"),
 
     args_item: $ => seq(
-      repeat(seq("[", choice($.modifier, $.integer), "]")), // Parameter attributes and local indexes
+      repeat($._param_attribute),
       $.type,
       optional($.marshal),
       optional($.id_parameter)
@@ -226,7 +257,10 @@ export default grammar({
       seq($.type, $.type_suffix)
     ),
 
-    type_spec: $ => choice($.ref_class, $.type),
+    type_spec: $ => choice(
+      $.ref_class, $.type,
+      alias(choice(".this", ".base", ".nester"), $.keyword) // The current class, its base class and its enclosing class
+    ),
 
     type_custom: $ => seq(alias(choice("class", "valuetype", seq("value", "class")), $.modifier), $.ref_class, optional($.type_args)),
 
@@ -321,7 +355,7 @@ export default grammar({
 
     def_method: $ => seq(
       alias(".method", $.keyword),
-      repeat(choice($.modifier, $.pinvokeimpl)),
+      repeat(choice($.modifier, $.pinvokeimpl, $._param_attribute)),
       $.type,
       optional($.marshal),
       $.id_method,
@@ -356,6 +390,8 @@ export default grammar({
       choice(list("{", $.literal_data, "}"), $.literal_data)
     ),
 
+    def_typedef: $ => seq(alias(".typedef", $.keyword), choice($.ref_token, $.attribute), alias("as", $.modifier), $.id_class),
+
     //#endregion
 
     //#region BODY
@@ -385,18 +421,18 @@ export default grammar({
           ".maxstack", ".emitbyte", ".pack", ".size", ".imagebase", ".stackreserve", ".subsystem", ".corflags",  // Integer
           seq(".file", "alignment"),                                                                             // Integer
           seq(".hash", "algorithm"),                                                                             // Integer
-          ".vtentry",                                                                                            // Two integers ("a:b")
-          ".ver",                                                                                                // Version
+          ".vtentry",                                                                                            // Two integers ("a : b")
+          ".ver",                                                                                                // Four integers ("a : b : c : d")
           ".vtable", ".hash", ".publickey", ".publickeytoken",                                                   // Blob
           ".locale", ".culture"                                                                                  // Blob or string
         ),
         $.keyword
       ),
       optional("="),
-      choice($.integer, seq($.integer, ":", $.integer), $.version, $.blob, $.string)
+      choice(join(":", $.integer), $.blob, $.string)
     ),
 
-    option_flag: $ => alias(choice(".entrypoint", ".zeroinit"), $.keyword),
+    option_flag: $ => alias(choice(".entrypoint", ".zeroinit", ".mscorlib"), $.keyword),
 
     option_module: $ => choice(
       prec.right(seq(alias(".module", $.keyword), alias(optional("extern"), $.modifier), optional($.id_assembly))), // A following word belongs to the directive, even if it could also be the label of the next statement
@@ -453,29 +489,22 @@ export default grammar({
       seq(alias(".language", $.keyword), join(",", $.quoted))
     ),
 
+    option_typelist: $ => seq(alias(".typelist", $.keyword), "{", repeat(choice($.ref_class, ",")), "}"),
+
+    option_preprocessor: $ => choice(
+      prec.right(seq(alias("#define", $.keyword), $.modifier, optional($.string))), // A following string belongs to the directive
+      seq(alias("#include", $.keyword), $.string),
+      seq(alias(choice("#undef", "#ifdef", "#ifndef"), $.keyword), $.modifier),
+      alias(choice("#else", "#endif"), $.keyword)
+    ),
+
     //#endregion
 
     //#region SECURITY
 
-    security_value: $ => seq(
-      $.string,
-      "=",
-      choice(
-        $.literal_bool, $.integer, $.string, $.literal_typed,
-        seq($.ref_class, "(", optional(seq($.intrinsic, ":")), $.integer, ")")
-      )
-    ),
+    security_value: $ => seq($.string, "=", choice($.literal_bool, $.integer, $.string, $.literal_custom)),
 
-    security_attribute: $ => seq($.type_spec, "=", "{", repeat($.security_arg), "}"),
-
-    security_arg: $ => seq(
-      alias(choice("property", "field"), $.modifier),
-      optional(alias("enum", $.modifier)),
-      $.type_spec,
-      $.id_member,
-      "=",
-      $.literal
-    ),
+    security_attribute: $ => seq($.type_spec, "=", "{", repeat($.literal_named), "}"),
 
     //#endregion
 
@@ -499,11 +528,13 @@ export default grammar({
 
     byte: () => token(seq(REGEX_HEX_DIGIT, REGEX_HEX_DIGIT)),
 
-    integer: () => token(seq(optional("-"), choice(REGEX_NUMBER, seq("0x", repeat1(REGEX_HEX_DIGIT))))),
+    integer: () => token(seq(optional("-"), choice(REGEX_NUMBER, seq(/0x/i, repeat1(REGEX_HEX_DIGIT))))),
 
-    float: () => token(seq(optional("-"), REGEX_NUMBER, ".", optional(REGEX_NUMBER), optional(seq(/e/i, optional(/[+-]/), REGEX_NUMBER)))),
-
-    version: () => token(seq(REGEX_NUMBER, ":", REGEX_NUMBER, ":", REGEX_NUMBER, ":", REGEX_NUMBER)),
+    float: () => token(seq(
+      optional("-"),
+      REGEX_NUMBER,
+      choice(seq(".", optional(REGEX_NUMBER), optional(REGEX_EXPONENT)), REGEX_EXPONENT) // Either a dot or an exponent
+    )),
 
     intrinsic: () => token(choice(
       /void|refany|bool|char|float|float32|float64|int|int8|int16|int32|int64|uint8|uint16|uint32|uint64|object|wchar|string|typedref/,

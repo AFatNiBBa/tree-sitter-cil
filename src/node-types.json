@@ -62,6 +62,14 @@
           "named": true
         },
         {
+          "type": "literal_custom",
+          "named": true
+        },
+        {
+          "type": "literal_named",
+          "named": true
+        },
+        {
           "type": "ref_assembly",
           "named": true
         },
@@ -245,6 +253,10 @@
           "named": true
         },
         {
+          "type": "def_typedef",
+          "named": true
+        },
+        {
           "type": "label",
           "named": true
         },
@@ -281,11 +293,19 @@
           "named": true
         },
         {
+          "type": "option_preprocessor",
+          "named": true
+        },
+        {
           "type": "option_security",
           "named": true
         },
         {
           "type": "option_source",
+          "named": true
+        },
+        {
+          "type": "option_typelist",
           "named": true
         },
         {
@@ -518,6 +538,10 @@
           "named": true
         },
         {
+          "type": "integer",
+          "named": true
+        },
+        {
           "type": "keyword",
           "named": true
         },
@@ -630,6 +654,37 @@
     }
   },
   {
+    "type": "def_typedef",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "attribute",
+          "named": true
+        },
+        {
+          "type": "id_class",
+          "named": true
+        },
+        {
+          "type": "keyword",
+          "named": true
+        },
+        {
+          "type": "modifier",
+          "named": true
+        },
+        {
+          "type": "ref_token",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "file",
     "named": true,
     "root": true,
@@ -691,6 +746,10 @@
           "named": true
         },
         {
+          "type": "def_typedef",
+          "named": true
+        },
+        {
           "type": "label",
           "named": true
         },
@@ -727,11 +786,19 @@
           "named": true
         },
         {
+          "type": "option_preprocessor",
+          "named": true
+        },
+        {
           "type": "option_security",
           "named": true
         },
         {
           "type": "option_source",
+          "named": true
+        },
+        {
+          "type": "option_typelist",
           "named": true
         },
         {
@@ -997,6 +1064,45 @@
     }
   },
   {
+    "type": "literal_custom",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "float",
+          "named": true
+        },
+        {
+          "type": "integer",
+          "named": true
+        },
+        {
+          "type": "keyword",
+          "named": true
+        },
+        {
+          "type": "literal_bool",
+          "named": true
+        },
+        {
+          "type": "literal_custom",
+          "named": true
+        },
+        {
+          "type": "quoted",
+          "named": true
+        },
+        {
+          "type": "type_spec",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "literal_data",
     "named": true,
     "fields": {},
@@ -1026,6 +1132,45 @@
         },
         {
           "type": "string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "literal_named",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "id_member",
+          "named": true
+        },
+        {
+          "type": "keyword",
+          "named": true
+        },
+        {
+          "type": "literal_bytes",
+          "named": true
+        },
+        {
+          "type": "literal_custom",
+          "named": true
+        },
+        {
+          "type": "modifier",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "type_spec",
           "named": true
         }
       ]
@@ -1335,6 +1480,29 @@
     }
   },
   {
+    "type": "option_preprocessor",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "keyword",
+          "named": true
+        },
+        {
+          "type": "modifier",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "option_security",
     "named": true,
     "fields": {},
@@ -1401,6 +1569,25 @@
     }
   },
   {
+    "type": "option_typelist",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "keyword",
+          "named": true
+        },
+        {
+          "type": "ref_class",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "option_value",
     "named": true,
     "fields": {},
@@ -1422,10 +1609,6 @@
         },
         {
           "type": "string",
-          "named": true
-        },
-        {
-          "type": "version",
           "named": true
         }
       ]
@@ -1624,33 +1807,6 @@
     }
   },
   {
-    "type": "security_arg",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "id_member",
-          "named": true
-        },
-        {
-          "type": "literal",
-          "named": true
-        },
-        {
-          "type": "modifier",
-          "named": true
-        },
-        {
-          "type": "type_spec",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "security_attribute",
     "named": true,
     "fields": {},
@@ -1659,7 +1815,7 @@
       "required": true,
       "types": [
         {
-          "type": "security_arg",
+          "type": "literal_named",
           "named": true
         },
         {
@@ -1682,19 +1838,11 @@
           "named": true
         },
         {
-          "type": "intrinsic",
-          "named": true
-        },
-        {
           "type": "literal_bool",
           "named": true
         },
         {
-          "type": "literal_typed",
-          "named": true
-        },
-        {
-          "type": "ref_class",
+          "type": "literal_custom",
           "named": true
         },
         {
@@ -1990,6 +2138,10 @@
       "required": true,
       "types": [
         {
+          "type": "keyword",
+          "named": true
+        },
+        {
           "type": "ref_class",
           "named": true
         },
@@ -2155,10 +2307,6 @@
   {
     "type": "true",
     "named": false
-  },
-  {
-    "type": "version",
-    "named": true
   },
   {
     "type": "word",

@@ -3,7 +3,6 @@
   (byte)
   (integer)
   (float)
-  (version)
 ] @number
 
 (string_single
@@ -18,6 +17,7 @@
 [
   (option_source (quoted) @string)
   (literal_typed (quoted) @string)
+  (literal_custom (quoted) @string)
 ]
 
 (comment) @comment
@@ -34,6 +34,7 @@
 [
   (def_class (id_class (id [ (symbol) @class.declaration (nesting) @namespace ])))
   (def_export (id_class (id [ (symbol) @class.declaration (nesting) @namespace ])))
+  (def_typedef (id_class (id [ (symbol) @class.declaration (nesting) @namespace ])))
   (ref_class (id_class (id [ (symbol) @class (nesting) @namespace ])))
 ]
 
@@ -74,7 +75,7 @@
   (def_property (id_member) @property.declaration)
   (def_event (id_member) @event.declaration)
   (ref_member (id_member) @property)
-  (security_arg (id_member) @property)
+  (literal_named (id_member) @property)
 ]
 
 [
