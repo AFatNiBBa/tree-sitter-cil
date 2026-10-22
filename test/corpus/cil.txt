@@ -445,10 +445,11 @@ Check:
         (id_label
           (symbol
             (word))))
-      (statement
+      (label
         (id_label
           (symbol
-            (word)))
+            (word))))
+      (statement
         (instruction))
       (statement
         (instruction)
@@ -588,10 +589,11 @@ Check:
         (id_label
           (symbol
             (word))))
-      (statement
+      (label
         (id_label
           (symbol
-            (word)))
+            (word))))
+      (statement
         (instruction))
       (statement
         (instruction)
@@ -952,22 +954,25 @@ Generics, Properties and Exception Handling
           (block_try
             (keyword)
             (body
-              (statement
+              (label
                 (id_label
                   (symbol
-                    (word)))
+                    (word))))
+              (statement
                 (instruction)
                 (float))
-              (statement
+              (label
                 (id_label
                   (symbol
-                    (word)))
+                    (word))))
+              (statement
                 (instruction)
                 (integer))
-              (statement
+              (label
                 (id_label
                   (symbol
-                    (word)))
+                    (word))))
+              (statement
                 (instruction)
                 (ref_token
                   (type_spec
@@ -984,18 +989,20 @@ Generics, Properties and Exception Handling
                               (word)))
                           (symbol
                             (word))))))))
-              (statement
+              (label
                 (id_label
                   (symbol
-                    (word)))
+                    (word))))
+              (statement
                 (instruction)
                 (string
                   (string_single
                     (string_content))))
-              (statement
+              (label
                 (id_label
                   (symbol
-                    (word)))
+                    (word))))
+              (statement
                 (instruction)
                 (ref_method
                   (type
@@ -1037,10 +1044,11 @@ Generics, Properties and Exception Handling
                         (type
                           (type_parameter))
                         (type_suffix))))))
-              (statement
+              (label
                 (id_label
                   (symbol
-                    (word)))
+                    (word))))
+              (statement
                 (instruction)
                 (id_label
                   (symbol
@@ -1063,24 +1071,27 @@ Generics, Properties and Exception Handling
                       (symbol
                         (word))))))
               (body
-                (statement
+                (label
                   (id_label
                     (symbol
-                      (word)))
+                      (word))))
+                (statement
                   (instruction))
-                (statement
+                (label
                   (id_label
                     (symbol
-                      (word)))
+                      (word))))
+                (statement
                   (instruction)
                   (id_label
                     (symbol
                       (word)))))))
           (comment)
-          (statement
+          (label
             (id_label
               (symbol
-                (word)))
+                (word))))
+          (statement
             (instruction))))
       (def_property
         (keyword)
@@ -2148,10 +2159,11 @@ Manifest, Security, Data and Source Directives
                 (keyword)
                 (body
                   (body
-                    (statement
+                    (label
                       (id_label
                         (symbol
-                          (word)))
+                          (word))))
+                    (statement
                       (instruction)
                       (modifier
                         (word))
@@ -2163,32 +2175,36 @@ Manifest, Security, Data and Source Directives
                         (args_item
                           (type
                             (intrinsic)))))
-                    (statement
+                    (label
                       (id_label
                         (symbol
-                          (word)))
+                          (word))))
+                    (statement
                       (instruction)
                       (literal_typed
                         (intrinsic)
                         (integer)))
-                    (statement
+                    (label
                       (id_label
                         (symbol
-                          (word)))
+                          (word))))
+                    (statement
                       (instruction)
                       (type_spec
                         (type
                           (type_parameter))))
-                    (statement
+                    (label
                       (id_label
                         (symbol
-                          (word)))
+                          (word))))
+                    (statement
                       (instruction)
                       (integer))
-                    (statement
+                    (label
                       (id_label
                         (symbol
-                          (word)))
+                          (word))))
+                    (statement
                       (instruction)
                       (id_label
                         (symbol
@@ -2197,24 +2213,27 @@ Manifest, Security, Data and Source Directives
                 (block_handler
                   (keyword)
                   (body
-                    (statement
+                    (label
                       (id_label
                         (symbol
-                          (word)))
+                          (word))))
+                    (statement
                       (instruction)))
                   (body
-                    (statement
+                    (label
                       (id_label
                         (symbol
-                          (word)))
+                          (word))))
+                    (statement
                       (instruction)
                       (id_label
                         (symbol
                           (word)))))))
-              (statement
+              (label
                 (id_label
                   (symbol
-                    (word)))
+                    (word))))
+              (statement
                 (instruction)
                 (ref_method
                   (modifier
@@ -2245,8 +2264,180 @@ Manifest, Security, Data and Source Directives
                     (args_item
                       (type
                         (intrinsic))))))
-              (statement
+              (label
                 (id_label
                   (symbol
-                    (word)))
+                    (word))))
+              (statement
                 (instruction)))))))))
+
+==================
+Labels and Raw Exception Handling
+==================
+
+.method static int32 Run(string s) cil managed
+{
+  First: Second: ldarg.0
+  IL_0001:  call       int32 [mscorlib]System.Int32::Parse(string)
+  IL_0006:  leave.s    IL_000c
+  IL_0008:
+  IL_0009:  pop
+  IL_000a:  leave.s    IL_000c
+  IL_000c:  ret
+  IL_000d:
+  .try IL_0001 to IL_0008 catch [mscorlib]System.FormatException handler IL_0008 to IL_000c
+  {
+    Inner:
+  }
+  End:
+}
+
+---
+
+(file
+  (def_method
+    (keyword)
+    (modifier
+      (word))
+    (type
+      (intrinsic))
+    (id_method
+      (id
+        (symbol
+          (word))))
+    (args
+      (args_item
+        (type
+          (intrinsic))
+        (id_parameter
+          (symbol
+            (word)))))
+    (modifier
+      (word))
+    (modifier
+      (word))
+    (body
+      (label
+        (id_label
+          (symbol
+            (word))))
+      (label
+        (id_label
+          (symbol
+            (word))))
+      (statement
+        (instruction))
+      (label
+        (id_label
+          (symbol
+            (word))))
+      (statement
+        (instruction)
+        (ref_method
+          (type
+            (intrinsic))
+          (ref_scope
+            (type_spec
+              (ref_class
+                (ref_assembly
+                  (id_assembly
+                    (id
+                      (symbol
+                        (word)))))
+                (id_class
+                  (id
+                    (nesting
+                      (symbol
+                        (word)))
+                    (symbol
+                      (word)))))))
+          (id_method
+            (id
+              (symbol
+                (word))))
+          (args
+            (args_item
+              (type
+                (intrinsic))))))
+      (label
+        (id_label
+          (symbol
+            (word))))
+      (statement
+        (instruction)
+        (id_label
+          (symbol
+            (word))))
+      (label
+        (id_label
+          (symbol
+            (word))))
+      (label
+        (id_label
+          (symbol
+            (word))))
+      (statement
+        (instruction))
+      (label
+        (id_label
+          (symbol
+            (word))))
+      (statement
+        (instruction)
+        (id_label
+          (symbol
+            (word))))
+      (label
+        (id_label
+          (symbol
+            (word))))
+      (statement
+        (instruction))
+      (label
+        (id_label
+          (symbol
+            (word))))
+      (block_try
+        (keyword)
+        (block_range
+          (id_label
+            (symbol
+              (word)))
+          (modifier)
+          (id_label
+            (symbol
+              (word))))
+        (block_handler
+          (keyword)
+          (type_spec
+            (ref_class
+              (ref_assembly
+                (id_assembly
+                  (id
+                    (symbol
+                      (word)))))
+              (id_class
+                (id
+                  (nesting
+                    (symbol
+                      (word)))
+                  (symbol
+                    (word))))))
+          (modifier)
+          (block_range
+            (id_label
+              (symbol
+                (word)))
+            (modifier)
+            (id_label
+              (symbol
+                (word))))))
+      (body
+        (label
+          (id_label
+            (symbol
+              (word)))))
+      (label
+        (id_label
+          (symbol
+            (word)))))))

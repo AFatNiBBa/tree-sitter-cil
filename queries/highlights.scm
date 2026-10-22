@@ -78,7 +78,7 @@
 ]
 
 [
-  (statement (id_label) @label.declaration . ":")
+  (label (id_label) @label.declaration)
   (def_data (id_label) @label.declaration)
   (statement (instruction) (id_label) @label)
   (option_vtfixup (id_label) @label)

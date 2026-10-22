@@ -32,18 +32,6 @@ const list = (open, rule, close) => seq(open, optional(join(",", rule)), close);
  */
 const instruction = ($, names, ...operands) => seq(alias(names.length > 1 ? choice(...names) : names[0], $.instruction), ...operands);
 
-/**
- * An integer between square brackets, used as index, offset or count
- * @param {GrammarSymbols<string>} $ The grammar symbols
- */
-const index = $ => seq("[", $.integer, "]");
-
-/**
- * Target of a branch, which can be either a label or an offset
- * @param {GrammarSymbols<string>} $ The grammar symbols
- */
-const target = $ => choice($.id_label, $.integer);
-
 // Grammar for .NET's Common Intermediate Language
 export default grammar({
   name: "cil",
@@ -55,11 +43,33 @@ export default grammar({
   rules: {
     file: $ => repeat($._decl),
 
+    //#region PRIVATE
+
+    _decl: $ => choice(
+      ";",
+      $.attribute, $.label, $.statement, $.body, $.block_try,
+      $.def_namespace, $.def_assembly, $.def_resource, $.def_export, $.def_class, $.def_field, $.def_method, $.def_property, $.def_event, $.def_data,
+      $.option_value, $.option_flag, $.option_module, $.option_vtfixup, $.option_export, $.option_interface, $.option_locals, $.option_param, $.option_override, $.option_accessor, $.option_security, $.option_source
+    ),
+
+    _index: $ => seq("[", $.integer, "]"),
+
+    _target: $ => choice($.id_label, $.integer), // Target of a branch
+
+    //#endregion
+
     //#region UTIL
 
     blob: $ => seq("(", repeat($.byte), ")"),
 
-    loose: $ => seq("(", repeat(choice($.intrinsic, $.modifier, $.string_single, $.integer, $.loose, "*", "&", "[", "]", "+", ",")), ")"), // Content of "marshal()" and "pinvokeimpl()", kept loose on purpose
+    loose: $ => seq(
+      "(",
+      repeat(choice(
+        $.intrinsic, $.modifier, $.string_single, $.integer, $.loose,
+        "*", "&", "[", "]", "+", ","
+      )),
+      ")"
+    ),
 
     nesting: $ => choice($.symbol, seq($.nesting, ".", $.symbol)),
 
@@ -94,57 +104,67 @@ export default grammar({
       seq($.intrinsic, "*", "(", $.string, ")"),
       seq("&", "(", $.id_label, ")"),
       $.literal_bytes,
-      seq(choice($.intrinsic, $.literal_typed), optional(index($)))
+      seq(choice($.intrinsic, $.literal_typed), optional($._index))
     ),
 
     //#endregion
 
     //#region INSTRUCTION
 
-    statement: $ => seq(
-      repeat(seq($.id_label, ":")),
-      choice(
-        instruction($, [ "call", "callvirt", "newobj", "jmp", "ldftn", "ldvirtftn" ], $.ref_method),
-        instruction($, [ "ldfld", "ldflda", "stfld", "ldsfld", "ldsflda", "stsfld" ], $.ref_member),
-        instruction($, [ "ldc.i4", "ldc.i4.s", "ldc.i8", "unaligned.", "no." ], $.integer),
-        instruction($, [ "ldc.r4", "ldc.r8" ], choice($.float, $.integer, $.blob, $.literal_typed)),
-        instruction($, [ "calli" ], repeat($.modifier), $.type, $.args),
-        instruction($, [ "ldarg", "ldarg.s", "ldarga", "ldarga.s", "starg", "starg.s", "ldloc", "ldloc.s", "ldloca", "ldloca.s", "stloc", "stloc.s" ], choice($.integer, $.id_parameter)),
-        instruction(
-          $,
-          [
-            "br", "br.s", "brfalse", "brfalse.s", "brnull", "brnull.s", "brzero", "brzero.s",
-            "brtrue", "brtrue.s", "brinst", "brinst.s", "beq", "beq.s", "bne.un", "bne.un.s",
-            "bge", "bge.s", "bge.un", "bge.un.s", "bgt", "bgt.s", "bgt.un", "bgt.un.s",
-            "ble", "ble.s", "ble.un", "ble.un.s", "blt", "blt.s", "blt.un", "blt.un.s",
-            "leave", "leave.s"
-          ],
-          target($)
-        ),
-        instruction($, [ "switch" ], list("(", target($), ")")),
-        instruction(
-          $,
-          [
-            "box", "unbox", "unbox.any", "castclass", "isinst", "newarr", "initobj", "ldobj", "stobj", "cpobj",
-            "sizeof", "mkrefany", "refanyval", "ldelem", "ldelema", "stelem", "ldelem.any", "stelem.any", "constrained."
-          ],
-          $.type_spec // The type token can omit "class" and "valuetype"
-        ),
-        instruction($, [ "ldtoken" ], $.ref_token),
-        instruction($, [ "ldstr" ], choice($.string, $.literal_bytes)),
-        alias(
-          token(choice( // Instructions without operands, they accept some combinations that don't exist
-            /nop|break|ret|dup|pop|throw|rethrow|endfinally|endfault|endfilter|arglist|localloc|ldnull|ldlen|cpblk|initblk|refanytype|ckfinite/,
-            /(ld|st)(arg|loc)\.[0-3]/,
-            /ldc\.i4\.([0-8]|m1|M1)/,
-            /(add|sub|mul)(\.ovf)?(\.un)?|(div|rem|shr)(\.un)?|neg|and|or|xor|not|shl/,
-            /c(eq|gt|lt)(\.un)?/,
-            /conv(\.ovf)?\.([iu][1248]?|r[48]|r\.un)(\.un)?/,
-            /(ld|st)(ind|elem)\.([iu][1248]?|r[48]|ref)/,
-            /(tail|volatile|readonly)\./
-          )),
-          $.instruction
-        )
+    label: $ => seq($.id_label, ":"),
+
+    statement: $ => choice(
+      instruction($, [ "call", "callvirt", "newobj", "jmp", "ldftn", "ldvirtftn" ], $.ref_method),
+      instruction($, [ "ldfld", "ldflda", "stfld", "ldsfld", "ldsflda", "stsfld" ], $.ref_member),
+      instruction($, [ "ldc.i4", "ldc.i4.s", "ldc.i8", "unaligned.", "no." ], $.integer),
+      instruction($, [ "ldc.r4", "ldc.r8" ], choice($.float, $.integer, $.blob, $.literal_typed)),
+      instruction($, [ "calli" ], repeat($.modifier), $.type, $.args),
+      instruction(
+        $,
+        [
+          "ldarg", "ldarg.s", "ldarga", "ldarga.s", "starg", "starg.s",  // Arguments
+          "ldloc", "ldloc.s", "ldloca", "ldloca.s", "stloc", "stloc.s"   // Locals
+        ],
+        choice($.integer, $.id_parameter)
+      ),
+      instruction(
+        $,
+        [
+          "br", "br.s", "leave", "leave.s",                                            // Unconditional
+          "brfalse", "brfalse.s", "brnull", "brnull.s", "brzero", "brzero.s",          // If false
+          "brtrue", "brtrue.s", "brinst", "brinst.s",                                  // If true
+          "beq", "beq.s", "bne.un", "bne.un.s",                                        // Equality
+          "bge", "bge.s", "bge.un", "bge.un.s", "bgt", "bgt.s", "bgt.un", "bgt.un.s",  // Greater
+          "ble", "ble.s", "ble.un", "ble.un.s", "blt", "blt.s", "blt.un", "blt.un.s"   // Less
+        ],
+        $._target
+      ),
+      instruction($, [ "switch" ], list("(", $._target, ")")),
+      instruction(
+        $,
+        [
+          "box", "unbox", "unbox.any", "castclass", "isinst",                   // Conversions and checks
+          "initobj", "ldobj", "stobj", "cpobj", "sizeof",                       // Values
+          "newarr", "ldelem", "ldelema", "stelem", "ldelem.any", "stelem.any",  // Arrays
+          "mkrefany", "refanyval",                                              // Typed references
+          "constrained."                                                        // Prefix
+        ],
+        $.type_spec // The type token can omit "class" and "valuetype"
+      ),
+      instruction($, [ "ldtoken" ], $.ref_token),
+      instruction($, [ "ldstr" ], choice($.string, $.literal_bytes)),
+      alias(
+        token(choice( // Instructions without operands, they accept some combinations that don't exist
+          /nop|break|ret|dup|pop|throw|rethrow|endfinally|endfault|endfilter|arglist|localloc|ldnull|ldlen|cpblk|initblk|refanytype|ckfinite/,  // Miscellaneous
+          /(ld|st)(arg|loc)\.[0-3]/,                                                                                                            // Short forms of arguments and locals
+          /ldc\.i4\.([0-8]|m1|M1)/,                                                                                                             // Short forms of constants
+          /(add|sub|mul)(\.ovf)?(\.un)?|(div|rem|shr)(\.un)?|neg|and|or|xor|not|shl/,                                                           // Arithmetic and bitwise
+          /c(eq|gt|lt)(\.un)?/,                                                                                                                 // Comparisons
+          /conv(\.ovf)?\.([iu][1248]?|r[48]|r\.un)(\.un)?/,                                                                                     // Conversions
+          /(ld|st)(ind|elem)\.([iu][1248]?|r[48]|ref)/,                                                                                         // Indirect and array access
+          /(tail|volatile|readonly)\./                                                                                                          // Prefixes
+        )),
+        $.instruction
       )
     ),
 
@@ -202,10 +222,7 @@ export default grammar({
     //#region TYPE
 
     type: $ => choice(
-      $.intrinsic,
-      $.type_custom,
-      $.type_parameter,
-      $.type_method,
+      $.intrinsic, $.type_custom, $.type_parameter, $.type_method,
       seq($.type, $.type_suffix)
     ),
 
@@ -223,9 +240,7 @@ export default grammar({
     ),
 
     type_suffix: $ => choice(
-      $.type_indexer,
-      "&",
-      "*",
+      $.type_indexer, "&", "*",
       alias("pinned", $.modifier),
       seq(alias(choice("modreq", "modopt"), $.modifier), "(", $.type_spec, ")")
     ),
@@ -251,7 +266,7 @@ export default grammar({
       $.type,
       optional($.ref_scope),
       $.id_method,
-      optional(choice($.type_args, seq("<", index($), ">"))), // Either the generic arguments or the generic arity
+      optional(choice($.type_args, seq("<", $._index, ">"))), // Either the generic arguments or the generic arity
       $.args
     ),
 
@@ -296,7 +311,7 @@ export default grammar({
 
     def_field: $ => seq(
       alias(".field", $.keyword),
-      optional(index($)),
+      optional($._index),
       repeat(choice($.modifier, $.marshal)),
       $.type,
       $.id_member,
@@ -347,44 +362,14 @@ export default grammar({
 
     body: $ => seq("{", repeat($._decl), "}"),
 
-    _decl: $ => choice( // Every element is accepted inside of every body, since the parser only needs to highlight the code
-      ";",
-      $.attribute,
-      $.statement,
-      $.body,
-      $.block_try,
-      $.def_namespace,
-      $.def_assembly,
-      $.def_resource,
-      $.def_export,
-      $.def_class,
-      $.def_field,
-      $.def_method,
-      $.def_property,
-      $.def_event,
-      $.def_data,
-      $.option_value,
-      $.option_flag,
-      $.option_module,
-      $.option_vtfixup,
-      $.option_export,
-      $.option_interface,
-      $.option_locals,
-      $.option_param,
-      $.option_override,
-      $.option_accessor,
-      $.option_security,
-      $.option_source
-    ),
-
-    block_range: $ => seq(target($), alias("to", $.modifier), target($)),
+    block_range: $ => seq($._target, alias("to", $.modifier), $._target),
 
     block_try: $ => seq(alias(".try", $.keyword), choice($.body, $.block_range), repeat1($.block_handler)),
 
     block_handler: $ => seq(
       choice(
         seq(alias("catch", $.keyword), $.type_spec),
-        seq(alias("filter", $.keyword), choice($.body, target($))),
+        seq(alias("filter", $.keyword), choice($.body, $._target)),
         alias(choice("finally", "fault"), $.keyword)
       ),
       choice($.body, seq(alias("handler", $.modifier), $.block_range))
@@ -397,8 +382,13 @@ export default grammar({
     option_value: $ => seq(
       alias(
         choice(
-          ".maxstack", ".emitbyte", ".vtentry", ".pack", ".size", ".imagebase", ".stackreserve", ".subsystem", ".corflags", ".vtable",
-          seq(".file", "alignment"), seq(".hash", "algorithm"), ".hash", ".publickey", ".publickeytoken", ".locale", ".culture", ".ver"
+          ".maxstack", ".emitbyte", ".pack", ".size", ".imagebase", ".stackreserve", ".subsystem", ".corflags",  // Integer
+          seq(".file", "alignment"),                                                                             // Integer
+          seq(".hash", "algorithm"),                                                                             // Integer
+          ".vtentry",                                                                                            // Two integers ("a:b")
+          ".ver",                                                                                                // Version
+          ".vtable", ".hash", ".publickey", ".publickeytoken",                                                   // Blob
+          ".locale", ".culture"                                                                                  // Blob or string
         ),
         $.keyword
       ),
@@ -414,9 +404,9 @@ export default grammar({
       seq(alias(".class", $.keyword), $.integer)
     ),
 
-    option_vtfixup: $ => seq(alias(".vtfixup", $.keyword), index($), repeat(choice($.intrinsic, $.modifier)), alias("at", $.modifier), $.id_label),
+    option_vtfixup: $ => seq(alias(".vtfixup", $.keyword), $._index, repeat(choice($.intrinsic, $.modifier)), alias("at", $.modifier), $.id_label),
 
-    option_export: $ => seq(alias(".export", $.keyword), index($), optional(seq(alias("as", $.modifier), $.id_method))),
+    option_export: $ => seq(alias(".export", $.keyword), $._index, optional(seq(alias("as", $.modifier), $.id_method))),
 
     option_interface: $ => seq(alias(seq(".interfaceimpl", "type"), $.keyword), $.type_spec),
 
@@ -424,7 +414,7 @@ export default grammar({
 
     option_param: $ => seq(
       alias(choice(".param", seq(".param", "type"), seq(".param", "constraint")), $.keyword),
-      choice(index($), $.id_generic),
+      choice($._index, $.id_generic),
       optional(seq(",", $.type_spec)),
       optional(seq("=", $.literal))
     ),
@@ -435,7 +425,16 @@ export default grammar({
       optional(seq(alias("with", $.modifier), alias(optional("method"), $.keyword), $.ref_method))
     ),
 
-    option_accessor: $ => seq(alias(choice(".get", ".set", ".other", ".addon", ".removeon", ".fire"), $.keyword), $.ref_method),
+    option_accessor: $ => seq(
+      alias(
+        choice(
+          ".get", ".set", ".other",       // Property
+          ".addon", ".removeon", ".fire"  // Event (".other" too)
+        ),
+        $.keyword
+      ),
+      $.ref_method
+    ),
 
     option_security: $ => choice(
       seq(alias(".permission", $.keyword), $.modifier, $.type_spec, optional(list("(", $.security_value, ")"))),
@@ -461,7 +460,10 @@ export default grammar({
     security_value: $ => seq(
       $.string,
       "=",
-      choice($.literal_bool, $.integer, $.string, $.literal_typed, seq($.ref_class, "(", optional(seq($.intrinsic, ":")), $.integer, ")"))
+      choice(
+        $.literal_bool, $.integer, $.string, $.literal_typed,
+        seq($.ref_class, "(", optional(seq($.intrinsic, ":")), $.integer, ")")
+      )
     ),
 
     security_attribute: $ => seq($.type_spec, "=", "{", repeat($.security_arg), "}"),
@@ -481,7 +483,7 @@ export default grammar({
 
     string: $ => join("+", $.string_single),
 
-    string_content: () => token.immediate(prec(1, /[^"\\\n]+/)), // The precedence prevents a "//" inside of the string from being lexed as a comment
+    string_content: () => token.immediate(prec(1, /[^"\\\n]+/)), // "token.immediate()" only forbids skipping extras before the content, so its leading spaces can't be dropped (And get included in the token, since it allows them), but when they are followed by "//" the lexer still prefers to skip them and read a comment, unless the content has a higher precedence
 
     string_escape: () => token.immediate(/\\./),
 
