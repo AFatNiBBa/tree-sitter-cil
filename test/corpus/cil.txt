@@ -48,7 +48,7 @@ Hello World
       (word))
     (modifier
       (word))
-    (body
+    (block
       (option_flag
         (keyword))
       (statement
@@ -211,7 +211,7 @@ Class Definition
           (word))
         (modifier
           (word))
-        (body
+        (block
           (statement
             (instruction))
           (statement
@@ -287,7 +287,7 @@ Method Locals and Instructions
       (word))
     (modifier
       (word))
-    (body
+    (block
       (option_locals
         (keyword)
         (keyword)
@@ -414,7 +414,7 @@ Check:
       (word))
     (modifier
       (word))
-    (body
+    (block
       (option_value
         (keyword)
         (integer))
@@ -876,7 +876,7 @@ Generics, Properties and Exception Handling
           (word))
         (modifier
           (word))
-        (body
+        (block
           (option_param
             (keyword)
             (integer)
@@ -956,7 +956,7 @@ Generics, Properties and Exception Handling
                     (word))))))
           (block_try
             (keyword)
-            (body
+            (block
               (label
                 (id_label
                   (symbol
@@ -1073,7 +1073,7 @@ Generics, Properties and Exception Handling
                           (word)))
                       (symbol
                         (word))))))
-              (body
+              (block
                 (label
                   (id_label
                     (symbol
@@ -2055,7 +2055,7 @@ Manifest, Security, Data and Source Directives
               (word))
             (modifier
               (word))
-            (body))
+            (block))
           (def_method
             (keyword)
             (modifier
@@ -2083,7 +2083,7 @@ Manifest, Security, Data and Source Directives
               (word))
             (modifier
               (word))
-            (body
+            (block
               (option_flag
                 (keyword))
               (option_export
@@ -2167,8 +2167,8 @@ Manifest, Security, Data and Source Directives
                         (word))))))
               (block_try
                 (keyword)
-                (body
-                  (body
+                (block
+                  (block
                     (label
                       (id_label
                         (symbol
@@ -2222,14 +2222,14 @@ Manifest, Security, Data and Source Directives
                       (integer))))
                 (block_handler
                   (keyword)
-                  (body
+                  (block
                     (label
                       (id_label
                         (symbol
                           (word))))
                     (statement
                       (instruction)))
-                  (body
+                  (block
                     (label
                       (id_label
                         (symbol
@@ -2326,7 +2326,7 @@ Labels and Raw Exception Handling
       (word))
     (modifier
       (word))
-    (body
+    (block
       (label
         (id_label
           (symbol
@@ -2442,7 +2442,7 @@ Labels and Raw Exception Handling
             (id_label
               (symbol
                 (word))))))
-      (body
+      (block
         (label
           (id_label
             (symbol
@@ -2742,7 +2742,7 @@ Preprocessor, ILASM 2.0 and Verbose Attributes
           (word))
         (modifier
           (word))
-        (body
+        (block
           (statement
             (instruction)
             (float))
@@ -2809,7 +2809,7 @@ Specification Forms
       (word))
     (modifier
       (word))
-    (body
+    (block
       (option_security
         (keyword)
         (modifier
@@ -2891,4 +2891,4 @@ Specification Forms
         (symbol
           (word))))
     (args)
-    (body)))
+    (block)))

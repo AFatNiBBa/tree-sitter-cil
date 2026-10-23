@@ -49,10 +49,14 @@ export default grammar({
 
     //#region PRIVATE
 
-    _decl: $ => choice(
+    _decl: $ => choice($._decl_common, $.def_assembly, $.def_export), // Element of the body of a definition, which can't be a block on its own
+
+    _decl_code: $ => choice($._decl_common, $.block), // Element of a block of code, which can't be a definition with an optional body (it never appears inside of a method)
+
+    _decl_common: $ => choice( // Every other element is accepted inside of every body, since the parser only needs to highlight the code
       ";",
-      $.attribute, $.label, $.statement, $.body, $.block_try,
-      $.def_namespace, $.def_assembly, $.def_resource, $.def_export, $.def_class, $.def_field, $.def_method, $.def_property, $.def_event, $.def_data, $.def_typedef,
+      $.attribute, $.label, $.statement, $.block_try,
+      $.def_namespace, $.def_resource, $.def_class, $.def_field, $.def_method, $.def_property, $.def_event, $.def_data, $.def_typedef,
       $.option_value, $.option_flag, $.option_module, $.option_vtfixup, $.option_export, $.option_interface, $.option_locals, $.option_param, $.option_override, $.option_accessor, $.option_security, $.option_source, $.option_typelist, $.option_preprocessor
     ),
 
@@ -269,10 +273,7 @@ export default grammar({
 
     type_method: $ => seq(alias("method", $.keyword), repeat($.modifier), $.type, "*", $.args),
 
-    type_parameter: $ => choice(
-      token(seq(choice("!", "!!"), REGEX_NUMBER)),
-      seq(choice("!", "!!"), $.id_generic)
-    ),
+    type_parameter: $ => seq(choice("!", "!!"), choice($.id_generic, REGEX_NUMBER)), // The index is an anonymous token, so that it doesn't get highlighted as an "integer" inside of the parameter
 
     type_suffix: $ => choice(
       $.type_indexer, "&", "*",
@@ -317,22 +318,22 @@ export default grammar({
 
     def_namespace: $ => seq(alias(".namespace", $.keyword), $.id_namespace, $.body),
 
-    def_assembly: $ => prec.right(seq( // The body is optional because it's missing when it's used inside of a ".mresource"
+    def_assembly: $ => seq( // The body is optional because it's missing when it's used inside of a ".mresource"
       alias(".assembly", $.keyword),
       repeat($.modifier),
       $.id_assembly,
       optional(seq(alias("as", $.modifier), $.id_assembly)),
       optional($.body)
-    )),
+    ),
 
     def_resource: $ => seq(alias(".mresource", $.keyword), repeat($.modifier), $.id_assembly, $.body),
 
-    def_export: $ => prec.right(seq( // The body is optional because it's missing when it's used inside of another export
+    def_export: $ => seq( // The body is optional because it's missing when it's used inside of another export
       alias(choice(seq(".class", "extern"), ".export"), $.keyword),
       repeat($.modifier),
       $.id_class,
       optional($.body)
-    )),
+    ),
 
     def_class: $ => seq(
       alias(".class", $.keyword),
@@ -363,7 +364,7 @@ export default grammar({
       optional($.generics),
       $.args,
       repeat($.modifier),
-      $.body
+      $.block
     ),
 
     def_property: $ => seq(
@@ -399,17 +400,19 @@ export default grammar({
 
     body: $ => seq("{", repeat($._decl), "}"),
 
+    block: $ => seq("{", repeat($._decl_code), "}"),
+
     block_range: $ => seq($._target, alias("to", $.modifier), $._target),
 
-    block_try: $ => seq(alias(".try", $.keyword), choice($.body, $.block_range), repeat1($.block_handler)),
+    block_try: $ => seq(alias(".try", $.keyword), choice($.block, $.block_range), repeat1($.block_handler)),
 
     block_handler: $ => seq(
       choice(
         seq(alias("catch", $.keyword), $.type_spec),
-        seq(alias("filter", $.keyword), choice($.body, $._target)),
+        seq(alias("filter", $.keyword), choice($.block, $._target)),
         alias(choice("finally", "fault"), $.keyword)
       ),
-      choice($.body, seq(alias("handler", $.modifier), $.block_range))
+      choice($.block, seq(alias("handler", $.modifier), $.block_range))
     ),
 
     //#endregion
@@ -494,7 +497,7 @@ export default grammar({
     option_typelist: $ => seq(alias(".typelist", $.keyword), "{", repeat(choice($.ref_class, ",")), "}"),
 
     option_preprocessor: $ => choice(
-      prec.right(seq(alias("#define", $.keyword), $.modifier, optional($.string))), // A following string belongs to the directive
+      seq(alias("#define", $.keyword), $.modifier, optional($.string)),
       seq(alias("#include", $.keyword), $.string),
       seq(alias(choice("#undef", "#ifdef", "#ifndef"), $.keyword), $.modifier),
       alias(choice("#else", "#endif"), $.keyword)

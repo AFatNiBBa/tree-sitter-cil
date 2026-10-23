@@ -100,6 +100,129 @@
     }
   },
   {
+    "type": "block",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "attribute",
+          "named": true
+        },
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "block_try",
+          "named": true
+        },
+        {
+          "type": "def_class",
+          "named": true
+        },
+        {
+          "type": "def_data",
+          "named": true
+        },
+        {
+          "type": "def_event",
+          "named": true
+        },
+        {
+          "type": "def_field",
+          "named": true
+        },
+        {
+          "type": "def_method",
+          "named": true
+        },
+        {
+          "type": "def_namespace",
+          "named": true
+        },
+        {
+          "type": "def_property",
+          "named": true
+        },
+        {
+          "type": "def_resource",
+          "named": true
+        },
+        {
+          "type": "def_typedef",
+          "named": true
+        },
+        {
+          "type": "label",
+          "named": true
+        },
+        {
+          "type": "option_accessor",
+          "named": true
+        },
+        {
+          "type": "option_export",
+          "named": true
+        },
+        {
+          "type": "option_flag",
+          "named": true
+        },
+        {
+          "type": "option_interface",
+          "named": true
+        },
+        {
+          "type": "option_locals",
+          "named": true
+        },
+        {
+          "type": "option_module",
+          "named": true
+        },
+        {
+          "type": "option_override",
+          "named": true
+        },
+        {
+          "type": "option_param",
+          "named": true
+        },
+        {
+          "type": "option_preprocessor",
+          "named": true
+        },
+        {
+          "type": "option_security",
+          "named": true
+        },
+        {
+          "type": "option_source",
+          "named": true
+        },
+        {
+          "type": "option_typelist",
+          "named": true
+        },
+        {
+          "type": "option_value",
+          "named": true
+        },
+        {
+          "type": "option_vtfixup",
+          "named": true
+        },
+        {
+          "type": "statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "block_handler",
     "named": true,
     "fields": {},
@@ -108,11 +231,11 @@
       "required": true,
       "types": [
         {
-          "type": "block_range",
+          "type": "block",
           "named": true
         },
         {
-          "type": "body",
+          "type": "block_range",
           "named": true
         },
         {
@@ -170,15 +293,15 @@
       "required": true,
       "types": [
         {
+          "type": "block",
+          "named": true
+        },
+        {
           "type": "block_handler",
           "named": true
         },
         {
           "type": "block_range",
-          "named": true
-        },
-        {
-          "type": "body",
           "named": true
         },
         {
@@ -202,10 +325,6 @@
         },
         {
           "type": "block_try",
-          "named": true
-        },
-        {
-          "type": "body",
           "named": true
         },
         {
@@ -522,7 +641,7 @@
           "named": true
         },
         {
-          "type": "body",
+          "type": "block",
           "named": true
         },
         {
@@ -695,10 +814,6 @@
         },
         {
           "type": "block_try",
-          "named": true
-        },
-        {
-          "type": "body",
           "named": true
         },
         {
