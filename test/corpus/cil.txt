@@ -2764,3 +2764,131 @@ Preprocessor, ILASM 2.0 and Verbose Attributes
               (args)))
           (statement
             (instruction)))))))
+
+==================
+Specification Forms
+==================
+
+.method public static [out] int32 marshal(iunknown(iidparam = 1)) Run() cil managed
+{
+  .permission demand [mscorlib]System.Security.Permissions.SecurityPermissionAttribute('Unrestricted' = 'true')
+  ldtoken [mscorlib]
+  IL_0001: ldtoken [.module kernel32.dll]
+  ret
+}
+.method public static pinvokeimpl("kernel32.dll" bestfit:on charmaperror:off) void Beep() { }
+
+---
+
+(file
+  (def_method
+    (keyword)
+    (modifier
+      (word))
+    (modifier
+      (word))
+    (modifier
+      (word))
+    (type
+      (intrinsic))
+    (marshal
+      (keyword)
+      (loose
+        (modifier
+          (word))
+        (loose
+          (modifier
+            (word))
+          (integer))))
+    (id_method
+      (id
+        (symbol
+          (word))))
+    (args)
+    (modifier
+      (word))
+    (modifier
+      (word))
+    (body
+      (option_security
+        (keyword)
+        (modifier
+          (word))
+        (type_spec
+          (ref_class
+            (ref_assembly
+              (id_assembly
+                (id
+                  (symbol
+                    (word)))))
+            (id_class
+              (id
+                (nesting
+                  (nesting
+                    (nesting
+                      (symbol
+                        (word)))
+                    (symbol
+                      (word)))
+                  (symbol
+                    (word)))
+                (symbol
+                  (word))))))
+        (security_value
+          (quoted)
+          (quoted)))
+      (statement
+        (instruction)
+        (ref_token
+          (type_spec
+            (ref_assembly
+              (id_assembly
+                (id
+                  (symbol
+                    (word))))))))
+      (label
+        (id_label
+          (symbol
+            (word))))
+      (statement
+        (instruction)
+        (ref_token
+          (type_spec
+            (ref_assembly
+              (keyword)
+              (id_assembly
+                (id
+                  (nesting
+                    (symbol
+                      (word)))
+                  (symbol
+                    (word))))))))
+      (statement
+        (instruction))))
+  (def_method
+    (keyword)
+    (modifier
+      (word))
+    (modifier
+      (word))
+    (pinvokeimpl
+      (keyword)
+      (loose
+        (string_single
+          (string_content))
+        (modifier
+          (word))
+        (modifier
+          (word))
+        (modifier
+          (word))
+        (modifier
+          (word))))
+    (type
+      (intrinsic))
+    (id_method
+      (id
+        (symbol
+          (word))))
+    (args)
+    (body)))

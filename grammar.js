@@ -40,7 +40,8 @@ export default grammar({
   name: "cil",
   extras: $ => [ /\s+/, $.comment ],
   conflicts: $ => [
-    [ $.modifier, $.symbol ] // Modifiers are bare words, so when the body is optional only the following tokens tell if a word is the name or the label of the next statement
+    [ $.modifier, $.symbol ], // Modifiers are bare words, so when the body is optional only the following tokens tell if a word is the name or the label of the next statement
+    [ $.type_spec, $.ref_class ] // A type can be a bare assembly, so only the following tokens tell if a word after it is the class name or the label of the next statement
   ],
 
   rules: {
@@ -71,7 +72,7 @@ export default grammar({
       "(",
       repeat(choice(
         $.intrinsic, $.modifier, $.string_single, $.integer, $.loose,
-        "*", "&", "[", "]", "+", ","
+        "*", "&", "[", "]", "+", ",", ":", "="
       )),
       ")"
     ),
@@ -88,7 +89,7 @@ export default grammar({
 
     attribute: $ => seq(
       alias(".custom", $.keyword),
-      optional(seq("(", choice($.ref_assembly, $.ref_token), ")")),
+      optional(seq("(", $.ref_token, ")")),
       $.ref_method,
       optional(seq("=", choice($.blob, $.string, seq("{", repeat(choice($.literal_custom, $.literal_named)), "}"))))
     ),
@@ -153,20 +154,20 @@ export default grammar({
       instruction(
         $,
         [
-          "ldarg", "ldarg.s", "ldarga", "ldarga.s", "starg", "starg.s",  // Arguments
-          "ldloc", "ldloc.s", "ldloca", "ldloca.s", "stloc", "stloc.s"   // Locals
+          "ldarg", "ldarg.s", "ldarga", "ldarga.s", "starg", "starg.s",   // Arguments
+          "ldloc", "ldloc.s", "ldloca", "ldloca.s", "stloc", "stloc.s"    // Locals
         ],
         choice($.integer, $.id_parameter)
       ),
       instruction(
         $,
         [
-          "br", "br.s", "leave", "leave.s",                                            // Unconditional
-          "brfalse", "brfalse.s", "brnull", "brnull.s", "brzero", "brzero.s",          // If false
-          "brtrue", "brtrue.s", "brinst", "brinst.s",                                  // If true
-          "beq", "beq.s", "bne.un", "bne.un.s",                                        // Equality
-          "bge", "bge.s", "bge.un", "bge.un.s", "bgt", "bgt.s", "bgt.un", "bgt.un.s",  // Greater
-          "ble", "ble.s", "ble.un", "ble.un.s", "blt", "blt.s", "blt.un", "blt.un.s"   // Less
+          "br", "br.s", "leave", "leave.s",                                             // Unconditional
+          "brfalse", "brfalse.s", "brnull", "brnull.s", "brzero", "brzero.s",           // If false
+          "brtrue", "brtrue.s", "brinst", "brinst.s",                                   // If true
+          "beq", "beq.s", "bne.un", "bne.un.s",                                         // Equality
+          "bge", "bge.s", "bge.un", "bge.un.s", "bgt", "bgt.s", "bgt.un", "bgt.un.s",   // Greater
+          "ble", "ble.s", "ble.un", "ble.un.s", "blt", "blt.s", "blt.un", "blt.un.s"    // Less
         ],
         $._target
       ),
@@ -258,7 +259,7 @@ export default grammar({
     ),
 
     type_spec: $ => choice(
-      $.ref_class, $.type,
+      $.ref_assembly, $.ref_class, $.type,
       alias(choice(".this", ".base", ".nester"), $.keyword) // The current class, its base class and its enclosing class
     ),
 
@@ -464,8 +465,9 @@ export default grammar({
     option_accessor: $ => seq(
       alias(
         choice(
-          ".get", ".set", ".other",       // Property
-          ".addon", ".removeon", ".fire"  // Event (".other" too)
+          ".addon", ".removeon", ".fire",   // Event
+          ".get", ".set",                   // Property
+          ".other"                          // Both
         ),
         $.keyword
       ),
@@ -502,7 +504,7 @@ export default grammar({
 
     //#region SECURITY
 
-    security_value: $ => seq($.string, "=", choice($.literal_bool, $.integer, $.string, $.literal_custom)),
+    security_value: $ => seq(choice($.string, $.quoted), "=", choice($.literal_bool, $.integer, $.string, $.quoted, $.literal_custom)),
 
     security_attribute: $ => seq($.type_spec, "=", "{", repeat($.literal_named), "}"),
 

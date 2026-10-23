@@ -18,6 +18,7 @@
   (option_source (quoted) @string)
   (literal_typed (quoted) @string)
   (literal_custom (quoted) @string)
+  (security_value (quoted) @string)
 ]
 
 (comment) @comment

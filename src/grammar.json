@@ -269,6 +269,14 @@
               {
                 "type": "STRING",
                 "value": ","
+              },
+              {
+                "type": "STRING",
+                "value": ":"
+              },
+              {
+                "type": "STRING",
+                "value": "="
               }
             ]
           }
@@ -381,17 +389,8 @@
                   "value": "("
                 },
                 {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "SYMBOL",
-                      "name": "ref_assembly"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "ref_token"
-                    }
-                  ]
+                  "type": "SYMBOL",
+                  "name": "ref_token"
                 },
                 {
                   "type": "STRING",
@@ -1884,6 +1883,10 @@
     "type_spec": {
       "type": "CHOICE",
       "members": [
+        {
+          "type": "SYMBOL",
+          "name": "ref_assembly"
+        },
         {
           "type": "SYMBOL",
           "name": "ref_class"
@@ -4567,8 +4570,17 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "string"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "string"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "quoted"
+            }
+          ]
         },
         {
           "type": "STRING",
@@ -4588,6 +4600,10 @@
             {
               "type": "SYMBOL",
               "name": "string"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "quoted"
             },
             {
               "type": "SYMBOL",
@@ -4949,6 +4965,10 @@
     [
       "modifier",
       "symbol"
+    ],
+    [
+      "type_spec",
+      "ref_class"
     ]
   ],
   "precedences": [],

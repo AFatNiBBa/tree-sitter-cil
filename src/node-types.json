@@ -70,10 +70,6 @@
           "named": true
         },
         {
-          "type": "ref_assembly",
-          "named": true
-        },
-        {
           "type": "ref_method",
           "named": true
         },
@@ -1846,6 +1842,10 @@
           "named": true
         },
         {
+          "type": "quoted",
+          "named": true
+        },
+        {
           "type": "string",
           "named": true
         }
@@ -2139,6 +2139,10 @@
       "types": [
         {
           "type": "keyword",
+          "named": true
+        },
+        {
+          "type": "ref_assembly",
           "named": true
         },
         {
